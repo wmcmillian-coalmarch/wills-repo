@@ -1,0 +1,5 @@
+#!/bin/bash
+loggedin=$(terminus auth whoami);
+if [ "$loggedin" != "You are authenticated as USER@coalmarch.com" ]; then
+	terminus auth login USER@coalmarch.com --password="PASSWORD"
+fi

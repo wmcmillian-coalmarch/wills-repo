@@ -1,0 +1,18 @@
+_drushsqlfiles()
+{
+	local cur prev opts
+	COMPREPLY=()
+	cur="${COMP_WORDS[COMP_CWORD]}"
+	prev="${COMP_WORDS[COMP_CWORD-1]}"
+	opts=$(for x in `find ~/Sites -maxdepth 1 -type d`; do echo ${x/\/Users\/willmcmillian\/Sites\//} ; done)
+	COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+	return 0;
+}
+
+complete -F _drushsqlfiles drushsql
+complete -F _drushsqlfiles drushfiles
+complete -F _drushsqlfiles siteopen
+complete -F _drushsqlfiles pssp
+complete -F _drushsqlfiles terminus-ssp
+complete -F _drushsqlfiles rewritebase.py
+complete -F _drushsqlfiles tfiles

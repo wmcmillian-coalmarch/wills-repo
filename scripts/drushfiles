@@ -1,0 +1,18 @@
+#!/bin/bash
+if [ -z "$2" ]
+then
+        PENV=dev
+else
+        PENV=$2
+fi; 
+cd ~/Sites/$1/sites/default;
+drush cc all;
+if [ -d "files" ]; then
+chmod -R 777 files
+fi  
+drush -r . -y rsync @pantheon.$1.$PENV:%files files --progress;
+echo "DONE!"
+chmod -R 777 files/;
+cd -;
+osascript -e "display notification \"Files synced for $1\" with title \"Files Synced!\"";
+say "files synced";

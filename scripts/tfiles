@@ -1,0 +1,17 @@
+if [ -z "$2" ]
+        then
+                PENV=dev
+        else
+                PENV=$2
+        fi;
+tlogin;
+PUUID=$(terminus site info --site=$1 --field=id);
+cd ~/Sites/$1/sites/default;
+
+mkdir -p files;
+
+ if [ -d "files" ]; then
+ 	chmod -R 777 files
+ fi
+
+rsync -rlvz --size-only --ipv4 --progress -e 'ssh -p 2222'  $PENV.$PUUID@appserver.$PENV.$PUUID.drush.in:files/* files/;
