@@ -1,26 +1,23 @@
 #!/bin/bash
 
-        if [ -z "$2" ]
-        then
-                PENV=dev
-        else
-                PENV=$2
-        fi;
+if [ -z "$2" ]
+then
+        PENV=dev
+else
+        PENV=$2
+fi;
 
-        cd ~/Sites/$1/sites/default;
-        drush sql-create -y;
-        drush @pantheon.$1.$PENV cc all --strict=0;
+cd ~/Sites/$1/sites/default;
+drush @pantheon.$1.$PENV cc all --strict=0;
 
 tlogin
 
-  mkdir -p $HOME/sqltemp
+mkdir -p $HOME/sqltemp
 
 terminus site backup create --element=database --site=$1 --env=$PENV
 terminus site backup get --element=database --site=$1 --env=$PENV --to-directory=$HOME/sqltemp --latest
 
-#CREDS=$(pmysqlcreds.py $1 $2);
-
-#mysqldump $CREDS | pv | gzip -c > ~/sqltemp/$1.sql.gz
+drush sql-create -y;
 
 pv ~/sqltemp/$1*.sql.gz | gunzip | $(drush sql-connect);
 rm ~/sqltemp/$1*.sql.gz

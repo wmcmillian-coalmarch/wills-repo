@@ -9,10 +9,7 @@ _drushsqlfiles()
 	return 0;
 }
 
-complete -F _drushsqlfiles drushsql
 complete -F _drushsqlfiles drushfiles
 complete -F _drushsqlfiles siteopen
-complete -F _drushsqlfiles pssp
 complete -F _drushsqlfiles terminus-ssp
 complete -F _drushsqlfiles rewritebase.py
-complete -F _drushsqlfiles tfiles

@@ -10,7 +10,7 @@ drush cc all;
 if [ -d "files" ]; then
 chmod -R 777 files
 fi  
-drush -r . -y rsync @pantheon.$1.$PENV:%files files --progress;
+drush -r . -y rsync @pantheon.$1.$PENV:%files . --progress;
 echo "DONE!"
 chmod -R 777 files/;
 cd -;
