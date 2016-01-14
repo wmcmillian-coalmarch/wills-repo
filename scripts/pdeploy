@@ -1,0 +1,7 @@
+#!/bin/bash
+
+export SITE=$1;
+shift;
+
+terminus site deploy --site=$SITE --env=test "$@";
+terminus site deploy --site=$SITE --env=live "$@";
