@@ -1,0 +1,9 @@
+#/bin/bash
+
+SITE=$1;
+ID="id ";
+UUID=$(terminus site info --site=$SITE --field=id);
+
+UUID=${UUID:4};
+
+git clone ssh://codeserver.dev.$UUID@codeserver.dev.$UUID.drush.in:2222/~/repository.git ~/Sites/$SITE;

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+SITE=${PWD##*/};
+
+terminus site upstream-updates apply --yes --site=$SITE --env=dev --updatedb;
+terminus site deploy --site=$SITE --env=test --note="Applying Upstream Updates" --updatedb --cc;
+terminus site deploy --site=$SITE --env=live --note="Applying Upstream Updates" --updatedb --cc;
