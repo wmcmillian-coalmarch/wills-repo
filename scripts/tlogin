@@ -1,5 +1,20 @@
 #!/bin/bash
-loggedin=$(terminus auth whoami);
-if [ "$loggedin" != "You are authenticated as USER@coalmarch.com" ]; then
-	terminus auth login USER@coalmarch.com --password="PASSWORD"
+if [ -f "$HOME/.tlogin.conf" ]; then
+    source $HOME/.tlogin.conf;
+    loggedin=$(terminus auth whoami);
+    if [ "$loggedin" != "You are authenticated as $email" ]; then
+        terminus auth login $email --password="$pass"
+    fi
+else
+    echo "No conf file. Please enter your data";
+    echo -n "Pantheon email: ";
+    read email
+    echo -n "Pantheon Pass (silent input): ";
+    read -s pass
+    echo "";
+
+    touch $HOME/.tlogin.conf;
+    echo "email=$email" >> $HOME/.tlogin.conf;
+    echo "pass=$pass" >> $HOME/.tlogin.conf;
+    tlogin;
 fi
