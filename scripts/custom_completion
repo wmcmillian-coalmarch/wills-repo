@@ -4,11 +4,12 @@ _drushsqlfiles()
 	COMPREPLY=()
 	cur="${COMP_WORDS[COMP_CWORD]}"
 	prev="${COMP_WORDS[COMP_CWORD-1]}"
-	opts=$(for x in `find ~/Sites -maxdepth 1 -type d`; do echo ${x/\/Users\/willmcmillian\/Sites\//} ; done)
+	opts=$(for x in `find ~/Sites -maxdepth 1 -type d`; do if [ ${x##*/} != "Sites" ]; then echo ${x##*/}; fi; done);
 	COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
 	return 0;
 }
 
+complete -F _drushsqlfiles pdeploy
 complete -F _drushsqlfiles drushfiles
 complete -F _drushsqlfiles siteopen
 complete -F _drushsqlfiles terminus-ssp
