@@ -15,4 +15,4 @@ echo "DONE!"
 chmod -R 777 files/;
 cd -;
 osascript -e "display notification \"Files synced for $1\" with title \"Files Synced!\"";
-say "files synced";
+#say "files synced";

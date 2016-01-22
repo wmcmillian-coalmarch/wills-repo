@@ -14,8 +14,8 @@ tlogin
 
 mkdir -p $HOME/sqltemp
 
-terminus site backup create --element=database --site=$1 --env=$PENV
-terminus site backup get --element=database --site=$1 --env=$PENV --to-directory=$HOME/sqltemp --latest
+terminus site backups create --element=database --site=$1 --env=$PENV
+terminus site backups get --element=database --site=$1 --env=$PENV --to-directory=$HOME/sqltemp --latest
 
 drush sql-create -y;
 
@@ -25,4 +25,4 @@ drush vset cache 0;drush vset preprocess_css 0;drush vset preprocess_js 0;
 drush cc all;
 cd -;
 osascript -e "display notification \"SQL synced for $1\" with title \"SQL synced!\"";
-say "sequel synced";
+#say "sequel synced";
