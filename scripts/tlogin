@@ -15,6 +15,6 @@ else
 
     touch $HOME/.tlogin.conf;
     echo "email=$email" >> $HOME/.tlogin.conf;
-    echo "pass=$pass" >> $HOME/.tlogin.conf;
+    echo "pass=\"$pass\"" >> $HOME/.tlogin.conf;
     tlogin;
 fi
