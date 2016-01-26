@@ -4,11 +4,22 @@ javascript:(function(){
 
 	var reg = /dev-(.*).(gotpantheon.com|pantheon.io)/;
 
-	var test = reg.test(host);
+	var onPantheon = reg.test(host);
 
-	if(test) {
+	if(onPantheon) {
 		var parts = reg.exec(host);
 		var newUrl = loc.href.replace(host, "http://"+parts[1]+".dev");
 		window.location = newUrl;
+	}
+	else {
+		var locreg = /http:\/\/(.*).dev/;
+
+		var onLocal = locreg.test(host);
+
+		if(onLocal) {
+			var parts = locreg.exec(host);
+			var newUrl = loc.href.replace(host, "http://dev-"+parts[1]+".pantheon.io");
+			window.location = newUrl;
+		}
 	}
 })();

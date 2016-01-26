@@ -9,6 +9,7 @@ _drushsqlfiles()
 	return 0;
 }
 
+complete -F _drushsqlfiles drushsql
 complete -F _drushsqlfiles pdeploy
 complete -F _drushsqlfiles drushfiles
 complete -F _drushsqlfiles siteopen
