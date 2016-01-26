@@ -1,10 +1,14 @@
 #/bin/bash
 
-PASSWORD=FNUh5CvKce5y3PI
-HOST=10.180.8.195
-USER=intprod
-DATABASE=int_redesign
+#repalce the values with the appropriate values
+
+PASSWORD=PASS
+HOST=HOST
+USER=USER
+DATABASE=DB
 DB_FILE=live_dump.sql
+
+
 EXCLUDED_TABLES=(
 _kn_actions
 _kn_authmap
