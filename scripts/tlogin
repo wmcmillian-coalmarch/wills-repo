@@ -1,16 +1,5 @@
 #!/bin/bash
-if [ -f "$HOME/.tlogin.conf" ]; then
-    source $HOME/.tlogin.conf;
-    loggedin=$(terminus auth whoami);
-    if [ "$loggedin" != "You are authenticated as $email" ]; then
-        terminus auth login
-    fi
-else
-    echo "No conf file. Please enter your data";
-    echo -n "Pantheon email: ";
-    read email
-
-    touch $HOME/.tlogin.conf;
-    echo "email=$email" >> $HOME/.tlogin.conf;
-    tlogin;
+loggedin=$(terminus auth whoami 2>&1);
+if [[ $loggedin =~ .*You.are.not.logged.in.* ]]; then
+    terminus auth login
 fi
