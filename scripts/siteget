@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SITE=$1;
+SITE="$1";
 CLONE="tclone $SITE"
 
 if [ -z $SITE ]; then
@@ -17,23 +17,31 @@ if [ -z $SITE ]; then
     exit 1
 fi
 
-if [ -n $2 ]; then
-    SITE=$2
+if [ -n "$2" ]; then
+    SITE="$2"
     CLONE="git clone $1 $2"
 fi
 
 cd ~/Sites
 tlogin
 terminus sites aliases
+terminus cli cache-clear
 
-eval $CLONE
+if [ -d ~/Sites/$SITE ]; then
+    echo "Directory for $SITE already exists. Pulling"
+    cd $SITE
+    git pull
+else
+    eval $CLONE
+    cd $SITE
+fi
 
-cd $SITE
 rewritebase.py $SITE
 if [ ! -f sites/default/settings.php ]
 then
     DB=${SITE//-/_}
-    drush si --db-url=mysqli://root:root@localhost/$DB -y
+    echo "No settings.php. creating..."
+    drush si --db-url=mysqli://root:root@localhost/$DB -y > /dev/null 2>&1
 fi;
 terminus-ssp $SITE
 drushfiles $SITE
