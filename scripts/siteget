@@ -1,0 +1,40 @@
+#!/bin/bash
+
+SITE=$1;
+CLONE="tclone $SITE"
+
+if [ -z $SITE ]; then
+    echo "
+        ERROR:
+
+        The first argument must be the site name from pantheon.
+
+
+        USAGE:
+
+        siteget got-bugs
+    "
+    exit 1
+fi
+
+if [ -n $2 ]; then
+    SITE=$2
+    CLONE="git clone $1 $2"
+fi
+
+cd ~/Sites
+tlogin
+terminus sites aliases
+
+eval $CLONE
+
+cd $SITE
+rewritebase.py $SITE
+if [ ! -f sites/default/settings.php ]
+then
+    DB=${SITE//-/_}
+    drush si --db-url=mysqli://root:root@localhost/$DB -y
+fi;
+terminus-ssp $SITE
+drushfiles $SITE
+open "http://$SITE.dev"

@@ -1,9 +1,13 @@
 #/bin/bash
 
 SITE=$1;
-ID="id ";
 UUID=$(terminus site info --site=$SITE --field=id);
 
-UUID=${UUID:4};
+if [ -d ~/Sites/$SITE ]; then
+    echo "
+        ERROR: ~/Sites/$SITE already exists. You should navigate there and run a git pull.
+    "
+    exit 1
+fi
 
 git clone ssh://codeserver.dev.$UUID@codeserver.dev.$UUID.drush.in:2222/~/repository.git ~/Sites/$SITE;
