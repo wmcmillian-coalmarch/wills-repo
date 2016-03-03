@@ -1,0 +1,14 @@
+#!/usr/bin/env python
+'''
+osascript doesn't exist on linux systems. This is a python3 script to mimic it.
+'''
+import sys, gi,re
+gi.require_version('Notify', '0.7')
+
+from gi.repository import Notify
+args = sys.argv
+m = re.search('"([^"]+)"[^"]+"([^"]+)',args[2]);
+if m:
+    Notify.init(m.group(1))
+    n = Notify.Notification.new(m.group(1),m.group(2),'dialog-information')
+    n.show()

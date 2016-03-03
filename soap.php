@@ -60,14 +60,14 @@ echo 'An error occurred while attempting to use the zipclient x.co web service';
 exit;
 }
 
-echo 'ContactClient:<br>';
-echo '<pre>'; print_r($contactclient->__getFunctions());echo '</pre>';
-/*
+//echo 'ContactClient:<br>';
+//echo '<pre>'; print_r($contactclient->__getFunctions());echo '</pre>';
+
 echo 'WebClient:<br>';
 echo '<pre>'; print_r($webclient->__getFunctions());echo '</pre>';
-echo 'Zipclient:<br>';
-echo '<pre>'; print_r($zipclient->__getFunctions());echo '</pre>';
-*/
+//echo 'Zipclient:<br>';
+//echo '<pre>'; print_r($zipclient->__getFunctions());echo '</pre>';
+
 
 /*
 $response = $zipclient->Lookup(array('zipCode'=>'27101'));
