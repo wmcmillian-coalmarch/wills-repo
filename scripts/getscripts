@@ -6,7 +6,9 @@ drushfiles
 tclone
 siteget"
 
+mkdir -p ~/bin
 cd ~/bin
+
 echo '#######################################'
 echo '         getting Scripts...'
 echo '#######################################'
