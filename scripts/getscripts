@@ -4,7 +4,8 @@ SCRIPTS="tlogin
 terminus-ssp
 drushfiles
 tclone
-siteget"
+siteget
+getscripts"
 
 mkdir -p ~/bin
 cd ~/bin
