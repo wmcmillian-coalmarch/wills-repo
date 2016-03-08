@@ -1,3 +1,41 @@
+<?php
+$HOME = '/Users/willmcmillian';
+$duke_dir = $HOME . '/Duke';
+$sites_dir = $HOME . '/Sites';
+
+$dir_r = scandir($duke_dir);
+
+$duke_sites = array();
+foreach($dir_r as $dir) {
+    $loc = $duke_dir . '/' . $dir;
+    if ($dir === '.'
+        || $dir === '..'
+        || strpos('.', $dir) === 0
+        || !is_dir($loc)
+    ) {
+        continue;
+    }
+    $duke_sites[] = '<option value="'.$dir.'">'.$dir.'</option>';
+}
+
+$sites = array();
+
+$dir_r = scandir($sites_dir);
+
+foreach($dir_r as $dir) {
+    $loc = $sites_dir . '/' . $dir;
+    if ($dir === '.'
+        || $dir === '..'
+        || strpos('.', $dir) === 0
+        || !is_dir($loc)
+    ) {
+        continue;
+    }
+    $sites[] = '<option value="'.$dir.'">'.$dir.'</option>';
+}
+
+
+?>
 <style>
     input, textarea, label {
         display: block;
@@ -24,8 +62,15 @@
     <textarea name="files" id="files"></textarea>
     <p>Seperate files with a new line</p>
     <label for="site">Site</label>
-    <input type="text" name="site" id="site">
+    <select name="site" id="site">
+        <?php print implode("\n",$sites); ?>
+    </select>
     <p>Optional site parameter. This will prepend the file names with '~/Sites/[sitename]'.</p>
+    <label for="duke-site">Duke Site</label>
+    <select name="duke-site" id="duke-site">
+        <?php print implode("\n",$duke_sites); ?>
+    </select>
+    <p>Name of the duke repo to copy to.</p>
     <button>Submit</button>
 </form>
 <br>
@@ -35,7 +80,7 @@
     <?php
         if(!empty($_REQUEST['files'])) {
             $files = explode("\n", $_REQUEST['files']);
-            $prepend = (!empty($_REQUEST['site'])) ? '~/Sites/' . $_REQUEST['site'] . '/' : '';
+            $prepend = (!empty($_REQUEST['site'])) ? $sites_dir . '/' . $_REQUEST['site'] . '/' : '';
 
             $filenames = array();
 
@@ -54,9 +99,10 @@
 <br>
 <div>
     <?php
+        $repo = (!empty($_REQUEST['duke-site'])) ? $duke_dir . '/' . $_REQUEST['duke-site'] . '/' : '';
         if(!empty($filenames)) {
             foreach($filenames as $k => $filename) {
-                print 'cp ' . $filename . ' ' . str_replace('sites/all', '.',$files[$k]) . ';';
+                print 'cp ' . $filename . ' ' . str_replace('sites/all',$repo ,$files[$k]) . ';';
             }
         }
     ?>
