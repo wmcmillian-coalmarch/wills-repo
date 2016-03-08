@@ -102,7 +102,7 @@ foreach($dir_r as $dir) {
         $repo = (!empty($_REQUEST['duke-site'])) ? $duke_dir . '/' . $_REQUEST['duke-site'] . '/' : '';
         if(!empty($filenames)) {
             foreach($filenames as $k => $filename) {
-                print 'cp ' . $filename . ' ' . str_replace('sites/all',$repo ,$files[$k]) . ';';
+                print 'cp ' . $filename . ' ' . str_replace('sites/all/',$repo ,$files[$k]) . ';';
             }
         }
     ?>
