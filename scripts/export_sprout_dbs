@@ -1,0 +1,22 @@
+#/bin/bash
+
+if [ -z "$1" ]; then
+    TO=$(pwd)
+else
+    TO=$1
+fi
+
+sites="leadbuilder
+quality-theme
+inter-theme
+tailor-theme"
+
+#tlogin
+
+
+for site in $sites; do
+    terminus drush "cc all" --site=$site --env=dev > /dev/null 2>&1
+    echo -n "backing up $site database"
+    terminus site backups create --site=$site --env=dev --element=db
+    terminus site backups get --site=$site --env=dev --element=db --latest --to=$TO
+done
