@@ -1,5 +1,7 @@
 #/bin/bash
 
+set -eu
+
 SITE=$1;
 UUID=$(terminus site info --site=$SITE --field=id);
 
