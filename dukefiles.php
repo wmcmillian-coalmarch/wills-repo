@@ -83,12 +83,13 @@ foreach($dir_r as $dir) {
             $prepend = (!empty($_REQUEST['site'])) ? $sites_dir . '/' . $_REQUEST['site'] . '/' : '';
 
             $filenames = array();
-
+            $files_used = array();
             foreach($files as $k => $file) {
-                if(!empty($file)) {
+                if(!empty($file) && !in_array($file, $files_used)) {
                     $filename = $prepend . $file;
                     print $filename . '<br>';
                     $filenames[$k] = $filename;
+                    $files_used[] = $file;
                 }
             }
         }

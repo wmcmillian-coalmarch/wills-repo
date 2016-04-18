@@ -1,5 +1,20 @@
 #!/bin/bash
 
+spinner()
+{
+    local pid=$1
+    local delay=0.75
+    local spinstr='|/-\'
+    while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+        local temp=${spinstr#?}
+        printf " [%c]  " "$spinstr"
+        local spinstr=$temp${spinstr%"$temp"}
+        sleep $delay
+        printf "\b\b\b\b\b\b"
+    done
+    printf "    \b\b\b\b"
+}
+
 SITE="$1";
 CLONE="tclone $SITE"
 
@@ -24,15 +39,19 @@ fi
 
 cd ~/Sites
 tlogin
-terminus sites aliases
-terminus cli cache-clear
+echo "refreshing site aliases..."
+terminus sites aliases > /dev/null 2>&1 && spinner $!
+echo "clearing terminus cache"
+terminus cli cache-clear > /dev/null 2>&1 && spinner $!
+echo "refreshing site list..."
+terminus sites list > /dev/null 2>&1 && spinner $!
 
 if [ -d ~/Sites/$SITE ]; then
     echo "Directory for $SITE already exists. Pulling"
     cd $SITE
     git pull
 else
-    eval $CLONE
+    eval $CLONE &&
     cd $SITE
 fi
 
@@ -43,6 +62,6 @@ then
     echo "No settings.php. creating..."
     drush si --db-url=mysqli://root:root@localhost/$DB -y > /dev/null 2>&1
 fi;
-terminus-ssp $SITE
-drushfiles $SITE
+terminus-ssp $SITE &&
+drushfiles $SITE &&
 open "http://$SITE.dev"

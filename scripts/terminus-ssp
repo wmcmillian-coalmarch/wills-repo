@@ -14,8 +14,8 @@ tlogin
 
 mkdir -p $HOME/sqltemp
 
-terminus site backups create --element=database --site=$1 --env=$PENV
-terminus site backups get --element=database --site=$1 --env=$PENV --to=$HOME/sqltemp --latest
+terminus site backups create --element=database --site=$1 --env=$PENV &&
+terminus site backups get --element=database --site=$1 --env=$PENV --to=$HOME/sqltemp --latest &&
 
 drush sql-create -y;
 
