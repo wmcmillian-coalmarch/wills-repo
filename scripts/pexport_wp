@@ -1,0 +1,58 @@
+#!/bin/bash
+
+set -e;
+
+spinner()
+{
+    local pid=$1
+    local delay=0.75
+    local spinstr='|/-\'
+    while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+        local temp=${spinstr#?}
+        printf " [%c]  " "$spinstr"
+        local spinstr=$temp${spinstr%"$temp"}
+        sleep $delay
+        printf "\b\b\b\b\b\b"
+    done
+    printf "    \b\b\b\b"
+}
+
+if [ -z "$1" ]
+then
+        SITE=${PWD##*/};
+else
+        SITE=$1
+fi;
+
+# Specify the destination folder.
+TARGET=$HOME/exports/$SITE;
+# Specify the source folder.
+SOURCE=~/Sites/$SITE
+
+mkdir -p $TARGET;
+touch $TARGET/$SITE-db.sql.gz;
+touch $TARGET/$SITE-code.tar.gz
+touch $TARGET/$SITE-files.tar.gz
+rm $TARGET/$SITE*;
+
+
+PHPCMD="require_once 'wp-config.php'; echo '-u' . DB_USER . ' -p' . DB_PASSWORD . ' -h' . DB_HOST . ' ' . DB_NAME;";
+mysqlcreds=$(php -r "${PHPCMD}");
+
+#database
+echo -n "exporting files..."
+cd $SOURCE
+mysqldump $mysqlcreds | gzip > $TARGET/$SITE-db.sql.gz & spinner $!
+echo "exported database to $TARGET/$SITE-db.sql.gz";
+
+#code
+echo -n "exporting code..."
+cd $SOURCE
+tar -czf $TARGET/$SITE-code.tar.gz --exclude=wp-content/uploads* --exclude=.git* --exclude=.idea* . & spinner $!
+echo "exported code to $TARGET/$SITE-code.tar.gz";
+
+#files
+echo -n "exporting files..."
+cd $SOURCE/wp-content/uploads
+tar -czf $TARGET/$SITE-files.tar.gz . & spinner $!
+echo "exported files to $TARGET/$SITE-files.tar.gz";
