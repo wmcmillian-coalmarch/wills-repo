@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -e
+
+if [ -z "$1" ]
+then
+        SITE=${PWD##*/}
+else
+        SITE=$1
+fi;
+
+if [ -z "$2" ]
+then
+        ENV="dev"
+else
+        ENV=$2
+fi;
+
+
+if [ "$SITE" = "live" ] || [ "$SITE" = "dev" ] || [ "$SITE" = "test" ]
+then
+    ENV=$SITE
+    SITE=${PWD##*/}
+fi;
+
+cd $HOME/Sites/$SITE
+git pull &&
+terminus-ssp $SITE $ENV &&
+drushfiles $SITE $ENV
