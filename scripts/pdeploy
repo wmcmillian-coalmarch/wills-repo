@@ -1,7 +1,14 @@
 #!/bin/bash
 
-SITE=$1;
-shift;
+set -e
+
+if [ "$1" =~ --.* ]
+then
+        SITE=${PWD##*/}
+else
+        SITE=$1
+        shift;
+fi;
 
 terminus site deploy --site=$SITE --env=test "$@";
-terminus sigit state deploy --site=$SITE --env=live "$@";
+terminus site deploy --site=$SITE --env=live "$@";

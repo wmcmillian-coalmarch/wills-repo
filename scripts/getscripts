@@ -5,18 +5,20 @@ terminus-ssp
 drushfiles
 tclone
 siteget
+pdeploy
+prefresh
 getscripts"
 
 mkdir -p ~/bin
 cd ~/bin
 
 echo '#######################################'
-echo '         getting Scripts...'
+echo '         getting scripts...'
 echo '#######################################'
 echo
 for script in $SCRIPTS;
 do
-    echo "Downloading $script..."
+    echo "Downloading $script to $HOME/bin/$script ..."
     curl https://raw.githubusercontent.com/wmcmillian-coalmarch/wills-repo/master/scripts/$script > $script
     chmod 777 $script
 done

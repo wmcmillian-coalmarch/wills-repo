@@ -1,28 +1,51 @@
 #!/bin/bash
 
-if [ -z "$2" ]
+set -e
+
+if [ -z "$1" ]
 then
-        PENV=dev
+        SITE=${PWD##*/}
 else
-        PENV=$2
+        SITE=$1
 fi;
 
-cd ~/Sites/$1/sites/default;
-drush @pantheon.$1.$PENV cc all --strict=0;
+if [ -z "$2" ]
+then
+        ENV="dev"
+else
+        ENV=$2
+fi;
+
+if [ "$SITE" = "live" ] || [ "$SITE" = "dev" ] || [ "$SITE" = "test" ]
+then
+    ENV=$SITE
+    SITE=${PWD##*/}
+fi;
+
+cd ~/Sites/$SITE/sites/default;
+
+if [[ $((drush sa @pantheon.$SITE.$ENV) 2>&1) =~ $notfound ]]
+then
+    echo "Alias @pantheon.$SITE.$ENV not found!"
+    echo "refreshing aliases.."
+    terminus sites aliases
+fi;
+
+drush @pantheon.$SITE.$ENV cc all --strict=0;
 
 tlogin
 
 mkdir -p $HOME/sqltemp
 
-terminus site backups create --element=database --site=$1 --env=$PENV &&
-terminus site backups get --element=database --site=$1 --env=$PENV --to=$HOME/sqltemp --latest &&
+terminus site backups create --element=database --site=$SITE --env=$ENV &&
+terminus site backups get --element=database --site=$SITE --env=$ENV --to=$HOME/sqltemp --latest &&
 
 drush sql-create -y;
 
-pv ~/sqltemp/$1*.sql.gz | gunzip | $(drush sql-connect);
-rm ~/sqltemp/$1*.sql.gz
+pv ~/sqltemp/$SITE*.sql.gz | gunzip | $(drush sql-connect);
+rm ~/sqltemp/$SITE*.sql.gz
 drush vset cache 0;drush vset preprocess_css 0;drush vset preprocess_js 0;
 drush cc all;
 cd -;
-osascript -e "display notification \"SQL synced for $1\" with title \"SQL synced!\"";
+osascript -e "display notification \"SQL synced for $SITE\" with title \"SQL synced!\"";
 #say "sequel synced";

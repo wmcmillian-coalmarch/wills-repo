@@ -1,18 +1,42 @@
 #!/bin/bash
+
+set -e
+
+if [ -z "$1" ]
+then
+        SITE=${PWD##*/}
+else
+        SITE=$1
+fi;
+
 if [ -z "$2" ]
 then
-        PENV=dev
+        ENV="dev"
 else
-        PENV=$2
-fi; 
-cd ~/Sites/$1/sites/default;
+        ENV=$2
+fi;
+
+if [ "$SITE" = "live" ] || [ "$SITE" = "dev" ] || [ "$SITE" = "test" ]
+then
+    ENV=$SITE
+    SITE=${PWD##*/}
+fi;
+
+if [[ $((drush sa @pantheon.$SITE.$ENV) 2>&1) =~ $notfound ]]
+then
+    echo "Alias @pantheon.$SITE.$ENV not found!"
+    echo "refreshing aliases.."
+    terminus sites aliases
+fi;
+
+cd ~/Sites/$SITE/sites/default;
 drush cc all;
 if [ -d "files" ]; then
 chmod -R 777 files
 fi  
-drush -r . -y rsync @pantheon.$1.$PENV:%files . --progress;
+drush -r . -y rsync @pantheon.$SITE.$ENV:%files . --progress;
 echo "DONE!"
 chmod -R 777 files/;
 cd -;
-osascript -e "display notification \"Files synced for $1\" with title \"Files Synced!\"";
+osascript -e "display notification \"Files synced for $SITE\" with title \"Files Synced!\"";
 #say "files synced";
