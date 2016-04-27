@@ -24,7 +24,8 @@ fi;
 
 cd ~/Sites/$SITE/sites/default;
 
-if [[ $((drush sa @pantheon.$SITE.$ENV) 2>&1) =~ Not found:.* ]]
+notfound="Not found:.*"
+if [[ $((drush sa @pantheon.$SITE.$ENV) 2>&1) =~ $notfound ]]
 then
     echo "Alias @pantheon.$SITE.$ENV not found!"
     echo "refreshing aliases.."
