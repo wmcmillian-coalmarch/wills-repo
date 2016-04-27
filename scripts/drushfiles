@@ -22,7 +22,7 @@ then
     SITE=${PWD##*/}
 fi;
 
-if [[ $((drush sa @pantheon.$SITE.$ENV) 2>&1) =~ $notfound ]]
+if [[ $((drush sa @pantheon.$SITE.$ENV) 2>&1) =~ Not found:.* ]]
 then
     echo "Alias @pantheon.$SITE.$ENV not found!"
     echo "refreshing aliases.."
