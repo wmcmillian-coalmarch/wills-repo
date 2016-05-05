@@ -52,6 +52,19 @@ var WEATHER_LOOKUP_CACHE = {};
 // Flag to pick which kind of targeting "LOCATION", "PROXIMITY", or "ALL".
 var TARGETING = 'ALL';
 
+var TIMEZONE = AdWordsApp.currentAccount().getTimeZone();
+
+var NOW=new Date();
+
+function getDateFromTime(mTime){
+    var timestr = '';
+    timestr += Utilities.formatDate(NOW, TIMEZONE, 'E, dd MMM yyyy ');
+    timestr += mTime;
+    timestr += ':00 ';
+    timestr += Utilities.formatDate(NOW, TIMEZONE, 'z');
+
+    return new Date(timestr);
+}
 
 /**
  * The code to execute when running the script.
@@ -158,7 +171,10 @@ function buildWeatherConditionMapping(weatherConditionData) {
             'precipitation': weatherConditionData[i][2],
 
             // Wind speed (e.g. above 5)
-            'wind': weatherConditionData[i][3]
+            'wind': weatherConditionData[i][3],
+
+            // Time Slot
+            'time': weatherConditionData[i][4]
         };
     }
     Logger.log('Weather condition mapping: %s', weatherConditionMapping);
@@ -189,23 +205,6 @@ function buildLocationMapping(geoTargetData) {
     return locationMapping;
 }
 
-/**
- *
- * Testing by Lee.
- *
- */
-var accountTimeZone = AdWordsApp.currentAccount().getTimeZone()
-//Logger.log('Time Zone = ' + accountTimeZone);
-
-var today=new Date();
-//Logger.log('Today = ' + today);
-
-var finalHour=Utilities.formatDate(today, accountTimeZone, "HH");
-Logger.log('Final Hour = ' + finalHour);
-
-if (finalHour < 10) {
-//Logger.log('Not under 10');
-}
 
 /**
  * Applies rules to a campaign.
@@ -237,8 +236,8 @@ function applyRulesForCampaign(campaignName, campaignRules, locationMapping,
 
         // Evaluate the weather rules.
         if (evaluateWeatherRules(weatherConditionRules, weather)) {
-            Logger.log('Matching Rule found: Campaign Name = %s, location = %s, ' +
-                'weatherName = %s,weatherRules = %s, noticed weather = %s.',
+            Logger.log('********'+"\n\n\n"+'Matching Rule found: Campaign Name = %s, location = %s, ' +
+                'weatherName = %s,weatherRules = %s, noticed weather = %s.'+"\n\n\n"+'********',
                 campaignRule.name, campaignRule.location,
                 weatherConditionName, weatherConditionRules, weather);
             bidModifier = campaignRule.bidModifier;
@@ -290,7 +289,83 @@ function evaluateWeatherRules(weatherRules, weather) {
 
     return evaluateMatchRules(weatherRules.temperature, temperature) &&
         evaluateMatchRules(weatherRules.precipitation, precipitation) &&
-        evaluateMatchRules(weatherRules.wind, windspeed);
+        evaluateMatchRules(weatherRules.wind, windspeed) &&
+        evaluateMatchRulesTime(weatherRules.time);
+}
+
+function evaluateMatchRulesTime(condition) {
+    // No condition to evaluate, rule passes.
+    if (condition == '') {
+        return true;
+    }
+    var rules = [matchesBelowTime, matchesAboveTime, matchesRangeTime];
+
+    for (var i = 0; i < rules.length; i++) {
+        if (rules[i](condition)) {
+            return true;
+        }
+    }
+
+    return false;
+
+}
+
+function matchesBelowTime(condition) {
+    conditionParts = condition.split(' ');
+
+    if (conditionParts.length != 2) {
+        return false;
+    }
+
+    if (conditionParts[0] != 'below') {
+        return false;
+    }
+
+    var time = getDateFromTime(conditionParts[1]);
+
+    if (NOW.valueOf() < time.valueOf()) {
+        return true;
+    }
+    return false;
+}
+
+function matchesAboveTime(condition) {
+    conditionParts = condition.split(' ');
+
+    if (conditionParts.length != 2) {
+        return false;
+    }
+
+    if (conditionParts[0] != 'above') {
+        return false;
+    }
+
+    var time = getDateFromTime(conditionParts[1]);
+
+    if (NOW.valueOf() > time.valueOf()) {
+        return true;
+    }
+    return false;
+}
+
+function matchesRangeTime(condition) {
+    conditionParts = condition.replace('\w+', ' ').split(' ');
+
+    if (conditionParts.length != 3) {
+        return false;
+    }
+
+    if (conditionParts[1] != 'to') {
+        return false;
+    }
+
+    var from = getDateFromTime(conditionParts[0]);
+    var to = getDateFromTime(conditionParts[2]);
+
+    if (from.valueOf() <= NOW.valueOf() && NOW.valueOf() <= to.valueOf()) {
+        return true;
+    }
+    return false;
 }
 
 /**
