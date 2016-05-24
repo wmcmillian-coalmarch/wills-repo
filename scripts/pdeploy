@@ -6,17 +6,23 @@ if [[ "$1" =~ --.* ]]
 then
         SITE=${PWD##*/}
 else
-        SITE=$1
-        shift;
+        if [[ "$1" = "doublecheck" ]]
+        then
+            DOUBLECHECK=true
+            shift;
+        else
+            DOUBLECHECK=false
+        fi;
+
+        if [[ "$1" =~ --.* ]]
+        then
+            SITE=${PWD##*/}
+        else
+            SITE=$1
+            shift;
+        fi;
 fi;
 
-if [[ "$1" = "doublecheck" ]]
-then
-        DOUBLECHECK=true
-        shift;
-else
-        DOUBLECHECK=false
-fi;
 
 CC=false
 UPDATEDB=false
