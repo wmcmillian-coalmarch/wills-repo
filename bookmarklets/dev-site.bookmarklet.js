@@ -2,7 +2,7 @@ javascript:(function(){
 	var loc = window.location;
 	var host = loc.protocol +"//"+ loc.hostname;
 
-	var reg = /dev-(.*).(gotpantheon.com|pantheon.io)/;
+	var reg = /dev-(.*).(gotpantheon.com|pantheon.io|pantheonsite.io)/;
 
 	var onPantheon = reg.test(host);
 
@@ -18,7 +18,7 @@ javascript:(function(){
 
 		if(onLocal) {
 			var parts = locreg.exec(host);
-			var newUrl = loc.href.replace(host, "http://dev-"+parts[1]+".pantheon.io");
+			var newUrl = loc.href.replace(host, "http://dev-"+parts[1]+".pantheonsite.io");
 			window.location = newUrl;
 		}
 	}

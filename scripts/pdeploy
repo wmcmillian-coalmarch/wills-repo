@@ -10,5 +10,42 @@ else
         shift;
 fi;
 
+if [[ "$1" = "doublecheck" ]]
+then
+        DOUBLECHECK=true
+        shift;
+else
+        DOUBLECHECK=false
+fi;
+
+CC=false
+UPDATEDB=false
+
+if [ "$DOUBLECHECK" = true ]; then
+    for var in "$@"
+    do
+        if [[ $var =~ --cc.* ]]; then
+            CC=true
+        elif [[ $var =~ --updatedb.* ]]; then
+            UPDATEDB=true
+        fi
+    done
+fi
+
 terminus site deploy --site=$SITE --env=test "$@";
+if [ "$CC" = true ]; then
+    terminus drush "cc all" --site=$SITE --env=test;
+fi
+
+if [ "$UPDATEDB" = true ]; then
+    terminus drush "updatedb -y" --site=$SITE --env=test;
+fi
+
 terminus site deploy --site=$SITE --env=live "$@";
+if [ "$CC" = true ]; then
+    terminus drush "cc all" --site=$SITE --env=live;
+fi
+
+if [ "$UPDATEDB" = true ]; then
+    terminus drush "updatedb -y" --site=$SITE --env=live;
+fi
