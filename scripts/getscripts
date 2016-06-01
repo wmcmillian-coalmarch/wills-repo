@@ -7,6 +7,7 @@ tclone
 siteget
 pdeploy
 prefresh
+rewritebase.py
 getscripts"
 
 mkdir -p ~/bin

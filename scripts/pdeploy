@@ -4,7 +4,8 @@ set -e
 
 if [[ "$1" =~ --.* ]]
 then
-        SITE=${PWD##*/}
+        ROOT=$(drush ev "print DRUPAL_ROOT");
+        SITE=${ROOT##*/}
 else
         if [[ "$1" = "doublecheck" ]]
         then
@@ -16,7 +17,8 @@ else
 
         if [[ "$1" =~ --.* ]]
         then
-            SITE=${PWD##*/}
+            ROOT=$(drush ev "print DRUPAL_ROOT");
+            SITE=${ROOT##*/}
         else
             SITE=$1
             shift;

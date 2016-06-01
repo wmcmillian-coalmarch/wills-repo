@@ -4,7 +4,8 @@ set -e
 
 if [ -z "$1" ]
 then
-        SITE=${PWD##*/}
+        ROOT=$(drush ev "print DRUPAL_ROOT");
+        SITE=${ROOT##*/}
 else
         SITE=$1
 fi;
@@ -20,7 +21,8 @@ fi;
 if [ "$SITE" = "live" ] || [ "$SITE" = "dev" ] || [ "$SITE" = "test" ]
 then
     ENV=$SITE
-    SITE=${PWD##*/}
+    ROOT=$(drush ev "print DRUPAL_ROOT");
+    SITE=${ROOT##*/}
 fi;
 
 cd $HOME/Sites/$SITE
