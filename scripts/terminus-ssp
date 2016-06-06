@@ -39,6 +39,7 @@ drush @pantheon.$SITE.$ENV cc all --strict=0;
 tlogin
 
 mkdir -p $HOME/sqltemp
+rm ~/sqltemp/$SITE*.sql.gz
 
 terminus site backups create --element=database --site=$SITE --env=$ENV &&
 terminus site backups get --element=database --site=$SITE --env=$ENV --to=$HOME/sqltemp --latest &&
