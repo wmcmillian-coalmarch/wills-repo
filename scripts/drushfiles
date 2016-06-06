@@ -25,8 +25,7 @@ then
 fi;
 
 notfound="Not found:.*"
-if [[ $((drush sa @pantheon.$SITE.$ENV) 2>&1) =~ $notfound ]]
-then
+if [[ $(drush sa @pantheon.$SITE.$ENV 2>&1) =~ $notfound ]]; then
     echo "Alias @pantheon.$SITE.$ENV not found!"
     echo "refreshing aliases.."
     terminus sites aliases
