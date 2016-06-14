@@ -103,7 +103,23 @@ foreach($dir_r as $dir) {
         $repo = (!empty($_REQUEST['duke-site'])) ? $duke_dir . '/' . $_REQUEST['duke-site'] . '/' : '';
         if(!empty($filenames)) {
             foreach($filenames as $k => $filename) {
-                print 'cp ' . $filename . ' ' . str_replace('sites/all/',$repo ,$files[$k]) . ';';
+                $dest = trim(str_replace('sites/all/',$repo ,$files[$k]));
+                if(is_dir($filename)) {
+                    $dir = basename($dest);
+                    $dest = substr($dest, 0, (0 - (strlen($dir) + 1)));
+                    $cmd = "mkdir -p $dest; cp -R $filename $dest/;";
+                }
+                elseif(!is_file($dest)) {
+                    $file = basename($dest);
+                    $dest = substr($dest, 0, (0 - (strlen($file) + 1)));
+                    $cmd = "mkdir -p $dest; cp $filename $dest/;";
+                }
+                else {
+                    $cmd = "cp $filename $dest;";
+                }
+
+
+                print $cmd;
             }
         }
     ?>
