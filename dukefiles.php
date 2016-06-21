@@ -103,6 +103,7 @@ foreach($dir_r as $dir) {
         $repo = (!empty($_REQUEST['duke-site'])) ? $duke_dir . '/' . $_REQUEST['duke-site'] . '/' : '';
         if(!empty($filenames)) {
             foreach($filenames as $k => $filename) {
+                $filename = trim($filename);
                 $dest = trim(str_replace('sites/all/',$repo ,$files[$k]));
                 if(is_dir($filename)) {
                     $dir = basename($dest);
