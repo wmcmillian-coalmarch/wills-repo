@@ -43,8 +43,8 @@ cd ~/Sites
 tlogin
 echo "refreshing site aliases..."
 terminus sites aliases > /dev/null 2>&1 & spinner $! &&
-echo "clearing terminus cache..."
-terminus cli cache-clear > /dev/null 2>&1 & spinner $! &&
+#echo "clearing terminus cache..."
+#terminus cli cache-clear > /dev/null 2>&1 & spinner $! &&
 echo "refreshing site list..."
 terminus sites list > /dev/null 2>&1 & spinner $! &&
 
