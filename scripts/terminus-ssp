@@ -24,6 +24,15 @@ then
     SITE=${ROOT##*/}
 fi;
 
+cd ~/Sites/$SITE
+
+if [ -f ~/Sites/$SITE/core/lib/Drupal.php ]
+then
+    DRUPALV=8
+else
+    DRUPALV=7
+fi;
+
 cd ~/Sites/$SITE/sites/default;
 
 notfound="Not found:.*"
@@ -34,7 +43,11 @@ then
     terminus sites aliases
 fi;
 
-drush @pantheon.$SITE.$ENV cc all --strict=0;
+if [ $DRUPALV = "7" ]; then
+    drush @pantheon.$SITE.$ENV cc all --strict=0;
+else
+    drush @pantheon.$SITE.$ENV cr
+fi
 
 tlogin
 
@@ -48,8 +61,14 @@ drush sql-create -y;
 
 pv ~/sqltemp/$SITE*.sql.gz | gunzip | $(drush sql-connect);
 rm ~/sqltemp/$SITE*.sql.gz
-drush vset cache 0;drush vset preprocess_css 0;drush vset preprocess_js 0;
-drush cc all;
+if [ $DRUPALV = "7" ]; then
+    drush vset cache 0;drush vset preprocess_css 0;drush vset preprocess_js 0;
+fi
+if [$DRUPALV = "7"]; then
+    drush cc all
+else
+    drush cr
+fi
 cd -;
 osascript -e "display notification \"SQL synced for $SITE\" with title \"SQL synced!\"";
 #say "sequel synced";
