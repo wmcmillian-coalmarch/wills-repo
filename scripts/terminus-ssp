@@ -64,7 +64,7 @@ rm ~/sqltemp/$SITE*.sql.gz
 if [ $DRUPALV = "7" ]; then
     drush vset cache 0;drush vset preprocess_css 0;drush vset preprocess_js 0;
 fi
-if [$DRUPALV = "7"]; then
+if [ $DRUPALV = "7"]; then
     drush cc all
 else
     drush cr
