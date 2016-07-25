@@ -39,7 +39,7 @@ if [[ $(drush sa @pantheon.$SITE.$ENV 2>&1) =~ $notfound ]]; then
 fi;
 
 cd ~/Sites/$SITE/sites/default;
-if [ $DRUPALV = "7"]; then
+if [ $DRUPALV = "7" ]; then
     drush cc all
 else
     drush cr
