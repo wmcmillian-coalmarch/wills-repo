@@ -24,6 +24,13 @@ then
     SITE=${ROOT##*/}
 fi;
 
+if [ -f ~/Sites/$SITE/core/lib/Drupal.php ]
+then
+    DRUPALV=8
+else
+    DRUPALV=7
+fi;
+
 notfound="Not found:.*"
 if [[ $(drush sa @pantheon.$SITE.$ENV 2>&1) =~ $notfound ]]; then
     echo "Alias @pantheon.$SITE.$ENV not found!"
@@ -32,7 +39,11 @@ if [[ $(drush sa @pantheon.$SITE.$ENV 2>&1) =~ $notfound ]]; then
 fi;
 
 cd ~/Sites/$SITE/sites/default;
-drush cc all;
+if [$DRUPALV = "7"]; then
+    drush cc all
+else
+    drush cr
+fi
 if [ -d "files" ]; then
 chmod -R 777 files
 fi  
