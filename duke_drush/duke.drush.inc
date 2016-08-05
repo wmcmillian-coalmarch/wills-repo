@@ -73,24 +73,28 @@ function drush_duke_check_modules(){
     }
 
     if(!empty($not_found)) {
-        print "NOT FOUND! The following modules weren't found in the patform:\n\n";
+        print "\n";
+        print "NOT FOUND! The following modules weren't found in the pltform:\n\n";
         foreach($not_found as $m) {
             print "    $m";
         }
-        print "\n\n\n";
+        print "\n";
     }
     if(!empty($no_match)) {
+        print "\n";
         print "NO MATCH! The following modules were found on platform but the versions didn't match:\n\n";
         foreach($no_match as $m) {
             print "    $m";
         }
-        print "\n\n\n";
+        print "\n";
     }
 
     if(!empty($commands)) {
+        print "\n";
         if(drush_confirm('Download found modules?')){
            drush_shell_exec(implode(" && ", $commands));
         }
+        print "\n";
     }
 
 }
