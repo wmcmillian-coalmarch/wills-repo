@@ -31,6 +31,7 @@ function drush_duke_check_modules(){
 
     $platform = Spyc::YAMLLoadString($yaml);
     $projects = $platform['projects'];
+    $core = $platform['core'];
 
     $current_modules = db_query("
         SELECT *
@@ -56,7 +57,7 @@ function drush_duke_check_modules(){
     $not_found = array();
     $no_match = array();
     foreach($modules as $module => $v) {
-        $version = str_replace('7.x-', '', $v);
+        $version = str_replace($core.'-', '', $v);
         $project_version = $projects[$module];
         if(is_array($project_version)) {
             $project_version = $project_version['version'];
@@ -68,7 +69,7 @@ function drush_duke_check_modules(){
 
         if($project_version != $version) {
             $no_match[] = "$module version doesn't match: Site = $version. Platform = $project_version\n";
-            $commands[] = 'drush dl ' . "$module-7.x-$project_version -y";
+            $commands[] = 'drush dl ' . "$module-$core-$project_version -y";
         }
     }
 
