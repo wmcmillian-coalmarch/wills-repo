@@ -15,7 +15,13 @@ foreach($dir_r as $dir) {
     ) {
         continue;
     }
-    $duke_sites[] = '<option value="'.$dir.'">'.$dir.'</option>';
+    if(!empty($_GET['duke-site']) && $_GET['duke-site'] == $dir) {
+        $selected = ' selected="selected"';
+    }
+    else {
+        $selected = '';
+    }
+    $duke_sites[] = '<option value="'.$dir.'"'.$selected.'>'.$dir.'</option>';
 }
 
 $sites = array();
@@ -31,7 +37,13 @@ foreach($dir_r as $dir) {
     ) {
         continue;
     }
-    $sites[] = '<option value="'.$dir.'">'.$dir.'</option>';
+    if(!empty($_GET['duke-site']) && $_GET['site'] == $dir) {
+        $selected = ' selected="selected"';
+    }
+    else {
+        $selected = '';
+    }
+    $sites[] = '<option value="'.$dir.'"'.$selected.'>'.$dir.'</option>';
 }
 
 
