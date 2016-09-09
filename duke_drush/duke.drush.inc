@@ -13,6 +13,18 @@ function duke_drush_command(){
         ),
     );
 
+    $items['duke-prepare-site'] = array(
+        'description' => 'Remove pantheon modules from the database and convert coalmarch users to netIDs',
+        'aliases' => array('dps'),
+        'options' => array(
+            'file' => 'a php file (do NOT close the php tag) containing an array of additional users and netIds saved tot he variable $users eg: 
+                        <?php 
+                        $users = array(
+                            \'username\' => \'netID@duke.edu\'
+                        )'
+        ),
+    );
+
     return $items;
 }
 
@@ -98,4 +110,72 @@ function drush_duke_check_modules(){
         print "\n";
     }
 
+}
+
+function drush_duke_prepare_site(){
+    $file = drush_get_option('file');
+    $users = array();
+    if(!empty($file)) {
+        require_once $file;
+    }
+
+    $users = array_merge($users, array(
+        'dwhite' => 'dmw60@duke.edu',
+        'lroger' => 'lhr8@duke.edu',
+        'cnein' => 'cbn5@duke.edu',
+        'rkirkpatrick' => 'rdk11@duke.edu',
+        'wmcmillian' => 'wdm10@duke.edu',
+        'lhenderson' => 'lah82@duke.edu',
+        'jfekete' => 'jrf26@duke.edu',
+        'awelles' => 'amw84@duke.edu'
+    ));
+
+    $d_users = entity_load('user');
+
+    //get rid of users 0 and 1
+    array_shift($d_users);
+    array_shift($d_users);
+
+    $not_found = array();
+    foreach ($d_users as $user) {
+        if(!in_array($user->name,array_keys($users))) {
+            $not_found[$user->uid] = $user->name;
+            continue;
+        }
+
+        if (shib_provision_is_provisioned($user->uid)) {
+            shib_provision_update_provision($user->uid, $user->name, $user->mail);
+        }
+        else {
+            shib_provision_provision($user->uid, $user->name, $user->mail);
+        }
+
+        user_save($user, array('name' => $users[$user->name]));
+    }
+
+    if(!empty($not_found)) {
+        global $base_url;
+        $message = 'The following users were not updated. These should be converted to netIDs manually: ' . "\n";
+        $i = 1;
+        foreach($not_found as $uid => $nf) {
+            $url = $base_url . '/user/' . $uid . '/edit';
+            $message .= "$nf => $url";
+            if($i != count($not_found)) {
+                $message .= "\n";
+            }
+            ++$i;
+        }
+
+
+        drush_log($message, 'warning');
+    }
+
+    $pantheon_modules = array(
+        'pantheon_api',
+        'pantheon_login',
+        'pantheon_apachesolr'
+    );
+
+    drush_module_disable($pantheon_modules);
+    drush_module_uninstall($pantheon_modules);
 }
