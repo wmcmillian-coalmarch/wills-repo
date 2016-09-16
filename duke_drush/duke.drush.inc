@@ -25,6 +25,11 @@ function duke_drush_command(){
         ),
     );
 
+    $items['duke-prepare-site-reverse'] = array(
+        'description' => 'Reverse of duke-prepare-site so that a duke site can be made into a pantheon one',
+        'aliases' => array('dpsr'),
+    );
+
     return $items;
 }
 
@@ -178,4 +183,50 @@ function drush_duke_prepare_site(){
 
     drush_module_disable($pantheon_modules);
     drush_module_uninstall($pantheon_modules);
+}
+
+function drush_duke_prepare_site_reverse() {
+    $pantheon_modules = array(
+        'pantheon_api',
+        'pantheon_login'
+    );
+
+    drush_module_enable($pantheon_modules);
+
+    $users = array(
+        'dwhite' => 'dmw60@duke.edu',
+        'lroger' => 'lhr8@duke.edu',
+        'cnein' => 'cbn5@duke.edu',
+        'rkirkpatrick' => 'rdk11@duke.edu',
+        'wmcmillian' => 'wdm10@duke.edu',
+        'lhenderson' => 'lah82@duke.edu',
+        'jfekete' => 'jrf26@duke.edu',
+        'awelles' => 'amw84@duke.edu'
+    );
+    $r_users = array();
+    foreach($users as $pu => $du) {
+        $r_users[$du] = $pu;
+    }
+
+    $d_users = entity_load('user');
+
+    //get rid of users 0 and 1
+    array_shift($d_users);
+    array_shift($d_users);
+
+    foreach ($d_users as $user) {
+        if(!in_array($user->name,array_keys($r_users))) {
+            $not_found[$user->uid] = $user->name;
+            continue;
+        }
+
+        if (shib_provision_is_provisioned($user->uid)) {
+            shib_provision_update_provision($user->uid, $user->name, $user->mail);
+        }
+        else {
+            shib_provision_provision($user->uid, $user->name, $user->mail);
+        }
+
+        user_save($user, array('name' => $r_users[$user->name]));
+    }
 }
