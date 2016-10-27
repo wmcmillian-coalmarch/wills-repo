@@ -28,7 +28,7 @@ fi
 cd $MODULE;
 
 echo "renaming files";
-find . -name "$MODULE*" -print | xargs rename $MODULE $NEWNAME;
+find . -name "$MODULE*" -print | xargs rename "s/$MODULE/$NEWNAME/";
 
 echo "string replace $MODULE with $NEWNAME";
 find . -type f -print | xargs sed -i "s/$MODULE/$NEWNAME/";

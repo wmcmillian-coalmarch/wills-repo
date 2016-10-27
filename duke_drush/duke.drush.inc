@@ -25,6 +25,11 @@ function duke_drush_command(){
         ),
     );
 
+    $items['duke-prepare-site-reverse'] = array(
+        'description' => 'Reverse of duke-prepare-site so that a duke site can be made into a pantheon one',
+        'aliases' => array('dpsr'),
+    );
+
     return $items;
 }
 
@@ -43,6 +48,7 @@ function drush_duke_check_modules(){
 
     $platform = Spyc::YAMLLoadString($yaml);
     $projects = $platform['projects'];
+    $core = $platform['core'];
 
     $current_modules = db_query("
         SELECT *
@@ -68,7 +74,7 @@ function drush_duke_check_modules(){
     $not_found = array();
     $no_match = array();
     foreach($modules as $module => $v) {
-        $version = str_replace('7.x-', '', $v);
+        $version = str_replace($core.'-', '', $v);
         $project_version = $projects[$module];
         if(is_array($project_version)) {
             $project_version = $project_version['version'];
@@ -80,29 +86,33 @@ function drush_duke_check_modules(){
 
         if($project_version != $version) {
             $no_match[] = "$module version doesn't match: Site = $version. Platform = $project_version\n";
-            $commands[] = 'drush dl ' . "$module-7.x-$project_version -y";
+            $commands[] = 'drush dl ' . "$module-$core-$project_version -y";
         }
     }
 
     if(!empty($not_found)) {
-        print "NOT FOUND! The following modules weren't found in the patform:\n\n";
+        print "\n";
+        print "NOT FOUND! The following modules weren't found in the pltform:\n\n";
         foreach($not_found as $m) {
             print "    $m";
         }
-        print "\n\n\n";
+        print "\n";
     }
     if(!empty($no_match)) {
+        print "\n";
         print "NO MATCH! The following modules were found on platform but the versions didn't match:\n\n";
         foreach($no_match as $m) {
             print "    $m";
         }
-        print "\n\n\n";
+        print "\n";
     }
 
     if(!empty($commands)) {
+        print "\n";
         if(drush_confirm('Download found modules?')){
            drush_shell_exec(implode(" && ", $commands));
         }
+        print "\n";
     }
 
 }
@@ -173,4 +183,50 @@ function drush_duke_prepare_site(){
 
     drush_module_disable($pantheon_modules);
     drush_module_uninstall($pantheon_modules);
+}
+
+function drush_duke_prepare_site_reverse() {
+    $pantheon_modules = array(
+        'pantheon_api',
+        'pantheon_login'
+    );
+
+    drush_module_enable($pantheon_modules);
+
+    $users = array(
+        'dwhite' => 'dmw60@duke.edu',
+        'lroger' => 'lhr8@duke.edu',
+        'cnein' => 'cbn5@duke.edu',
+        'rkirkpatrick' => 'rdk11@duke.edu',
+        'wmcmillian' => 'wdm10@duke.edu',
+        'lhenderson' => 'lah82@duke.edu',
+        'jfekete' => 'jrf26@duke.edu',
+        'awelles' => 'amw84@duke.edu'
+    );
+    $r_users = array();
+    foreach($users as $pu => $du) {
+        $r_users[$du] = $pu;
+    }
+
+    $d_users = entity_load('user');
+
+    //get rid of users 0 and 1
+    array_shift($d_users);
+    array_shift($d_users);
+
+    foreach ($d_users as $user) {
+        if(!in_array($user->name,array_keys($r_users))) {
+            $not_found[$user->uid] = $user->name;
+            continue;
+        }
+
+        if (shib_provision_is_provisioned($user->uid)) {
+            shib_provision_update_provision($user->uid, $user->name, $user->mail);
+        }
+        else {
+            shib_provision_provision($user->uid, $user->name, $user->mail);
+        }
+
+        user_save($user, array('name' => $r_users[$user->name]));
+    }
 }
