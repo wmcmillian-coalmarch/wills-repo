@@ -1,5 +1,6 @@
 <?php
-$HOME = '/Users/willmcmillian';
+$path = explode('/', $_SERVER['DOCUMENT_ROOT']);
+$HOME = "/{$path[1]}/{$path[2]}";
 $duke_dir = $HOME . '/Duke';
 $sites_dir = $HOME . '/Sites';
 
@@ -61,9 +62,12 @@ foreach($dir_r as $dir) {
         font-weight: bold;
     }
 
+    form {
+        max-width: 600px;
+    }
+
     textarea {
         width: 100%;
-        max-width: 600px;
         height: 300px;
     }
 

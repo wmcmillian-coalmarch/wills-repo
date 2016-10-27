@@ -60,7 +60,7 @@ function module_rename_drush_command(){
     return $items;
 }
 
-function drush_module_rename_module_rename($old, $new) {
+function drush_module_rename($old, $new) {
     $MCR = new ModuleCopyRename();
     $modulepath = $MCR->rename($old, $new);
 
@@ -81,7 +81,7 @@ function drush_module_rename_module_rename($old, $new) {
 
 }
 
-function drush_module_rename_module_string_replace($module) {
+function drush_module_string_replace($module) {
     $MCR = new ModuleCopyRename();
     $modulepath = $MCR->getModulePath($module);
     $replace = drush_get_option_list('replace');
@@ -98,7 +98,7 @@ function drush_module_rename_module_string_replace($module) {
     }
 }
 
-function drush_module_rename_module_copy($module) {
+function drush_module_copy($module) {
     $MCR = new ModuleCopyRename();
 
     $destination = drush_get_option('destination');
@@ -118,7 +118,7 @@ function drush_module_rename_module_copy($module) {
     drush_log("$module copied to $dest", 'success');
 }
 
-function drush_module_rename_module_copy_rename($old, $new) {
+function drush_module_copy_rename($old, $new) {
     $MCR = new ModuleCopyRename();
 
     $destination = drush_get_option('destination');

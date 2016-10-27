@@ -1,10 +1,11 @@
-#!/bash/sh
+#!/bin/bash
 tlogin;
-site_list=$(terminus site list --cached --format=bash);
+tsites=$(terminus sites list --cached --format=bash)";
+
 sites=()
 
-for s in site_list; do
-    sites=("${sites[@]}" $s[0])
+for s in $tsites; do
+    echo $s;
 done;
 
-echo ${sites[@]};
+#echo ${sites[@]};

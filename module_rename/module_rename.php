@@ -2,8 +2,9 @@
 
 class ModuleCopyRename {
 
-    function getModulePath($name) {
-        return drupal_get_path('module', $name);
+    function getModulePath($name, $type = 'module') {
+        require_once DRUPAL_ROOT . '/includes/bootstrap.inc';
+        return dirname(drupal_get_filename($type, $name));
     }
 
     function directory_recurse_copy($src, $dst) {
