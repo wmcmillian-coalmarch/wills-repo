@@ -30,7 +30,7 @@ function checkDomain($domain) {
         $expiration = new DateTime(date('c',$cert['validTo_time_t']));
         $now = new DateTime();
         $diff = $expiration->sub($now);
-        if($now >= $expiration || ($expiration > $now && $diff->$w <= 1)) {
+        if($now >= $expiration || ($expiration > $now && $diff->w <= 1)) {
             return false;
         }
         else {

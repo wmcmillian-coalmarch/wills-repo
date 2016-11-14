@@ -26,7 +26,7 @@
 <form>
     <h1>Sanitize input for use in dukefiles</h1>
     <label for="files">List of Files</label>
-    <textarea name="files" id="files"><?php print $_REQUEST['files']; ?></textarea>
+    <textarea name="files" id="files"><?php print !empty($_REQUEST['files']) ? $_REQUEST['files'] : ''; ?></textarea>
     <button>Submit</button>
 </form>
 <br>
