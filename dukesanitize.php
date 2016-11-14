@@ -40,11 +40,21 @@
         $files_used = array();
         foreach($files as $k => $file) {
             if(!empty($file) && !in_array($file, $files_used)) {
-                $file = preg_split('/\s/', trim($file));
-                if(!is_array($file)) {
-                    $file = array($file);
+                $file_raw = preg_split('/\s/', trim($file));
+                if(!is_array($file_raw)) {
+                    $file_raw = array($file_raw);
                 }
+                $file = array();
+                foreach($file_raw as $part) {
+                    if(!empty($part)) {
+                        $file[] = trim($part);
+                    }
+                }
+                
                 $filename = array_shift($file);
+                if(strpos($filename, 'modified:') !== false) {
+                    $filename = array_shift($file);
+                }
                 print $filename . '<br>';
                 $filenames[$k] = $filename;
                 $files_used[] = $file;
