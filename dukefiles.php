@@ -1,6 +1,11 @@
 <?php
-$path = explode('/', $_SERVER['DOCUMENT_ROOT']);
-$HOME = "/{$path[1]}/{$path[2]}";
+if($_SERVER['DOCUMENT_ROOT'] == '/usr/local/var/www/htdocs') {
+    $HOME = '/Users/willmcmillian';
+}
+else {
+    $path = explode('/', $_SERVER['DOCUMENT_ROOT']);
+    $HOME = "/{$path[1]}/{$path[2]}";
+}
 $duke_dir = $HOME . '/Duke';
 $sites_dir = $HOME . '/Sites';
 
