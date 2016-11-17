@@ -1,0 +1,49 @@
+#!/bin/bash
+
+set -e
+
+if [ -z "$1" ]
+then
+        ROOT=$(drush ev "print DRUPAL_ROOT");
+        SITE=${ROOT##*/}
+else
+        SITE=$1
+fi;
+
+if [ -z "$2" ]
+then
+        ENV="dev"
+else
+        ENV=$2
+fi;
+
+if [ "$SITE" = "live" ] || [ "$SITE" = "dev" ] || [ "$SITE" = "test" ]
+then
+    ENV=$SITE
+    ROOT=$(drush ev "print DRUPAL_ROOT");
+    SITE=${ROOT##*/}
+fi;
+
+UUID=$(terminus site info --site=$SITE --field=id);
+
+cd ~/Sites/$SITE/sites/default;
+echo "This will upload files from ~/Sites/$SITE/sites/default to $ENV.$UUID@appserver.$ENV.$UUID.drush.in:files."
+read -p "Are you sure you want to continue? " -n 1 -r
+echo    # (optional) move to a new line
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    echo "Oh well..."
+    [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1 # handle exits from shell or function but don't exit interactive shell
+fi
+
+while [ 1 ]
+do
+rsync --partial -rlvz --size-only --ipv4 --progress -e 'ssh -p 2222' ./files/* --temp-dir=../tmp/ $ENV.$UUID@appserver.$ENV.$UUID.drush.in:files/
+if [ "$?" = "0" ] ; then
+echo "rsync completed normally"
+exit
+else
+echo "Rsync failure. Backing off and retrying..."
+sleep 180
+fi
+done

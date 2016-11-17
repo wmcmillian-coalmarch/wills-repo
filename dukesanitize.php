@@ -44,10 +44,17 @@
                 if(!is_array($file)) {
                     $file = array($file);
                 }
-                $filename = array_shift($file);
-                print $filename . '<br>';
-                $filenames[$k] = $filename;
-                $files_used[] = $file;
+                foreach($file as $f) {
+                    if(strpos($f, 'sites/') !== false) {
+                        $filename = trim($f);
+                        break;
+                    }
+                }
+                if(!empty($filename)) {
+                    print $filename . '<br>';
+                    $filenames[$k] = $filename;
+                    $files_used[] = $file;
+                }
             }
         }
     }
