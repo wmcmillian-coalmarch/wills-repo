@@ -26,7 +26,7 @@
 <form>
     <h1>Sanitize input for use in dukefiles</h1>
     <label for="files">List of Files</label>
-    <textarea name="files" id="files"><?php print $_REQUEST['files']; ?></textarea>
+    <textarea name="files" id="files"><?php print !empty($_REQUEST['files']) ? $_REQUEST['files'] : ''; ?></textarea>
     <button>Submit</button>
 </form>
 <br>
@@ -40,21 +40,25 @@
         $files_used = array();
         foreach($files as $k => $file) {
             if(!empty($file) && !in_array($file, $files_used)) {
-                $file = preg_split('/\s/', trim($file));
-                if(!is_array($file)) {
-                    $file = array($file);
+                $file_raw = preg_split('/\s/', trim($file));
+                if(!is_array($file_raw)) {
+                    $file_raw = array($file_raw);
                 }
-                foreach($file as $f) {
-                    if(strpos($f, 'sites/') !== false) {
-                        $filename = trim($f);
-                        break;
+
+                $file = array();
+                foreach($file_raw as $part) {
+                    if(!empty($part)) {
+                        $file[] = trim($part);
                     }
                 }
-                if(!empty($filename)) {
-                    print $filename . '<br>';
-                    $filenames[$k] = $filename;
-                    $files_used[] = $file;
+                
+                $filename = array_shift($file);
+                if(strpos($filename, 'modified:') !== false) {
+                    $filename = array_shift($file);
                 }
+                print $filename . '<br>';
+                $filenames[$k] = $filename;
+                $files_used[] = $file;
             }
         }
     }
