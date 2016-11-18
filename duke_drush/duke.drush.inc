@@ -208,14 +208,14 @@ function drush_duke_prepare_site_reverse() {
     drush_module_enable($pantheon_modules);
 
     $users = array(
-        'dwhite' => 'dmw60@duke.edu',
-        'lroger' => 'lhr8@duke.edu',
-        'cnein' => 'cbn5@duke.edu',
-        'rkirkpatrick' => 'rdk11@duke.edu',
-        'wmcmillian' => 'wdm10@duke.edu',
-        'lhenderson' => 'lah82@duke.edu',
-        'jfekete' => 'jrf26@duke.edu',
-        'awelles' => 'amw84@duke.edu'
+        'dwhite' => 'dmw60',
+        'lroger' => 'lhr8',
+        'cnein' => 'cbn5',
+        'rkirkpatrick' => 'rdk11',
+        'wmcmillian' => 'wdm10',
+        'lhenderson' => 'lah82',
+        'jfekete' => 'jrf26',
+        'awelles' => 'amw84'
     );
     $r_users = array();
     foreach($users as $pu => $du) {
