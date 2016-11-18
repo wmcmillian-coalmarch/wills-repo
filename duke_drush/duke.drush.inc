@@ -70,7 +70,7 @@ function drush_duke_check_modules(){
         $modules[$m['name']] = $info['version'];
     }
 
-    $commands = array();
+    $new_projects = array();
     $not_found = array();
     $no_match = array();
     foreach($modules as $module => $v) {
@@ -86,7 +86,7 @@ function drush_duke_check_modules(){
 
         if($project_version != $version) {
             $no_match[] = "$module version doesn't match: Site = $version. Platform = $project_version\n";
-            $commands[] = 'drush dl ' . "$module-$core-$project_version -y";
+            $new_projects[$module] = $projects[$module];
         }
     }
 
@@ -107,10 +107,24 @@ function drush_duke_check_modules(){
         print "\n";
     }
 
-    if(!empty($commands)) {
+    if(!empty($new_projects)) {
         print "\n";
         if(drush_confirm('Download found modules?')){
-           drush_shell_exec(implode(" && ", $commands));
+           $make = array();
+            $make['core'] = $platform['core'];
+            $make['api'] = $platform['api'];
+            $make['projects'] = array(
+                'drupal' => $projects['drupal']
+            );
+            foreach($new_projects as $module => $proj) {
+                $make['projects'][$module] = $proj;
+            }
+            $make['defaults'] = $platform['defaults'];
+            $yml = Spyc::YAMLDump($make, false , 0, true);
+            $tmp = tempnam('/tmp', 'duke_tmp_yml') . '.make';
+            file_put_contents($tmp, $yml);
+            drush_shell_exec_interactive("drush make --no-core $tmp -y");
+            unlink($tmp);
         }
         print "\n";
     }
