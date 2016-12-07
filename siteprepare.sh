@@ -10,7 +10,6 @@ drush upwd coalmarch --password="c04lm4rch";
 echo "$USER updated to be coalmarch";
 
 USERS="wmcmillian
-lroger
 dwhite";
 for user in $USERS; do
     drush ucrt $user --mail="$user@coalmarch.com" --password="c04lm4rch";

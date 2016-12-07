@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+if [ "$1" = "live" ] || [ "$1" = "dev" ] || [ "$1" = "test" ]
+then
+    ENV=$1;
+    shift;
+else
+    ENV="dev"
+fi;
+
+ROOT=$(drush ev "print DRUPAL_ROOT;");
+SITE=${ROOT##*/}
+
+terminus drush "$@" --site=$SITE --env=$ENV;
