@@ -12,5 +12,6 @@ fi;
 
 ROOT=$(drush ev "print DRUPAL_ROOT;");
 SITE=${ROOT##*/}
+ARGS=""$@"";
 
-terminus drush "$@" --site=$SITE --env=$ENV;
+terminus drush "$ARGS" --site=$SITE --env=$ENV;
