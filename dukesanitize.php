@@ -56,7 +56,9 @@
                 if(strpos($filename, 'modified:') !== false) {
                     $filename = array_shift($file);
                 }
-                print $filename . '<br>';
+                if(!in_array($filename, $filenames)) {
+                    print $filename . '<br>';
+                }
                 $filenames[$k] = $filename;
                 $files_used[] = $file;
             }
