@@ -26,6 +26,7 @@ then
 fi;
 
 cd $HOME/Sites/$SITE
+terminus site wake --site=$SITE --env=$ENV &&
 git pull &&
 terminus-ssp $SITE $ENV &&
 drushfiles $SITE $ENV
