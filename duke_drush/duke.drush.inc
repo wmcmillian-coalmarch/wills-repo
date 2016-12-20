@@ -146,7 +146,8 @@ function drush_duke_prepare_site(){
         'wmcmillian' => 'wdm10',
         'lhenderson' => 'lah82',
         'jfekete' => 'jrf26',
-        'awelles' => 'amw84'
+        'awelles' => 'amw84',
+        'dward' => 'djw49'
     ));
 
     $d_users = entity_load('user');
@@ -215,7 +216,8 @@ function drush_duke_prepare_site_reverse() {
         'wmcmillian' => 'wdm10',
         'lhenderson' => 'lah82',
         'jfekete' => 'jrf26',
-        'awelles' => 'amw84'
+        'awelles' => 'amw84',
+        'dward' => 'djw49'
     );
     $r_users = array();
     foreach($users as $pu => $du) {
