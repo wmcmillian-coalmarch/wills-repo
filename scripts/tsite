@@ -1,0 +1,47 @@
+#!/bin/bash
+
+set -e
+
+ARGS="";
+SITE="";
+ENV="";
+for arg in "$@"; do
+    case $1 in
+        --site=?*)
+            SITE=${1#*=};
+            shift
+            ;;
+        --env=?*)
+            ENV=${1#*=};
+            shift
+            ;;
+        --)
+            shift
+            break
+            ;;
+        *)
+            ARGS="$ARGS"$1" ";
+            shift
+            ;;
+       esac
+done
+
+if [ -z "$SITE" ]
+then
+        ROOT=$(drush ev "print DRUPAL_ROOT");
+        SITE=${ROOT##*/}
+fi;
+
+if [ -z "$ENV" ]
+then
+        ENV="dev"
+fi;
+
+if [ -z "$ARGS" ]
+then
+        echo "no arguments. Exiting..."
+        exit;
+fi;
+
+echo "terminus site $ARGS --site=$SITE --env=$ENV";
+terminus site $ARGS --site=$SITE --env=$ENV
