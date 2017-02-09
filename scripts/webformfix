@@ -1,0 +1,12 @@
+#! /bin/bash
+set -e
+
+ROOT=$(drush ev 'print DRUPAL_ROOT';);
+WEBFORMPATH=$(drush ev "print drupal_get_path('module','webform')";);
+
+
+cd "$ROOT/$WEBFORMPATH";
+
+wget https://www.drupal.org/files/issues/webform-2811063-3.patch
+
+patch -p1 < webform-2811063-3.patch
