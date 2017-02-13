@@ -35,8 +35,9 @@ if [ -z $SITE ]; then
 fi
 
 if [ -n "$2" ]; then
-    SITE="$2"
-    CLONE="git clone $1 $2"
+    ENV="$2"
+else
+    ENV="dev"
 fi
 
 cd ~/Sites
@@ -64,6 +65,7 @@ then
     echo "No settings.php. creating..."
     drush si --db-url=mysqli://root:root@localhost/$DB -y > /dev/null 2>&1
 fi;
-terminus-ssp $SITE &&
-drushfiles $SITE &&
+terminus-ssp $SITE $ENV &&
+drushfiles $SITE $ENV &&
+cd ~/Sites/$SITE &&
 open "http://$SITE.dev"
