@@ -26,8 +26,8 @@ function duke_drush_command(){
     );
 
     $items['duke-prepare-site-reverse'] = array(
-        'description' => 'Reverse of duke-prepare-site so that a duke site can be made into a pantheon one',
-        'aliases' => array('dpsr'),
+        'description' => 'duke-prepare-site-reverse: Reverse of duke-prepare-site so that a duke site can be made into a pantheon one',
+        'aliases' => array('dpsr', 'duke-prepare-site-re'),
     );
 
     return $items;
