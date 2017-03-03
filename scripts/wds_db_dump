@@ -1,0 +1,13 @@
+#! /bin/bash
+
+while read -r line || [[ -n $line ]]; do
+    IFS=':'; arr=($line); unset IFS;
+    key=${arr[0]};
+    val=${arr[1]}
+    declare $key=$(echo "$val"| xargs);
+done < $1
+
+#echo "database=$database";
+#echo "user=$user";
+#echo "password=$password";
+mysqldump -u$user -p$password $database | gzip > $database.sql.gz
