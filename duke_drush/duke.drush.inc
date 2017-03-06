@@ -209,20 +209,26 @@ function drush_duke_prepare_site_reverse() {
     drush_module_enable($pantheon_modules);
 
     $users = array(
-        'dwhite' => 'dmw60',
-        'lroger' => 'lhr8',
-        'cnein' => 'cbn5',
-        'rkirkpatrick' => 'rdk11',
-        'wmcmillian' => 'wdm10',
-        'lhenderson' => 'lah82',
-        'jfekete' => 'jrf26',
-        'awelles' => 'amw84',
-        'dward' => 'djw49'
+        'dmw60' => 'dwhite',
+        'lhr8' => 'lroger',
+        'cbn5' => 'cnein',
+        'rdk11' => 'rkirkpatrick',
+        'wdm10' => 'wmcmillian',
+        'lah82' => 'lhenderson',
+        'jrf26' => 'jfekete',
+        'amw84' => 'awelles',
+        'djw49' => 'dward',
+        'dmw60@duke.edu' => 'dwhite',
+        'lhr8@duke.edu' => 'lroger',
+        'cbn5@duke.edu' => 'cnein',
+        'rdk11@duke.edu' => 'rkirkpatrick',
+        'wdm10@duke.edu' => 'wmcmillian',
+        'lah82@duke.edu' => 'lhenderson',
+        'jrf26@duke.edu' => 'jfekete',
+        'amw84@duke.edu' => 'awelles',
+        'djw49@duke.edu' => 'dward',
     );
-    $r_users = array();
-    foreach($users as $pu => $du) {
-        $r_users[$du] = $pu;
-    }
+
 
     $d_users = entity_load('user');
 
@@ -231,7 +237,7 @@ function drush_duke_prepare_site_reverse() {
     array_shift($d_users);
 
     foreach ($d_users as $user) {
-        if(!in_array($user->name,array_keys($r_users))) {
+        if(!in_array($user->name,array_keys($users))) {
             $not_found[$user->uid] = $user->name;
             continue;
         }
@@ -243,6 +249,6 @@ function drush_duke_prepare_site_reverse() {
             shib_provision_provision($user->uid, $user->name, $user->mail);
         }
 
-        user_save($user, array('name' => $r_users[$user->name]));
+        user_save($user, array('name' => $users[$user->name]));
     }
 }

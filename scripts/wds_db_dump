@@ -1,13 +1,17 @@
 #! /bin/bash
 
+grantfile="/srv/web/wds.duke.edu/access/wds_grant";
+DATE=$(date +%Y-%m-%d%H%M%S);
 while read -r line || [[ -n $line ]]; do
     IFS=':'; arr=($line); unset IFS;
     key=${arr[0]};
     val=${arr[1]}
     declare $key=$(echo "$val"| xargs);
-done < $1
+done < $grantfile
 
 #echo "database=$database";
 #echo "user=$user";
 #echo "password=$password";
-mysqldump -u$user -p$password $database | gzip > $database.sql.gz
+filename="-$DATE.sql.gz";
+filename=$database$filename
+mysqldump -u$user -p$password $database | gzip > "$filename"
