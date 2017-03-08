@@ -2,6 +2,12 @@
 
 set -e
 
+if [ -z "$1" ]
+then
+    echo "No file given. Must include a file."
+    exit 2
+fi;
+
 ROOT=$(drush ev "print DRUPAL_ROOT");
 SITE=${ROOT##*/}
 SITEROOT=~/Sites/$SITE;
