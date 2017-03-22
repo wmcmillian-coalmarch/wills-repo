@@ -1,0 +1,62 @@
+$duke-blue-light: #00539b;
+$duke-blue-dark: #004b91;
+
+@import url("http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700");
+
+#som-brandbar {
+	-webkit-font-smoothing: antialiased;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: $duke-blue-light url("som-brandbar-bg.png");
+	color: white;
+	border-bottom: 1px solid white;
+	font-family: 'Open Sans', Verdana, sans-serif;
+	font-size: 13px;
+	line-height: normal;
+	&, * {
+		// -webkit-transition: all .3s;
+		// transition: all .3s;
+	}
+	.som-wrap {
+		max-width: 1040px;
+		margin: auto;
+		padding: 15px 38px 13px;
+		cursor: pointer;
+		&:after {
+			content: " ";
+			display: table;
+			clear: both;
+		}
+	}
+	.som-title {
+		float: left;
+		vertical-align: middle;
+		color: transparent;
+		font-size: 0;
+		&:after {
+			content: url("som-brandbar-logo.png");
+		}
+		span {
+			font-weight: bold;
+		}
+	}
+	.som-tagline {
+		float: right;
+		font-style: italic;
+		margin-top: -2px;
+		letter-spacing: .0325em;
+	}
+}
+
+@media screen and (max-width: 635px) {
+	#som-brandbar {
+		.som-wrap {
+			padding: 10px 25px 8px;
+		}
+		.som-tagline {
+			display: none;
+		}
+	}
+}
