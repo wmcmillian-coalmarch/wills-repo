@@ -13,7 +13,7 @@ r(function() {
         link.id = cssID;
         link.rel = 'stylesheet';
         link.type = 'text/css';
-        link.href = 'style.css';
+        link.href = 'https://pdc.dukemedicine.org/sites/pdc.dukemedicine.org/files/brandbar/style.css';
         link.media = 'all';
         head.appendChild(link);
     }
@@ -25,13 +25,13 @@ r(function() {
     var taglineCopy = 'A Duke Private Diagnostic Clinic';
 
     if (tagline == 1) {
-        taglineCopy = 'A Duke Private Diagnostic Clinic';
-    } else if (tagline == 2) {
         taglineCopy = 'Caring for Our Patients, Their Loved Ones, and Each Other';
+    } else if (tagline == 2) {
+        taglineCopy = 'A Duke Private Diagnostic Clinic';
     }
-    var arrowClass = "onLeft";
-    if(arrow == 'onRight') {
-        arrowClass = "onRight";
+    var arrowClass = "onRight";
+    if(arrow == 'onLeft') {
+        arrowClass = "onLeft";
     }
 
     // plop in the HTML

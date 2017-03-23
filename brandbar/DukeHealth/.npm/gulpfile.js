@@ -17,9 +17,7 @@ gulp.task('sass', function() {
     .pipe(sass().on('error', notify.onError('<%= error.message %>')))
     .pipe(autoprefixer())
     .pipe(gulp.dest('..'))
-    .pipe(livereload())
-    .pipe(sourcemaps.write('..'))
-    .pipe(gulp.dest('..'));
+    .pipe(livereload());
 });
 
 gulp.task('watch', function() {
