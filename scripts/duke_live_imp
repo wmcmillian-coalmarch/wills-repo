@@ -1,0 +1,17 @@
+#! /bin/bash
+
+set -e
+
+ROOT=$(drush ev "print DRUPAL_ROOT");
+SITE=${ROOT##*/};
+SITEROOT="~/Sites/$SITE";
+
+drush sql-create -y &&
+pv $1 | gunzip | $(drush sql-connect) &&
+drush rr &&
+drush dl backup_migrate memcache -y &&
+drush dis backup_migrate memcache -y &&
+drush pmu backup_migrate memcache -y &&
+drush dpsr &&
+rm -rf $SITEROOT/sites/all/modules/contrib/backup_migrate &&
+rm -rf $SITEROOT/sites/all/modules/contrib/memcache
