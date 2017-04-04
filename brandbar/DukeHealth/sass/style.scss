@@ -1,0 +1,136 @@
+@import url("http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700");
+
+// libraries
+@import "../.npm/node_modules/breakpoint-sass/stylesheets/breakpoint";
+$fa-font-path: "//netdna.bootstrapcdn.com/font-awesome/4.7.0/fonts" !default;
+@import "../.npm/node_modules/font-awesome/scss/font-awesome";
+
+$duke-blue-light: #00539b;
+$duke-blue-dark: #004b91;
+
+#dh-brandbar {
+  -webkit-font-smoothing: antialiased;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: $duke-blue-light url("som-brandbar-bg.png");
+  color: white;
+  border-bottom: 1px solid white;
+  font-family: 'Open Sans', Verdana, sans-serif;
+  font-size: 16px;
+  font-stretch: normal;
+  line-height: 2.25;
+  letter-spacing: 0.4px;
+  .dh-wrap {
+    max-width: 1040px;
+    padding: 7px 38px 10px;
+    cursor: pointer;
+    margin: 0 auto;
+    > a, > span {
+      display: inline-block;
+      float: left;
+    }
+    .dh-tagline {
+      display: none;
+    }
+    &:after {
+      content: " ";
+      display: block;
+      height: 0;
+      clear: both;
+    }
+  }
+  .dh-logo {
+    font-size: 0;
+    &:before {
+      content: url('duke-health-logo.png');
+    }
+  }
+  .dh-tagline {
+    font-weight: 600;
+    font-style: italic;
+    margin-left: 28px;
+    padding-left: 23px;
+    position: relative;
+    &:before {
+      content: "";
+      position: absolute;
+      top: 8px;
+      bottom: 5px;
+      left: 0;
+      width: 1px;
+      height: 21px;
+      background: white;
+      opacity: 0.1;
+    }
+  }
+  .dh-links {
+    a {
+      display: inline-block;
+      font-size: 15px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 2.4;
+      color: white;
+      text-decoration: none;
+      transition: border-color .3s;
+      border-bottom: 1px solid rgba(white, 0);
+      &:hover {
+        border-bottom: 1px solid rgba(white, 1);
+      }
+      &:after {
+        font-family: FontAwesome;
+        content: $fa-var-angle-right;
+        margin-left: 5px;
+      }
+      &:before {
+        font-family: FontAwesome;
+        content: $fa-var-angle-right;
+        margin-right: 5px;
+        display: none;
+      }
+    }
+    .my-chart {
+      margin-left: 30px;
+    }
+    .duke-health {
+      display: none;
+    }
+  }
+
+  .onLeft {
+    .dh-links {
+      a:before {
+        display: inline;
+      }
+      a:after {
+        display: none;
+      }
+    }
+  }
+  @include breakpoint(860px) {
+    .dh-wrap {
+      .dh-tagline {
+        display: inline-block;
+      }
+      .dh-links {
+        float: right;
+        .duke-health {
+          //display: inline-block;
+        }
+      }
+    }
+  }
+
+  @include breakpoint(980px) {
+    .dh-wrap {
+      .dh-links {
+        .duke-health {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}

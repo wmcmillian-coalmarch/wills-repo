@@ -1,0 +1,30 @@
+{
+  "name": "amwelles-groundwork",
+  "version": "0.1.0",
+  "description": "A framework for gulp projects.",
+  "author": "Autumn Welles <amwelles@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/amwelles/groundwork"
+  },
+  "bugs": {
+    "url": "http://github.com/amwelles/groundwork/issues"
+  },
+  "dependencies": {
+    "breakpoint-sass": "^2.6.1",
+    "browser-sync": "^2.10.0",
+    "del": "^2.1.0",
+    "font-awesome": "^4.5.0",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-sass": "^2.1.1",
+    "gulp-sass-glob": "^0.0.2",
+    "gulp-sass-lint": "^1.1.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-sourcemaps": "^1.6.0"
+  },
+  "license": "MIT",
+  "devDependencies": {
+  }
+}

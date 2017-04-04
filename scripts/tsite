@@ -23,7 +23,7 @@ for arg in "$@"; do
             ARGS="$ARGS"$1" ";
             shift
             ;;
-       esaca
+       esac
 done
 
 if [ -z "$SITE" ]
