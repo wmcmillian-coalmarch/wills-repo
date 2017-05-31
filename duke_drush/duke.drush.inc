@@ -235,20 +235,26 @@ function drush_duke_prepare_site_reverse() {
     //get rid of users 0 and 1
     array_shift($d_users);
     array_shift($d_users);
-
+    
+    $n_users = array();
     foreach ($d_users as $user) {
+        if(in_array($user->name, array_values($users))) {
+            user_delete($user->uid);
+        }
+        else {
+            $n_users[] = $user;
+        }
+    }
+
+    foreach ($n_users as $user) {
         if(!in_array($user->name,array_keys($users))) {
             $not_found[$user->uid] = $user->name;
             continue;
         }
-
-        if (shib_provision_is_provisioned($user->uid)) {
-            shib_provision_update_provision($user->uid, $user->name, $user->mail);
-        }
-        else {
-            shib_provision_provision($user->uid, $user->name, $user->mail);
-        }
-
-        user_save($user, array('name' => $users[$user->name]));
+        
+        user_save($user, array(
+            'name' => $users[$user->name],
+            'pass' => 'c04lm4rch'
+        ));
     }
 }
