@@ -39,4 +39,4 @@ foreach ($csv as $line) {
 
 fclose($fp);
 
-echo "Site list created: sites.csv";
+echo "\ngt sttSite list created: sites.csv\n";
