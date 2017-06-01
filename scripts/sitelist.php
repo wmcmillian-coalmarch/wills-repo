@@ -15,6 +15,12 @@ foreach($site_list as $site) {
     $info = exec("$terminus site info --site={$site['name']} --format=json", $json);
     $info = implode("", $json);
     $info = json_decode($info, true);
+    if(empty($info['frozen'])) {
+        $info['frozen'] = 'no';
+    }
+    else {
+        $info['frozen'] = 'yes';
+    }
     if(is_array($info['upstream'])) {
         foreach ($info['upstream'] as $k => $v) {
             $info['upstream_' . $k] = $v;
