@@ -126,6 +126,16 @@ foreach($dir_r as $dir) {
             foreach($filenames as $k => $filename) {
                 $filename = trim($filename);
                 $dest = trim(str_replace('sites/all/',$repo ,$files[$k]));
+                switch($_REQUEST['duke-site']) {
+                    case 'site_dhvi':
+                    case 'site_chavi-id':
+                    case 'site_eqapol_dhvi_duke_edu':
+                        if(strpos($dest, '/themes/' )) {
+                           $dest =  str_replace('/themes/', '/themes/custom/', $dest);
+                        }
+                }
+                
+                
                 if(is_dir($filename)) {
                     $dir = basename($dest);
                     $dest = substr($dest, 0, (0 - (strlen($dir) + 1)));

@@ -1,13 +1,13 @@
 <?php
 
-$accessKey = '0d19666afb824d151fed5f0c190abd93c47d0760';
-$secretKey = 'pERmxdV7ReCDzYiEKreWITE0K3VN5JmFpWSU';
+$accessKey = '5229425eba7ef44dfff7d2de44ef2f2a695d3890';
+$secretKey = 'l6Wk2MrHdtEjG5ILrbPY3zO22WCJ83ifIh1x';
 
 $payload = array();
 
 $base_url = 'http://dev.forge.ly';
 $api_uri = '/api/v1';
-$uri = '/company';
+$uri = '/jobs/sprowt';
 
 $url = $base_url . $api_uri . $uri;
 
