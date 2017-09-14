@@ -1,6 +1,7 @@
 #!/bin/bash
 
-SCRIPTS="tlogin
+SCRIPTS="terminus_version
+tlogin
 terminus-ssp
 drushfiles
 tclone

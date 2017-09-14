@@ -1,0 +1,19 @@
+[
+    {
+        "jobId": "02d42b0a-a55d-4728-adb8-dcda7d00a27a",
+        "title": "Web Designer",
+        "location": {
+            "name": "Raleigh",
+            "address": "230 Fayetteville Street Ste 201",
+            "city": "Raleigh",
+            "state": "NC",
+            "zip": "27601",
+            "phone": "919-481-2895",
+            "altphone": null,
+            "emailAddress": null
+        },
+        "teaser": "<p>Teaser teaser teaser<br><\/p>",
+        "description": "<p>Make amazing websites!<\/p>",
+        "benefits": "<p>Work with awesome people!<\/p>"
+    }
+]

@@ -1,5 +1,13 @@
 #!/bin/bash
-loggedin=$(terminus auth whoami 2>&1);
-if [[ $loggedin =~ .*You.are.not.logged.in.* ]]; then
-    terminus auth login
+terminus_version
+if [ "$TERMINUS_OLD" = true ]; then
+    loggedin=$(terminus auth whoami 2>&1);
+    if [[ $loggedin =~ .*You.are.not.logged.in.* ]]; then
+        terminus auth login
+    fi
+else
+    loggedin=$(terminus auth:whoami 2>&1);
+    if [[ $loggedin =~ .*You.are.not.logged.in.* ]]; then
+        terminus auth:login
+    fi
 fi

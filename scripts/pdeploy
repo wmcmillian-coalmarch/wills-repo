@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+terminus_version;
 
 if [[ "$1" =~ --.* ]]
 then
@@ -40,20 +41,40 @@ if [ "$DOUBLECHECK" = true ]; then
     done
 fi
 
-terminus site deploy --site=$SITE --env=test "$@";
-if [ "$CC" = true ]; then
-    terminus drush "cc all" --site=$SITE --env=test;
-fi
+if [ "$TERMINUS_OLD" = true ]; then
+    terminus site deploy --site=$SITE --env=test "$@";
+    if [ "$CC" = true ]; then
+        terminus drush "cc all" --site=$SITE --env=test;
+    fi
 
-if [ "$UPDATEDB" = true ]; then
-    terminus drush "updatedb -y" --site=$SITE --env=test;
-fi
+    if [ "$UPDATEDB" = true ]; then
+        terminus drush "updatedb -y" --site=$SITE --env=test;
+    fi
 
-terminus site deploy --site=$SITE --env=live "$@";
-if [ "$CC" = true ]; then
-    terminus drush "cc all" --site=$SITE --env=live;
-fi
+    terminus site deploy --site=$SITE --env=live "$@";
+    if [ "$CC" = true ]; then
+        terminus drush "cc all" --site=$SITE --env=live;
+    fi
 
-if [ "$UPDATEDB" = true ]; then
-    terminus drush "updatedb -y" --site=$SITE --env=live;
+    if [ "$UPDATEDB" = true ]; then
+        terminus drush "updatedb -y" --site=$SITE --env=live;
+    fi
+else
+    terminus env:deploy "$SITE.test" "$@";
+    if [ "$CC" = true ]; then
+        terminus remote:drush "$SITE.test" "cc all";
+    fi
+
+    if [ "$UPDATEDB" = true ]; then
+        terminus remote:drush "$SITE.test" "updatedb -y";
+    fi
+
+    terminus env:deploy "$SITE.live" "$@";
+    if [ "$CC" = true ]; then
+        terminus remote:drush "$SITE.live" "cc all";
+    fi
+
+    if [ "$UPDATEDB" = true ]; then
+        terminus remote:drush "$SITE.live" "updatedb -y";
+    fi
 fi

@@ -1,13 +1,17 @@
 <?php
+$json = $_POST['json'];
+$data = json_decode($json, true);
+file_put_contents(__DIR__ . '/postdata.json', json_encode($data, JSON_PRETTY_PRINT));
 
-$accessKey = '0d19666afb824d151fed5f0c190abd93c47d0760';
-$secretKey = 'pERmxdV7ReCDzYiEKreWITE0K3VN5JmFpWSU';
+
+$accessKey = '4011b08f7218bc650a3e6270f52394a6d9ae4cfc';
+$secretKey = 'SMpd6pFYYWsLSOmItT2zglICChPNdteJ0Cly';
 
 $payload = array();
 
 $base_url = 'http://dev.forge.ly';
 $api_uri = '/api/v1';
-$uri = '/company';
+$uri = '/jobs/sprowt';
 
 $url = $base_url . $api_uri . $uri;
 
@@ -21,7 +25,7 @@ curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
 curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 curl_setopt($ch, CURLOPT_USERPWD, $accessKey . ':' . $secretKey);
 
-//curl_setopt($ch, CURLOPT_COOKIE, 'XDEBUG_SESSION=forgelyapitest');
+curl_setopt($ch, CURLOPT_COOKIE, 'XDEBUG_SESSION=forgelyapitest');
 
 if (count($payload)) {
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($payload, '', '&'));

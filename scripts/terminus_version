@@ -1,0 +1,16 @@
+#! /bin/bash
+
+TERMINUS_VERSION=$(terminus --version 2>&1);
+pat=".*unknown --version parameter.*"
+if [[ "$TERMINUS_VERSION" =~ $pat ]]; then
+    export TERMINUS_OLD=true;
+else
+    export TERMINUS_OLD=false;
+fi
+
+#if [ "$TERMINUS_OLD" = true ]; then
+#    echo '0.13.6';
+#else
+#    echo '1.5';
+#fi
+

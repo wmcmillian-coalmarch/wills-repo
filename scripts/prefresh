@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+terminus_version
 
 if [ -z "$1" ]
 then
@@ -26,7 +27,11 @@ then
 fi;
 
 cd $HOME/Sites/$SITE
-terminus site wake --site=$SITE --env=$ENV &&
+if [ "$TERMINUS_OLD" = true ]; then
+    terminus site wake --site=$SITE --env=$ENV
+else
+    terminus env:wake "$SITE.$ENV"
+fi
 git pull &&
 terminus-ssp $SITE $ENV &&
 drushfiles $SITE $ENV

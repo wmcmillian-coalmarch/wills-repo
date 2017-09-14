@@ -1,9 +1,21 @@
 #!/bin/bash
 
 set -eu
+TERMINUS_VERSION=$(terminus --version 2>&1);
+pat=".*unknown --version parameter.*"
+if [[ "$TERMINUS_VERSION" =~ $pat ]]; then
+    TERMINUS_OLD=true;
+else
+    TERMINUS_OLD=false;
+fi
 
 SITE=$1;
-UUID=$(terminus site info --site=$SITE --field=id);
+
+if [ "$TERMINUS_OLD" = true ]; then
+    UUID=$(terminus site info --site=$SITE --field=id);
+else
+    UUID=$(terminus site:info $SITE --field=id);
+fi
 
 if [ -d ~/Sites/$SITE ]; then
     echo "
