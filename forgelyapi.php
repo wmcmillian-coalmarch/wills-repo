@@ -1,11 +1,7 @@
 <?php
-$json = $_POST['json'];
-$data = json_decode($json, true);
-file_put_contents(__DIR__ . '/postdata.json', json_encode($data, JSON_PRETTY_PRINT));
 
-
-$accessKey = '4011b08f7218bc650a3e6270f52394a6d9ae4cfc';
-$secretKey = 'SMpd6pFYYWsLSOmItT2zglICChPNdteJ0Cly';
+$accessKey = '5229425eba7ef44dfff7d2de44ef2f2a695d3890';
+$secretKey = 'l6Wk2MrHdtEjG5ILrbPY3zO22WCJ83ifIh1x';
 
 $payload = array();
 
@@ -25,7 +21,7 @@ curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
 curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 curl_setopt($ch, CURLOPT_USERPWD, $accessKey . ':' . $secretKey);
 
-curl_setopt($ch, CURLOPT_COOKIE, 'XDEBUG_SESSION=forgelyapitest');
+//curl_setopt($ch, CURLOPT_COOKIE, 'XDEBUG_SESSION=forgelyapitest');
 
 if (count($payload)) {
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($payload, '', '&'));

@@ -1,38 +1,237 @@
 <?php
-//
-//for($i = -50; $i <= 50; ++$i) {
-//    print "$i<br>";
-//}
 
 ?>
-<table>
-<tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Symfony\Component\Debug\Exception\ContextErrorException: Notice: Undefined index: entity_id in /home/will/Sites/forgely/vendor/doctrine/orm/lib/Doctrine/ORM/UnitOfWork.php on line <i>2744</i></th></tr>
-<tr><th align='left' bgcolor='#e9b96e' colspan='5'>Call Stack</th></tr>
-<tr><th align='center' bgcolor='#eeeeec'>#</th><th align='left' bgcolor='#eeeeec'>Time</th><th align='left' bgcolor='#eeeeec'>Memory</th><th align='left' bgcolor='#eeeeec'>Function</th><th align='left' bgcolor='#eeeeec'>Location</th></tr>
-<tr><td bgcolor='#eeeeec' align='center'>1</td><td bgcolor='#eeeeec' align='center'>0.0115</td><td bgcolor='#eeeeec' align='right'>239584</td><td bgcolor='#eeeeec'>{main}(  )</td><td title='/home/will/Sites/forgely/web/app_dev.php' bgcolor='#eeeeec'>.../app_dev.php<b>:</b>0</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>2</td><td bgcolor='#eeeeec' align='center'>0.1626</td><td bgcolor='#eeeeec' align='right'>3086816</td><td bgcolor='#eeeeec'>Symfony\Component\HttpKernel\Kernel->handle( ???, ???, ??? )</td><td title='/home/will/Sites/forgely/web/app_dev.php' bgcolor='#eeeeec'>.../app_dev.php<b>:</b>21</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>3</td><td bgcolor='#eeeeec' align='center'>0.3675</td><td bgcolor='#eeeeec' align='right'>14924144</td><td bgcolor='#eeeeec'>Symfony\Component\HttpKernel\DependencyInjection\ContainerAwareHttpKernel->handle( ???, ???, ??? )</td><td title='/home/will/Sites/forgely/app/bootstrap.php.cache' bgcolor='#eeeeec'>.../bootstrap.php.cache<b>:</b>2540</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>4</td><td bgcolor='#eeeeec' align='center'>0.3676</td><td bgcolor='#eeeeec' align='right'>14925888</td><td bgcolor='#eeeeec'>Symfony\Component\HttpKernel\HttpKernel->handle( ???, ???, ??? )</td><td title='/home/will/Sites/forgely/app/bootstrap.php.cache' bgcolor='#eeeeec'>.../bootstrap.php.cache<b>:</b>3335</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>5</td><td bgcolor='#eeeeec' align='center'>0.3677</td><td bgcolor='#eeeeec' align='right'>14926840</td><td bgcolor='#eeeeec'>Symfony\Component\HttpKernel\HttpKernel->handleRaw( ???, ??? )</td><td title='/home/will/Sites/forgely/app/bootstrap.php.cache' bgcolor='#eeeeec'>.../bootstrap.php.cache<b>:</b>3181</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>6</td><td bgcolor='#eeeeec' align='center'>5.5358</td><td bgcolor='#eeeeec' align='right'>27419784</td><td bgcolor='#eeeeec'><a href='http://www.php.net/function.call-user-func-array:{/home/will/Sites/forgely/app/bootstrap.php.cache:3222}' target='_new'>call_user_func_array:{/home/will/Sites/forgely/app/bootstrap.php.cache:3222}</a>
-        ( ???, ??? )</td><td title='/home/will/Sites/forgely/app/bootstrap.php.cache' bgcolor='#eeeeec'>.../bootstrap.php.cache<b>:</b>3222</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>7</td><td bgcolor='#eeeeec' align='center'>5.5358</td><td bgcolor='#eeeeec' align='right'>27422184</td><td bgcolor='#eeeeec'>Coalmarch\Forgely\RestBundle\Controller\DashboardController->getTilesAction(  )</td><td title='/home/will/Sites/forgely/app/bootstrap.php.cache' bgcolor='#eeeeec'>.../bootstrap.php.cache<b>:</b>3222</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>8</td><td bgcolor='#eeeeec' align='center'>11.5174</td><td bgcolor='#eeeeec' align='right'>28659536</td><td bgcolor='#eeeeec'>Coalmarch\Forgely\CoreBundle\Entity\EnrollmentRepository->findTodoByEmployee( ???, ???, ??? )</td><td title='/home/will/Sites/forgely/src/Coalmarch/Forgely/RestBundle/Controller/DashboardController.php' bgcolor='#eeeeec'>.../DashboardController.php<b>:</b>32</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>9</td><td bgcolor='#eeeeec' align='center'>11.5322</td><td bgcolor='#eeeeec' align='right'>29204720</td><td bgcolor='#eeeeec'>Doctrine\ORM\AbstractQuery->getResult( ??? )</td><td title='/home/will/Sites/forgely/src/Coalmarch/Forgely/CoreBundle/Entity/EnrollmentRepository.php' bgcolor='#eeeeec'>.../EnrollmentRepository.php<b>:</b>1255</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>10</td><td bgcolor='#eeeeec' align='center'>11.5322</td><td bgcolor='#eeeeec' align='right'>29204896</td><td bgcolor='#eeeeec'>Doctrine\ORM\AbstractQuery->execute( ???, ??? )</td><td title='/home/will/Sites/forgely/vendor/doctrine/orm/lib/Doctrine/ORM/AbstractQuery.php' bgcolor='#eeeeec'>.../AbstractQuery.php<b>:</b>727</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>11</td><td bgcolor='#eeeeec' align='center'>11.5322</td><td bgcolor='#eeeeec' align='right'>29205160</td><td bgcolor='#eeeeec'>Doctrine\ORM\AbstractQuery->executeIgnoreQueryCache( ???, ??? )</td><td title='/home/will/Sites/forgely/vendor/doctrine/orm/lib/Doctrine/ORM/AbstractQuery.php' bgcolor='#eeeeec'>.../AbstractQuery.php<b>:</b>924</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>12</td><td bgcolor='#eeeeec' align='center'>11.6272</td><td bgcolor='#eeeeec' align='right'>30469272</td><td bgcolor='#eeeeec'>Doctrine\ORM\Internal\Hydration\AbstractHydrator->hydrateAll( ???, ???, ??? )</td><td title='/home/will/Sites/forgely/vendor/doctrine/orm/lib/Doctrine/ORM/AbstractQuery.php' bgcolor='#eeeeec'>.../AbstractQuery.php<b>:</b>978</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>13</td><td bgcolor='#eeeeec' align='center'>11.6470</td><td bgcolor='#eeeeec' align='right'>30721144</td><td bgcolor='#eeeeec'>Doctrine\ORM\Internal\Hydration\ObjectHydrator->cleanup(  )</td><td title='/home/will/Sites/forgely/vendor/doctrine/orm/lib/Doctrine/ORM/Internal/Hydration/AbstractHydrator.php' bgcolor='#eeeeec'>.../AbstractHydrator.php<b>:</b>149</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>14</td><td bgcolor='#eeeeec' align='center'>11.6470</td><td bgcolor='#eeeeec' align='right'>30702408</td><td bgcolor='#eeeeec'>Doctrine\ORM\UnitOfWork->hydrationComplete(  )</td><td title='/home/will/Sites/forgely/vendor/doctrine/orm/lib/Doctrine/ORM/Internal/Hydration/ObjectHydrator.php' bgcolor='#eeeeec'>.../ObjectHydrator.php<b>:</b>154</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>15</td><td bgcolor='#eeeeec' align='center'>11.6470</td><td bgcolor='#eeeeec' align='right'>30702408</td><td bgcolor='#eeeeec'>Doctrine\ORM\Internal\HydrationCompleteHandler->hydrationComplete(  )</td><td title='/home/will/Sites/forgely/vendor/doctrine/orm/lib/Doctrine/ORM/UnitOfWork.php' bgcolor='#eeeeec'>.../UnitOfWork.php<b>:</b>3478</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>16</td><td bgcolor='#eeeeec' align='center'>11.6874</td><td bgcolor='#eeeeec' align='right'>31137160</td><td bgcolor='#eeeeec'>Doctrine\ORM\Event\ListenersInvoker->invoke( ???, ???, ???, ???, ??? )</td><td title='/home/will/Sites/forgely/vendor/doctrine/orm/lib/Doctrine/ORM/Internal/HydrationCompleteHandler.php' bgcolor='#eeeeec'>.../HydrationCompleteHandler.php<b>:</b>100</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>17</td><td bgcolor='#eeeeec' align='center'>11.6874</td><td bgcolor='#eeeeec' align='right'>31137160</td><td bgcolor='#eeeeec'>Symfony\Bridge\Doctrine\ContainerAwareEventManager->dispatchEvent( ???, ??? )</td><td title='/home/will/Sites/forgely/vendor/doctrine/orm/lib/Doctrine/ORM/Event/ListenersInvoker.php' bgcolor='#eeeeec'>.../ListenersInvoker.php<b>:</b>117</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>18</td><td bgcolor='#eeeeec' align='center'>11.6874</td><td bgcolor='#eeeeec' align='right'>31137312</td><td bgcolor='#eeeeec'>Coalmarch\Forgely\CoreBundle\EventListener\HydrateEnrollmentEntity->postLoad( ??? )</td><td title='/home/will/Sites/forgely/vendor/symfony/symfony/src/Symfony/Bridge/Doctrine/ContainerAwareEventManager.php' bgcolor='#eeeeec'>.../ContainerAwareEventManager.php<b>:</b>63</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>19</td><td bgcolor='#eeeeec' align='center'>11.6915</td><td bgcolor='#eeeeec' align='right'>31240392</td><td bgcolor='#eeeeec'>Doctrine\ORM\EntityRepository->findOneBy( ???, ??? )</td><td title='/home/will/Sites/forgely/src/Coalmarch/Forgely/CoreBundle/EventListener/HydrateEnrollmentEntity.php' bgcolor='#eeeeec'>.../HydrateEnrollmentEntity.php<b>:</b>21</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>20</td><td bgcolor='#eeeeec' align='center'>11.6916</td><td bgcolor='#eeeeec' align='right'>31242192</td><td bgcolor='#eeeeec'>Doctrine\ORM\Persisters\Entity\BasicEntityPersister->load( ???, ???, ???, ???, ???, ???, ??? )</td><td title='/home/will/Sites/forgely/vendor/doctrine/orm/lib/Doctrine/ORM/EntityRepository.php' bgcolor='#eeeeec'>.../EntityRepository.php<b>:</b>196</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>21</td><td bgcolor='#eeeeec' align='center'>11.7041</td><td bgcolor='#eeeeec' align='right'>31303064</td><td bgcolor='#eeeeec'>Doctrine\ORM\Internal\Hydration\AbstractHydrator->hydrateAll( ???, ???, ??? )</td><td title='/home/will/Sites/forgely/vendor/doctrine/orm/lib/Doctrine/ORM/Persisters/Entity/BasicEntityPersister.php' bgcolor='#eeeeec'>.../BasicEntityPersister.php<b>:</b>720</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>22</td><td bgcolor='#eeeeec' align='center'>11.7042</td><td bgcolor='#eeeeec' align='right'>31303432</td><td bgcolor='#eeeeec'>Doctrine\ORM\Internal\Hydration\SimpleObjectHydrator->hydrateAllData(  )</td><td title='/home/will/Sites/forgely/vendor/doctrine/orm/lib/Doctrine/ORM/Internal/Hydration/AbstractHydrator.php' bgcolor='#eeeeec'>.../AbstractHydrator.php<b>:</b>147</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>23</td><td bgcolor='#eeeeec' align='center'>11.7042</td><td bgcolor='#eeeeec' align='right'>31305232</td><td bgcolor='#eeeeec'>Doctrine\ORM\Internal\Hydration\SimpleObjectHydrator->hydrateRowData( ???, ??? )</td><td title='/home/will/Sites/forgely/vendor/doctrine/orm/lib/Doctrine/ORM/Internal/Hydration/SimpleObjectHydrator.php' bgcolor='#eeeeec'>.../SimpleObjectHydrator.php<b>:</b>69</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>24</td><td bgcolor='#eeeeec' align='center'>11.7045</td><td bgcolor='#eeeeec' align='right'>31312768</td><td bgcolor='#eeeeec'>Doctrine\ORM\UnitOfWork->createEntity( ???, ???, ??? )</td><td title='/home/will/Sites/forgely/vendor/doctrine/orm/lib/Doctrine/ORM/Internal/Hydration/SimpleObjectHydrator.php' bgcolor='#eeeeec'>.../SimpleObjectHydrator.php<b>:</b>147</td></tr>
-<tr><td bgcolor='#eeeeec' align='center'>25</td><td bgcolor='#eeeeec' align='center'>11.7048</td><td bgcolor='#eeeeec' align='right'>31323320</td><td bgcolor='#eeeeec'>Symfony\Component\Debug\ErrorHandler->handleError( ???, ???, ???, ???, ??? )</td><td title='/home/will/Sites/forgely/vendor/doctrine/orm/lib/Doctrine/ORM/Internal/Hydration/SimpleObjectHydrator.php' bgcolor='#eeeeec'>.../SimpleObjectHydrator.php<b>:</b>2744</td></tr>
-</table>h coo
+<head>
+    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
+</head>
+<div marginwidth="0" marginheight="0" style="height:100%;margin:0;padding:0;width:100%;background-color:#f1f1f1">
+    <div align="center">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="m_-1246376999557549432bodyTable" style="border-collapse:collapse;height:100%;margin:0;padding:0;width:100%;background-color:#f1f1f1">
+            <tbody><tr>
+                <td align="center" valign="top" id="m_-1246376999557549432bodyCell" style="height:100%;margin:0;padding:0;width:100%;border-top:0">
+                    
+                    <table border="0" cellpadding="0" cellspacing="0" width="600" id="m_-1246376999557549432templateContainer" style="border-collapse:collapse;border:0">
+                        <tbody><tr>
+                            <td align="center" valign="top">
+                                
+                                <table border="0" cellpadding="0" cellspacing="0" width="600" id="m_-1246376999557549432templatePreheader" style="border-collapse:collapse;background-color:#f1f1f1;border-top:0;border-bottom:1px solid #dddddd">
+                                    <tbody><tr>
+                                        <td valign="top" class="m_-1246376999557549432preheaderContainer" style="padding-top:9px;padding-bottom:9px">
+                                            <table class="m_-1246376999557549432mcnTextBlock" style="min-width:100%;border-collapse:collapse" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                <tbody class="m_-1246376999557549432mcnTextBlockOuter">
+                                                <tr>
+                                                    <td class="m_-1246376999557549432mcnTextBlockInner" valign="top">
+                                                        
+                                                        <table class="m_-1246376999557549432mcnTextContentContainer" align="left" border="0" cellpadding="0" cellspacing="0" width="366" style="border-collapse:collapse">
+                                                            <tbody>
+                                                            <tr>
+                                                                
+                                                                <td class="m_-1246376999557549432mcnTextContent" style="padding-top:9px;padding-left:28px;padding-bottom:9px;padding-right:0;word-break:break-word;color:#808080;font-family:Helvetica;font-size:11px;line-height:125%;text-align:left" valign="top">
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    </tbody></table>
+                            
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" valign="top">
+                                
+                                <table border="0" cellpadding="0" cellspacing="0" width="600" id="m_-1246376999557549432templateHeader" style="border-collapse:collapse;background-color:#ffffff;border-top:10px solid #f15742;border-bottom:0">
+                                    <tbody><tr>
+                                        <td valign="top" class="m_-1246376999557549432headerContainer">
+                                            
+                                            <table class="m_-1246376999557549432mcnImageBlock" style="min-width:100%;border-collapse:collapse" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                <tbody class="m_-1246376999557549432mcnImageBlockOuter">
+                                                <tr>
+                                                    <td style="padding:0px" class="m_-1246376999557549432mcnImageBlockInner" valign="top">
+                                                        <table class="m_-1246376999557549432mcnImageContentContainer" style="min-width:100%;border-collapse:collapse" align="left" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td class="m_-1246376999557549432mcnImageContent" style="padding-right:0px;padding-left:0px;padding-top:0;padding-bottom:0;text-align:center" valign="top">
+                                                                    <img alt="" src="https://ci3.googleusercontent.com/proxy/imB0PG5SlWTsT03HNPUQ-eVQxvdZTC9st5AWt1awyzH9OuFxOfGo4o20Dxst89kNmS-GukArdt-dGraCQ9Za1JYbWOO3Qupa-s_S3H6LYYbJM1MmoprgBcOu6ZnC-k_o2r-sZUV9A333=s0-d-e1-ft#https://storage.googleapis.com/forgely-public/email-assets/forgely-logo-red-alt.png" style="max-width:230px;padding-bottom:0;padding-top:20px;display:inline!important;vertical-align:bottom;border:0;height:auto;outline:none;text-decoration:none" class="m_-1246376999557549432mcnImage CToWUd" align="middle" width="230">
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    </tbody></table>
+                            
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" valign="top">
+                                
+                                <table border="0" cellpadding="0" cellspacing="0" width="600" id="m_-1246376999557549432templateBody" style="border-collapse:collapse;background-color:#ffffff;border-top:0;border-bottom:0">
+                                    <tbody><tr>
+                                        <td valign="top" class="m_-1246376999557549432bodyContainer">
+                                            <table class="m_-1246376999557549432mcnTextBlock" style="min-width:100%;border-collapse:collapse" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                <tbody class="m_-1246376999557549432mcnTextBlockOuter">
+                                                <tr>
+                                                    <td class="m_-1246376999557549432mcnTextBlockInner" valign="top">
+                                                        
+                                                        <table style="min-width:100%;border-collapse:collapse" class="m_-1246376999557549432mcnTextContentContainer" align="left" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                            <tbody>
+                                                            <tr>
+                                                                
+                                                                <td class="m_-1246376999557549432mcnTextContent" style="padding-top:9px;padding-right:35px;padding-bottom:9px;padding-left:35px;word-break:break-word;color:#616161;font-family:Helvetica;font-size:16px;line-height:150%;text-align:left" valign="top">
+                                                                    
+                                                                    <h1 class="m_-1246376999557549432null" style="text-align:center;display:block;margin:0;padding:0;font-family:'Lucida Sans Unicode','Lucida Grande',sans-serif;font-size:32px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:-1px;color:#9e9e9e!important"><span style="font-size:31px"><strong><span style="font-family:arial,helvetica neue,helvetica,sans-serif">Hello Jason,</span></strong></span>
+                                                                    </h1>
+                                                                    <br>
+                                                                    <p>Someone just filled out a questionnaire for Web Designer opening. Check it out now!</p>
+                                                                    <p style="color:#f15742"><img src="https://storage.googleapis.com/rga-backoffice/assets/img/red-flag.png" alt=""> This candidate's questionnaire contains flagged answer(s).</p>
+                                                                    <br>
+                                                                    &nbsp;
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <table class="m_-1246376999557549432mcnButtonBlock" style="min-width:100%;border-collapse:collapse" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                <tbody class="m_-1246376999557549432mcnButtonBlockOuter">
+                                                <tr>
+                                                    <td style="padding-top:0;padding-right:18px;padding-bottom:18px;padding-left:18px" class="m_-1246376999557549432mcnButtonBlockInner" align="center" valign="top">
+                                                        <table class="m_-1246376999557549432mcnButtonContentContainer" style="border-collapse:separate!important;border-radius:3px;background-color:#3192ec" border="0" cellpadding="0" cellspacing="0">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td style="font-family:Arial;font-size:16px;padding:15px" class="m_-1246376999557549432mcnButtonContent" align="center" valign="middle">
+                                                                    <a class="m_-1246376999557549432mcnButton" title="View Questionnaire" href="http://dev.forge.ly/online-hiring/management/application/acfea55c-ea10-42fc-9f1f-1016e184f938" style="font-weight:bold;letter-spacing:normal;line-height:100%;text-align:center;text-decoration:none;color:#ffffff;display:block" target="_blank" data-saferedirecturl="https://www.google.com/url?hl=en&amp;q=http://dev.forge.ly/online-hiring/management/application/acfea55c-ea10-42fc-9f1f-1016e184f938&amp;source=gmail&amp;ust=1502207240389000&amp;usg=AFQjCNHk_Olwkdxzx4ng1BfioIqarqtP6A">View Questionnaire</a>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <table class="m_-1246376999557549432mcnDividerBlock" style="min-width:100%;border-collapse:collapse;table-layout:fixed!important" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                <tbody class="m_-1246376999557549432mcnDividerBlockOuter">
+                                                <tr>
+                                                    <td class="m_-1246376999557549432mcnDividerBlockInner" style="min-width:100%;padding:30px 18px 10px">
+                                                        <table class="m_-1246376999557549432mcnDividerContent" style="min-width:100%;border-top:2px solid #eaeaea;border-collapse:collapse" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <span></span>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    </tbody></table>
+                            
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" valign="top">
+                                
+                                <table border="0" cellpadding="0" cellspacing="0" width="600" id="m_-1246376999557549432templateColumns" style="border-collapse:collapse;background-color:#ffffff;border-top:0;border-bottom:0">
+                                    <tbody><tr>
+                                        <td align="left" valign="top" class="m_-1246376999557549432columnsContainer" width="50%">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="100%" class="m_-1246376999557549432templateColumn" style="border-collapse:collapse">
+                                                <tbody><tr>
+                                                    <td valign="top" class="m_-1246376999557549432leftColumnContainer"></td>
+                                                </tr>
+                                                </tbody></table>
+                                        </td>
+                                        <td align="left" valign="top" class="m_-1246376999557549432columnsContainer" width="50%">
+                                            <table border="0" cellpadding="0" cellspacing="0" width="100%" class="m_-1246376999557549432templateColumn" style="border-collapse:collapse">
+                                                <tbody><tr>
+                                                    <td valign="top" class="m_-1246376999557549432rightColumnContainer"></td>
+                                                </tr>
+                                                </tbody></table>
+                                        </td>
+                                    </tr>
+                                    </tbody></table>
+                            
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" valign="top">
+                                
+                                <table border="0" cellpadding="0" cellspacing="0" width="600" id="m_-1246376999557549432templateFooter" style="border-collapse:collapse;background-color:#ffffff;border-top:10px solid #ffffff;border-bottom:0">
+                                    <tbody><tr>
+                                        <td valign="top" class="m_-1246376999557549432footerContainer" style="padding-top:9px;padding-bottom:9px">
+                                            <table class="m_-1246376999557549432mcnTextBlock" style="min-width:100%;border-collapse:collapse" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                <tbody class="m_-1246376999557549432mcnTextBlockOuter">
+                                                <tr>
+                                                    <td class="m_-1246376999557549432mcnTextBlockInner" valign="top">
+                                                        
+                                                        <table style="min-width:100%;border-collapse:collapse" class="m_-1246376999557549432mcnTextContentContainer" align="left" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                            <tbody>
+                                                            <tr>
+                                                                
+                                                                <td class="m_-1246376999557549432mcnTextContent" style="padding-top:9px;padding-right:18px;padding-bottom:9px;padding-left:18px;word-break:break-word;color:#838383;font-family:Helvetica;font-size:11px;line-height:125%;text-align:center" valign="top">
+                                                                    Have a question? Feel free to send us an email at
+                                                                    <a href="mailto:support@forge.ly" style="color:#f15742;font-weight:normal;text-decoration:underline" target="_blank">support@forge.ly</a>
+                                                                    <br>
+                                                                    <br>
+                                                                    <em>Copyright © 2017 Coalmarch
+                                                                        Productions, All
+                                                                        rights reserved.</em><br>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    </tbody></table>
+                                
+                                
+                                <table border="0" cellpadding="0" cellspacing="0" width="600" id="m_-1246376999557549432templatePreheader">
+                                    <tbody><tr>
+                                        <td valign="top" class="m_-1246376999557549432preheaderContainer" style="padding-top:9px;padding-bottom:9px">
+                                            <table class="m_-1246376999557549432mcnTextBlock" style="min-width:100%;border-collapse:collapse" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                <tbody class="m_-1246376999557549432mcnTextBlockOuter">
+                                                <tr>
+                                                    <td class="m_-1246376999557549432mcnTextBlockInner" valign="top">
+                                                        &nbsp;
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    </tbody></table>
+                            
+                            </td>
+                        </tr>
+                        </tbody></table>
+                
+                </td>
+            </tr>
+            </tbody></table><div class="yj6qo"></div><div class="adL">
+        </div></div><div class="adL">
+    </div></div>
