@@ -64,9 +64,28 @@ if [ "$TERMINUS_OLD" = true ]; then
     terminus site backups create --element=database --site=$SITE --env=$ENV &&
     terminus site backups get --element=database --site=$SITE --env=$ENV --to=$HOME/sqltemp --latest
 else
+
+    spinner()
+    {
+        local pid=$1
+        local delay=0.5
+        local spinstr='|/-\'
+        while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+            local temp=${spinstr#?}
+            printf " [%c]  " "$spinstr"
+            local spinstr=$temp${spinstr%"$temp"}
+            sleep $delay
+            printf "\b\b\b\b\b\b"
+        done
+        printf "    \b\b\b\b"
+    }
+
     SITEENV="$SITE.$ENV";
-    terminus backup:create "$SITEENV" --element=database &&
-    terminus backup:get "$SITEENV" --element=database --to=$HOME/sqltemp/${SITE}_bak.sql.gz
+    printf "Backing up database..." &&
+    terminus backup:create "$SITEENV" --element=database 2>&1 & spinner $!
+    printf "Downloading..." &&
+    terminus backup:get "$SITEENV" --element=database --to=$HOME/sqltemp/${SITE}_bak.sql.gz 2>&1 & spinner $!
+    printf "Database backup downloaded to $HOME/sqltemp/${SITE}_bak.sql.gz\n"
 fi
 
 drush sql-create -y;

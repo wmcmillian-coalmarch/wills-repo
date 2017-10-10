@@ -24,7 +24,7 @@ then
     SITE=${ROOT##*/}
 fi;
 
-UUID=$(terminus site info --site=$SITE --field=id);
+UUID=$(terminus site:info $SITE --field=id);
 
 cd ~/Sites/$SITE/sites/default;
 echo "This will upload files from ~/Sites/$SITE/sites/default to $ENV.$UUID@appserver.$ENV.$UUID.drush.in:files."

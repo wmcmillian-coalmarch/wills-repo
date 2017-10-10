@@ -12,6 +12,7 @@ fi;
 
 ROOT=$(drush ev "print DRUPAL_ROOT;");
 SITE=${ROOT##*/}
+ARGS=""$@"";
 
-echo "drush @pantheon.$SITE.$ENV $@ --strict=0"
-drush @pantheon.$SITE.$ENV "$@" --strict=0;
+echo "drush @pantheon.$SITE.$ENV $ARGS --strict=0"
+drush @pantheon.$SITE.$ENV "$ARGS" --strict=0;
