@@ -1,31 +1,32 @@
-#! /bin/bash
+#!/bin/bash
 
 set -e
-terminus_version;
 
-if [[ "$1" =~ --.* ]]
+if [ -z "$1" ]
 then
         ROOT=$(drush ev "print DRUPAL_ROOT");
         SITE=${ROOT##*/}
 else
-        if [[ "$1" = "doublecheck" ]]
-        then
-            DOUBLECHECK=true
-            shift;
-        else
-            DOUBLECHECK=false
-        fi;
-
-        if [[ "$1" =~ --.* ]]
-        then
-            ROOT=$(drush ev "print DRUPAL_ROOT");
-            SITE=${ROOT##*/}
-        else
-            SITE=$1
-            shift;
-        fi;
+        SITE=$1
 fi;
 
-terminus backup:create $SITE.dev
-terminus backup:create $SITE.test
-terminus backup:create $SITE.live
+ spinner()
+    {
+        local pid=$1
+        local delay=0.5
+        local spinstr='|/-\'
+        while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+            local temp=${spinstr#?}
+            printf " [%c]  " "$spinstr"
+            local spinstr=$temp${spinstr%"$temp"}
+            sleep $delay
+            printf "\b\b\b\b\b\b"
+        done
+        printf "    \b\b\b\b"
+    }
+printf "Backing up dev..." &&
+terminus backup:create $SITE.dev 2>&1 & spinner $!
+printf "Backing up test..." &&
+terminus backup:create $SITE.test 2>&1 & spinner $!
+printf "Backing up live..." &&
+terminus backup:create $SITE.live 2>&1 & spinner $!
