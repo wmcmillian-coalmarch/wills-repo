@@ -1,0 +1,31 @@
+#! /bin/bash
+
+set -e
+terminus_version;
+
+if [[ "$1" =~ --.* ]]
+then
+        ROOT=$(drush ev "print DRUPAL_ROOT");
+        SITE=${ROOT##*/}
+else
+        if [[ "$1" = "doublecheck" ]]
+        then
+            DOUBLECHECK=true
+            shift;
+        else
+            DOUBLECHECK=false
+        fi;
+
+        if [[ "$1" =~ --.* ]]
+        then
+            ROOT=$(drush ev "print DRUPAL_ROOT");
+            SITE=${ROOT##*/}
+        else
+            SITE=$1
+            shift;
+        fi;
+fi;
+
+terminus backup:create $SITE.dev
+terminus backup:create $SITE.test
+terminus backup:create $SITE.live

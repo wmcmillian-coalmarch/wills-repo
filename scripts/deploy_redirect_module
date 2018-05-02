@@ -1,0 +1,11 @@
+#! /bin/bash
+
+if [ -z "$1" ]
+then
+    echo "A url must be specified!";
+    exit;
+fi;
+
+pdeploy --note="adding pantheon_redirect module" --cc &&
+pdrush live en pantheon_redirect -y &&
+pdrush live vset pantheon_redirect_base_url "$1"
