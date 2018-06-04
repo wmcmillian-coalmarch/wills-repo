@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+ROOT=$(drush ev "print DRUPAL_ROOT");
+SITE=${ROOT##*/}
+
+terminus backup:create $SITE.dev
+terminus backup:create $SITE.test
+terminus backup:create $SITE.live

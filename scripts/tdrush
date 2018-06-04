@@ -2,6 +2,8 @@
 
 set -e
 
+terminus_version;
+
 if [ "$1" = "live" ] || [ "$1" = "dev" ] || [ "$1" = "test" ]
 then
     ENV=$1;
@@ -14,4 +16,8 @@ ROOT=$(drush ev "print DRUPAL_ROOT;");
 SITE=${ROOT##*/}
 ARGS=""$@"";
 
-terminus drush "$ARGS" --site=$SITE --env=$ENV;
+if [ "$TERMINUS_OLD" = true ]; then
+    terminus drush "$ARGS" --site=$SITE --env=$ENV;
+else
+    terminus drush $SITE.$ENV "$ARGS"
+fi

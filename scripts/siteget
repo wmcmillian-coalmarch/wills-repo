@@ -77,4 +77,4 @@ fi;
 terminus-ssp $SITE $ENV &&
 drushfiles $SITE $ENV &&
 cd ~/Sites/$SITE &&
-open "http://$SITE.dev"
+open "http://$SITE.test"

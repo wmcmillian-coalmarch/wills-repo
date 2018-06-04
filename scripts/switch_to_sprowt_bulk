@@ -1,0 +1,21 @@
+#! /usr/bin/env php
+<?php
+
+date_default_timezone_set('America/New_York');
+
+$terminus = $_SERVER['HOME'] . '/terminus/bin/terminus';
+
+$site_list = exec("$terminus org:sites 08b99cd5-81a3-4b67-acc1-d5dba50390f8 --format=json", $json);
+$site_list = implode("", $json);
+$site_list = json_decode($site_list, true);
+
+foreach($site_list as $site) {
+    $info = exec("$terminus site:info {$site['name']} --format=json", $sitejson);
+    $sitejson = implode("", $sitejson);
+    $info = json_decode($sitejson, true);
+    $upstream = explode(':', $info['upstream']);
+    $upstreamId = trim($upstream[0]);
+    if($upstreamId == '158e2876-13a4-427f-96cf-d29a3daa538b') { //Sprowt
+        passthru("terminus site:upstream:set {$site['name']} 54c231a3-d90c-4b6b-8732-18c2c74b8a43 -y");
+    }
+}

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+ROOT=$(drush ev "print DRUPAL_ROOT");
+SITE=${ROOT##*/}
+
+terminus site:upstream:set $SITE 873b5876-beb2-46cc-bf39-f02007197752

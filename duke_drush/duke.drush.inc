@@ -147,7 +147,8 @@ function drush_duke_prepare_site(){
         'lhenderson' => 'lah82',
         'jfekete' => 'jrf26',
         'awelles' => 'amw84',
-        'dward' => 'djw49'
+        'dward' => 'djw49',
+        'mquattrochi' => 'mjq2'
     ));
 
     $d_users = entity_load('user');
@@ -218,6 +219,7 @@ function drush_duke_prepare_site_reverse() {
         'jrf26' => 'jfekete',
         'amw84' => 'awelles',
         'djw49' => 'dward',
+        'mjq2' => 'mquattrochi',
         'dmw60@duke.edu' => 'dwhite',
         'lhr8@duke.edu' => 'lroger',
         'cbn5@duke.edu' => 'cnein',
@@ -227,6 +229,7 @@ function drush_duke_prepare_site_reverse() {
         'jrf26@duke.edu' => 'jfekete',
         'amw84@duke.edu' => 'awelles',
         'djw49@duke.edu' => 'dward',
+        'mjq2@duke.edu' => 'mquattrochi'
     );
 
 
