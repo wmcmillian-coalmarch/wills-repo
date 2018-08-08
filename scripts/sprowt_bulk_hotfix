@@ -1,0 +1,84 @@
+#! /usr/bin/env php
+<?php
+
+$commit = 'e5522ed362dad2d9255bfd509e83d6b1f88089d1';
+$commitMsg = '';
+date_default_timezone_set('America/New_York');
+
+if(empty($commit)) {
+    echo "No commit message!";
+    die(1);
+}
+
+$terminus = $_SERVER['HOME'] . '/terminus/bin/terminus';
+
+$site_list = exec("$terminus org:sites 08b99cd5-81a3-4b67-acc1-d5dba50390f8 --format=json", $json);
+$site_list = implode("", $json);
+$site_list = json_decode($site_list, true);
+
+$sitesPath = getenv('HOME') . '/Sites';
+
+foreach($site_list as $site) {
+    if($site['service_level'] != 'free') {
+        $siteName = $site['name'];
+        $info = exec("$terminus site:info $siteName --format=json", $sitejson);
+        $sitejson = implode("", $sitejson);
+        $info = json_decode($sitejson, TRUE);
+        $upstream = explode(':', $info['upstream']);
+        $upstreamId = trim($upstream[0]);
+        if ($upstreamId == '54c231a3-d90c-4b6b-8732-18c2c74b8a43') { //Sprowt
+            echo "\n===================================\n";
+            echo "    Hotfixing " . $siteName . "\n";
+            echo "===================================\n\n";
+            $siteDir = $sitesPath . '/' . $siteName;
+            if (file_exists($siteDir)) {
+                chdir($siteDir);
+                $currentBranch = '';
+                exec('git symbolic-ref -q --short HEAD || git describe --tags --exact-match', $currentBranch);
+                if(is_array($currentBranch)) {
+                    $currentBranch = array_shift($currentBranch);
+                }
+    
+                if(empty($currentBranch)) {
+                    $currentBranch = 'master';
+                }
+    
+                if($currentBranch != 'master') {
+                    passthru('git checkout master');
+                }
+                passthru('git pull');
+                passthru("git pull git@bitbucket.org:coalmarch/sprowt.git");
+                if(empty($commitMsg)) {
+                    exec('git log --format=%B -n 1 ' . $commit, $msg);
+                    if(is_array($msg)) {
+                        $tries = 0;
+                        while (empty($commitMsg) && $tries < 5) {
+                            $commitMsg = array_shift($msg);
+                            ++$tries;
+                        }
+                    }
+                    else {
+                        $commitMsg = $msg;
+                    }
+                }
+    
+                if(empty($commitMsg)) {
+                    $commitMsg = 'commit: ' . $commit;
+                }
+
+                passthru("git fetch --tags");
+                exec("git tag | grep pantheon_live_ | gsort -V", $tags);
+                if(!empty($tags)) {
+                    $latest = array_pop($tags);
+                    $latestNum = str_replace('pantheon_live_', '', $latest);
+                    $newTag = 'pantheon_live_' . ($latestNum + 1);
+                    passthru('git checkout ' . $latest);
+                    passthru('git cherry-pick ' . $commit);
+                    passthru('git tag -a ' . $newTag . ' -m "Hotfix: ' . $commitMsg . '"');
+                    passthru('git push --tags');
+                    passthru('git checkout ' . $currentBranch);
+                }
+            }
+        }
+    }
+}
