@@ -1,0 +1,23 @@
+{
+  "name": "pestpac-modules",
+  "version": "0.1.0",
+  "description": "Modules for Pest Pac API Testing.",
+  "author": "Michael Quattrochi <mquattrochi@gmail.com>",
+  "dependencies": {
+    "breakpoint-sass": "^2.6.1",
+    "browser-sync": "^2.10.0",
+    "del": "^3.0.0",
+    "font-awesome": "^4.5.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-sass": "^4.0.1",
+    "gulp-sass-glob": "^1.0.9",
+    "gulp-sass-lint": "^1.1.0",
+    "gulp-notify": "^3.2.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "bulma": "^0.7.1"
+  },
+  "license": "MIT",
+  "devDependencies": {}
+}
