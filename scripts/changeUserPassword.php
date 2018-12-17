@@ -102,8 +102,13 @@ function updateUser($siteName) {
                     $userInfo[trim($rowParts[0])] = trim($rowParts[1]);
                 }
             }
-            $response = drushCommand($siteEnv, 'upwd "' . $userInfo['User name'] . '" --password="'.PASSWORD.'"', false);
-            echo array_pop($response) . "\n";
+            if(!empty($userInfo['User name'])) {
+                $response = drushCommand($siteEnv, 'upwd "' . $userInfo['User name'] . '" --password="' . PASSWORD . '"', FALSE);
+                echo array_pop($response) . "\n";
+            }
+            else {
+                echo 'User ' . USER . ' not found for site: ' . $siteName . ' in environment ' . $environment['id'];
+            }
         }
     }
     
