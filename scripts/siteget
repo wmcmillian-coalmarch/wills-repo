@@ -2,6 +2,10 @@
 
 set -e
 terminus_version;
+if [ "$TERMINUS_OLD" = true ]; then
+    echo 'Your Terminus is out of date! Please update!';
+    exit 1;
+fi
 
 spinner()
 {
@@ -44,19 +48,25 @@ fi
 cd ~/Sites
 tlogin
 echo "refreshing site aliases..."
-if [ "$TERMINUS_OLD" = true ]; then
-    terminus sites aliases > /dev/null 2>&1 & spinner $!
-else
+
+terminus aliases > /dev/null 2>&1 & spinner $!
+
+notfound="Not found:.*"
+if [[ $((drush sa @pantheon.$SITE.$ENV) 2>&1) =~ $notfound ]]
+then
+    echo "Alias @pantheon.$SITE.$ENV not found!"
+    echo "adding you to the site in pantheon"
+    email=$(terminus auth:whoami);
+    terminus site:team:add $SITE $email &&
+    echo "refreshing site aliases..."
     terminus aliases > /dev/null 2>&1 & spinner $!
-fi
-#echo "clearing terminus cache..."
-#terminus cli cache-clear > /dev/null 2>&1 & spinner $! &&
+fi;
+
 echo "refreshing site list..."
-if [ "$TERMINUS_OLD" = true ]; then
-    terminus sites list > /dev/null 2>&1 & spinner $!
-else
-    terminus site:list > /dev/null 2>&1 & spinner $!
-fi
+terminus site:list > /dev/null 2>&1 & spinner $!
+
+
+
 
 if [ -d ~/Sites/$SITE ]; then
     echo "Directory for $SITE already exists. Pulling"
