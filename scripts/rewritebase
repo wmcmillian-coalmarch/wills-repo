@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+$home = getenv('HOME');
+
+$sites = $home . '/Sites';
+$site = $argv[1];
+$sitedir = $sites . '/' . $site;
+
+if(empty($site) || !is_dir($sitedir)) {
+    echo 'Please use a valid site name' . "\n";
+    exit(2);
+}
+
+$htaccess = $sitedir . "/.htaccess";
+$txt = file_get_contents($htaccess);
+$pattern = '[\s]\#[\s]RewriteBase /\n';
+$dPattern = '|' . $pattern . '|';
+if(preg_match($dPattern, $txt)) {
+    $newTxt = preg_replace($dPattern, " RewriteBase /\n", $txt);
+    file_put_contents($htaccess, $newTxt);
+    echo 'rewrite base done' . "\n";
+}

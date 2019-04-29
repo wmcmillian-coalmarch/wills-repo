@@ -8,7 +8,8 @@ tclone
 siteget
 pdeploy
 prefresh
-rewritebase.py
+pdrush
+rewritebase
 getscripts"
 
 mkdir -p ~/bin

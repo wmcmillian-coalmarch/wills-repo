@@ -71,13 +71,15 @@ terminus site:list > /dev/null 2>&1 & spinner $!
 if [ -d ~/Sites/$SITE ]; then
     echo "Directory for $SITE already exists. Pulling"
     cd $SITE
+    chmod 775 $SITE/sites/default
     git pull
 else
     eval $CLONE &&
     cd $SITE
+    chmod 775 $SITE/sites/default
 fi
 
-rewritebase.py $SITE
+rewritebase $SITE
 if [ ! -f sites/default/settings.php ]
 then
     DB=${SITE//-/_}
