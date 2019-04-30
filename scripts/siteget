@@ -84,7 +84,7 @@ if [ ! -f sites/default/settings.php ]
 then
     DB=${SITE//-/_}
     echo "No settings.php. creating..."
-    drush si --db-url=mysqli://root:root@localhost/$DB -y > /dev/null 2>&1
+    drush si --db-url=mysql://root:root@localhost/$DB -y > /dev/null 2>&1
 fi;
 terminus-ssp $SITE $ENV &&
 drushfiles $SITE $ENV &&
