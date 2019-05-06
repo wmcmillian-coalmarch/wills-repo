@@ -44,7 +44,7 @@ $longopts = [
 
 
 $options = getopt('u:hp:', $longopts);
-if(empty($options) || empty($argv)) {
+if(empty($options)) {
     $options = ['h' => true];
 }
 
@@ -72,7 +72,7 @@ if(empty($options['u']) && empty($options['user'])) {
 }
 
 
-if(empty($argv[2])) {
+if(empty($options['p']) && empty($options['password'])) {
     echo 'password argument missing.';
     die(1);
 }
