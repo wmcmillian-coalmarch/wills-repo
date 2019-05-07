@@ -32,6 +32,7 @@ if [ "$TERMINUS_OLD" = true ]; then
 else
     terminus env:wake "$SITE.$ENV"
 fi
+chmod 775 ~/Sites/$SITE/sites/default &&
 git pull &&
 terminus-ssp $SITE $ENV &&
 drushfiles $SITE $ENV
