@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -e;
+
+if [ -z "$1" ]
+then
+        ROOT=$(drush ev "print DRUPAL_ROOT");
+        SITE=${ROOT##*/}
+else
+        SITE=$1
+fi;
+
+if [ -d ~/Sites/$SITE ]; then
+    cd ~/Sites/$SITE;
+    prefresh live;
+else
+    echo "getting site";
+    siteget $SITE live;
+    cd ~/Sites/$SITE;
+fi
+
+terminus backup:create $SITE.dev
+terminus backup:create $SITE.test
+terminus backup:create $SITE.live
+
+terminus upstream:updates:apply $SITE.dev --updatedb
+
+git pull
+
+drush updatedb -y
