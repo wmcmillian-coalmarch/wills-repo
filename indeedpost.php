@@ -1,9 +1,14 @@
 <?php
 
 
-$url = 'http://dev.forge.ly/online-hiring/indeed-feed/questionnaire/023fce9b-8500-44bf-89af-65c788c72eb8/4f44571b-ebb9-4dcf-9f1f-cafbc7f5a14d/submission';
+//$json = file_get_contents('/home/will/Sites/sandbox/2017-09-27--18_02_08.json');
+$json = file_get_contents(__DIR__ . '/indeedData.json');
+$contents = json_decode($json, true);
 
-$json = file_get_contents('/home/will/Sites/sandbox/2017-09-27--18_02_08.json');
+$url = $contents["questions"]["url"] . '/submission';
+if(strpos($url, 'https://forge.ly') !== false){
+    $url = str_replace('https://forge.ly', 'http://dev.forge.ly', $url);
+}
 
 $headersArray = [
     'Total-Route-Time' => '0',
