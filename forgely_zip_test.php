@@ -1,7 +1,7 @@
 <?php
 
 $dir = __DIR__;
-$json = file_get_contents($dir . '/ziprecruiter_apply.json');
+$json = file_get_contents($dir . '/zipPost.json');
 
 $headers = [
     "User-Agent: libwww-perl/6.13",
