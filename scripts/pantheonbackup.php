@@ -11,7 +11,7 @@ $site_list = json_decode($site_list, true);
 
 
 foreach($site_list as $site) {
-    if(empty($site['frozen']) && $site['service_level'] == 'free') {
+    if(empty($site['frozen']) && $site['plan_name'] == 'Sandbox') {
         exec("$terminus backup:create {$site['name']}.dev");
         echo date('Y-m-d H:i:s') . " - {$site['name']} backed up.\n";
     }
