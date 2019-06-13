@@ -80,11 +80,43 @@ else
 fi
 
 rewritebase $SITE
-if [ ! -f sites/default/settings.php ]
+if [ -f ~/Sites/$SITE/core/lib/Drupal.php ]
+then
+    DRUPALV=8
+else
+    DRUPALV=7
+fi;
+
+if [ $DRUPALV = "8" ]
 then
     DB=${SITE//-/_}
-    echo "No settings.php. creating..."
+
+    echo "Setting up database credentials... This might take a bit...";
     drush si --db-url=mysql://root:root@localhost/$DB -y > /dev/null 2>&1
+    chmod 775 ~/Sites/$SITE/sites/default
+    if grep -e "\!isset(\$_ENV\['PANTHEON_ENVIRONMENT'\])" ~/Sites/${SITE}/sites/default/settings.php > /dev/null 2>&1; then
+        echo "Pantheon environment conditionals already added!";
+    else
+            sed -i "/databases/i \
+            if(!isset(\$_ENV['PANTHEON_ENVIRONMENT'])){" ~/Sites/$SITE/sites/default/settings.php
+            sed -i -e "\$a}" ~/Sites/$SITE/sites/default/settings.php
+            if grep -e "\!isset(\$_ENV\['PANTHEON_ENVIRONMENT'\])" ~/Sites/${SITE}/sites/default/settings.php > /dev/null 2>&1; then
+                echo "Pantheon environment conditionals added successfully!";
+            else
+                echo "There was an error adding the pantheon environment conditionals";
+            fi
+    fi
+
+
+
+
+else
+    if [ ! -f sites/default/settings.php ]
+    then
+        DB=${SITE//-/_}
+        echo "No settings.php. creating..."
+        drush si --db-url=mysql://root:root@localhost/$DB -y > /dev/null 2>&1
+    fi;
 fi;
 terminus-ssp $SITE $ENV &&
 drushfiles $SITE $ENV &&
