@@ -97,7 +97,7 @@ then
     if grep -e "\!isset(\$_ENV\['PANTHEON_ENVIRONMENT'\])" ~/Sites/${SITE}/sites/default/settings.php > /dev/null 2>&1; then
         echo "Pantheon environment conditionals already added!";
     else
-            sed -i "/databases/i \
+            sed -i -- "/databases/i \
             if(!isset(\$_ENV['PANTHEON_ENVIRONMENT'])){" ~/Sites/$SITE/sites/default/settings.php
             sed -i -e "\$a}" ~/Sites/$SITE/sites/default/settings.php
             if grep -e "\!isset(\$_ENV\['PANTHEON_ENVIRONMENT'\])" ~/Sites/${SITE}/sites/default/settings.php > /dev/null 2>&1; then
