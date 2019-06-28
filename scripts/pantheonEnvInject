@@ -1,0 +1,27 @@
+#!/usr/bin/env python2
+import sys
+
+inputFile = sys.argv[1]
+pantheonDetailsAdded = False
+
+with open(inputFile, "r+") as f:
+    a = [x.rstrip() for x in f]
+    index = 0
+    for item in a:
+        if item.startswith("if(!isset($_ENV"):
+            pantheonDetailsAdded = True
+            break
+        else:
+            if item.startswith("$databases"): # Checks for databases array
+                a.insert(index, "if(!isset($_ENV['PANTHEON_ENVIRONMENT'])){")  # Adds opening IF statement
+                break
+            index += 1
+    # Go to start of file and clear it
+    f.seek(0)
+    f.truncate()
+    # Write each line back
+    for line in a:
+        f.write(line + "\n")
+    if not pantheonDetailsAdded:
+        f.write("}")
+f.close()

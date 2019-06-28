@@ -28,12 +28,8 @@ CLONE="tclone $SITE"
 if [ -z $SITE ]; then
     echo "
         ERROR:
-
         The first argument must be the site name from pantheon.
-
-
         USAGE:
-
         siteget got-bugs
     "
     exit 1
@@ -61,13 +57,8 @@ then
     echo "refreshing site aliases..."
     terminus aliases > /dev/null 2>&1 & spinner $!
 fi;
-
 echo "refreshing site list..."
 terminus site:list > /dev/null 2>&1 & spinner $!
-
-
-
-
 if [ -d ~/Sites/$SITE ]; then
     echo "Directory for $SITE already exists. Pulling"
     cd $SITE
@@ -78,7 +69,6 @@ else
     cd $SITE
     chmod 775 ~/Sites/$SITE/sites/default
 fi
-
 rewritebase $SITE
 if [ -f ~/Sites/$SITE/core/lib/Drupal.php ]
 then
@@ -86,30 +76,26 @@ then
 else
     DRUPALV=7
 fi;
-
 if [ $DRUPALV = "8" ]
 then
     DB=${SITE//-/_}
-
+    settings_file=~/Sites/${SITE}/sites/default/settings.php;
     echo "Setting up database credentials... This might take a bit...";
     drush si --db-url=mysql://root:root@localhost/$DB -y > /dev/null 2>&1
     chmod 775 ~/Sites/$SITE/sites/default
     if grep -e "\!isset(\$_ENV\['PANTHEON_ENVIRONMENT'\])" ~/Sites/${SITE}/sites/default/settings.php > /dev/null 2>&1; then
         echo "Pantheon environment conditionals already added!";
     else
-            sed -i -- "/databases/i \
-            if(!isset(\$_ENV['PANTHEON_ENVIRONMENT'])){" ~/Sites/$SITE/sites/default/settings.php
-            sed -i -e "\$a}" ~/Sites/$SITE/sites/default/settings.php
+            chmod 775 ~/Sites/${SITE}/sites/default/settings.php
+            echo "Injecting Pantheon Environment Credentials...";
+            pantheonEnvInject $settings_file
+            echo "Finished Injecting Credentials..."
             if grep -e "\!isset(\$_ENV\['PANTHEON_ENVIRONMENT'\])" ~/Sites/${SITE}/sites/default/settings.php > /dev/null 2>&1; then
                 echo "Pantheon environment conditionals added successfully!";
             else
                 echo "There was an error adding the pantheon environment conditionals";
             fi
     fi
-
-
-
-
 else
     if [ ! -f sites/default/settings.php ]
     then
