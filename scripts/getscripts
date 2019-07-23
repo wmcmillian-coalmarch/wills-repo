@@ -10,6 +10,7 @@ pdeploy
 prefresh
 pdrush
 rewritebase
+pantheonEnvInject
 getscripts"
 
 mkdir -p ~/bin
