@@ -48,7 +48,7 @@ BACKUP_RETAIN_DAYS=30   ## Number of days to keep local backup copy
 #################################################################
 
 mkdir -p ${DB_BACKUP_PATH}/${TODAY}
-echo "Backup started for database - ${DATABASE_NAME}"
+echo "Backup started for database - ${DATABASE_NAME} on ${TODAY}"
 
 
 mysqldump -h ${MYSQL_HOST} \
