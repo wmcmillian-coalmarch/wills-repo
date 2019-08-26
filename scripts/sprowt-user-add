@@ -1,0 +1,46 @@
+#!/bin/bash
+
+CONFIG=$HOME/.sprowtuser;
+if [ ! -f $CONFIG ]; then
+  echo 'No config file found! Please enter your username and password';
+  echo 'Username:';
+  read USERNAME;
+  echo 'Password:';
+  read PASSWORD;
+  echo "#Coalmarch sprowtuser config" > $CONFIG;
+  echo "" >> $CONFIG;
+  echo "USERNAME=\"$USERNAME\"" >> $CONFIG;
+  echo "PASSWORD=\"$PASSWORD\"" >> $CONFIG;
+else
+  source $CONFIG;
+fi
+
+if [ -z "$1" ]
+then
+        ROOT=$(drush ev "print DRUPAL_ROOT");
+        SITE=${ROOT##*/}
+else
+        SITE=$1
+        shift
+fi;
+
+if [ "$SITE" = "live" ] || [ "$SITE" = "dev" ] || [ "$SITE" = "test" ]
+then
+    ENV=$SITE
+    ROOT=$(drush ev "print DRUPAL_ROOT");
+    SITE=${ROOT##*/}
+else
+    ENV=$2
+    shift
+fi;
+
+if [ -z "$ENV" ]; then
+  ENV="local"
+fi
+
+
+if [ "$ENV" = "local" ]; then
+  drush cm-add --name=$USERNAME --password="$PASSWORD"
+else
+  terminus drush $SITE.$ENV -- cm-add --name=$USERNAME --password="$PASSWORD"
+fi
