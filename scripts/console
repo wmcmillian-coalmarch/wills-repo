@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+PROJECTDIR="Sites"
+if [[ "${PWD}" =~ ^$HOME/Projects ]]; then
+    PROJECTDIR="Projects"
+fi
+
+if [[ ! "${PWD}" =~ ^$HOME/$PROJECTDIR ]]; then
+    echo "Not in a Project directory like ~/Sites or ~/Projects"
+    exit 1;
+fi
+
+SITE=${PWD##*/$PROJECTDIR/}
+SITE=${SITE%%/*}
+
+ROOT=$HOME/$PROJECTDIR/$SITE;
+
+declare -A tests
+tests["bin/appc"]="COALMARCH_SYMPHONY"
+tests["bin/console"]="SYMPHONY_4"
+tests["app/console"]="SYMPHONY"
+tests["artisan"]="LARAVEL"
+tests["core/lib/Drupal.php"]="DRUPAL_8"
+tests["modules/system/system.module"]="DRUPAL_7"
+tests["wp-config.php"]="WORDPRESS"
+
+for dir in "${!tests[@]}"; do
+    testdir=$ROOT/$dir;
+    if [ -f $testdir ]; then
+        case ${tests[$dir]} in
+        COALMARCH_SYMPHONY)
+            cmd=$testdir;
+            ;;
+        SYMPHONY_4)
+            cmd=$testdir;
+            ;;
+        SYMPHONY)
+            cmd=$testdir;
+            ;;
+        LARAVEL)
+            cmd=$testdir;
+            ;;
+        DRUPAL_8)
+            cmd="drupal";
+            ;;
+        DRUPAL_7)
+            cmd="drush";
+            ;;
+        WORDPRESS)
+            cmd="wp";
+            ;;
+        esac
+    fi
+done
+
+if [ -z "$cmd" ]; then
+    echo "Not a valid site."
+    exit 1;
+fi
+
+$cmd "$@";
