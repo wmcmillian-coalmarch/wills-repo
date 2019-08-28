@@ -1,0 +1,35 @@
+#!/bin/bash
+
+SCRIPTS="terminus_version
+tlogin
+terminus-ssp
+drushfiles
+tclone
+siteget
+pdeploy
+prefresh
+pdrush
+rewritebase
+pantheonEnvInject
+getscripts
+sprowt-user-add"
+
+mkdir -p ~/bin
+cd ~/bin
+
+echo '#######################################'
+echo '         getting scripts...'
+echo '#######################################'
+echo
+for script in $SCRIPTS;
+do
+    echo "Downloading $script to $HOME/bin/$script ..."
+    curl https://raw.githubusercontent.com/wmcmillian-coalmarch/wills-repo/master/scripts/$script > $script
+    chmod 777 $script
+done
+
+echo
+echo '#######################################'
+echo '               DONE!!!'
+echo '#######################################'
+echo
