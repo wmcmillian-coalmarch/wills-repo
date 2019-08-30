@@ -15,31 +15,22 @@ SITE=${SITE%%/*}
 
 ROOT=$HOME/$PROJECTDIR/$SITE;
 
-declare -A tests
-tests["bin/appc"]="COALMARCH_SYMPHONY"
-tests["bin/console"]="SYMPHONY_4"
-tests["app/console"]="SYMPHONY"
-tests["artisan"]="LARAVEL"
-tests["core/lib/Drupal.php"]="DRUPAL_8"
-tests["modules/system/system.module"]="DRUPAL_7"
-tests["wp-config.php"]="WORDPRESS"
+tests=(
+  "bin/appc::COALMARCH_SYMPHONY"
+  "bin/console::SYMPHONY_4"
+  "app/console::SYMPHONY"
+  "artisan::LARAVEL"
+  "core/lib/Drupal.php::DRUPAL_8"
+  "modules/system/system.module::DRUPAL_7"
+  "wp-config.php::WORDPRESS"
+);
 
-for dir in "${!tests[@]}"; do
+for index in "${tests[@]}"; do
+    dir="${index%%::*}";
+    type="${index##*::}";
     testdir=$ROOT/$dir;
     if [ -f $testdir ]; then
-        case ${tests[$dir]} in
-        COALMARCH_SYMPHONY)
-            cmd=$testdir;
-            ;;
-        SYMPHONY_4)
-            cmd=$testdir;
-            ;;
-        SYMPHONY)
-            cmd=$testdir;
-            ;;
-        LARAVEL)
-            cmd=$testdir;
-            ;;
+        case $type in
         DRUPAL_8)
             cmd="drupal";
             ;;
@@ -48,6 +39,9 @@ for dir in "${!tests[@]}"; do
             ;;
         WORDPRESS)
             cmd="wp";
+            ;;
+        *)
+            cmd=$testdir;
             ;;
         esac
     fi
