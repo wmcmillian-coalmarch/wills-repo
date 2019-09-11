@@ -58,3 +58,4 @@ function dlogin() {
         alert("This doesn't appear to be a Drupal site.");
     }
 }
+dlogin();
