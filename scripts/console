@@ -20,6 +20,7 @@ tests=(
   "bin/console::SYMPHONY_4"
   "app/console::SYMPHONY"
   "artisan::LARAVEL"
+  "vendor/bin/drupal::DRUPAL_CONSOLE"
   "core/lib/Drupal.php::DRUPAL_8"
   "modules/system/system.module::DRUPAL_7"
   "wp-config.php::WORDPRESS"

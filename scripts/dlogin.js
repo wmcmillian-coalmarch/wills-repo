@@ -1,5 +1,4 @@
-function dlogin() {
-    if (typeof Drupal != 'undefined' && typeof Drupal.settings != 'undefined') {
+ if (typeof Drupal != 'undefined' && typeof Drupal.settings != 'undefined') {
         var u = false;
         if (typeof jQuery != 'undefined' && jQuery('body.logged-in').length) {
             if (!confirm("It looks like you're already logged in. Continue?")) {
@@ -11,12 +10,7 @@ function dlogin() {
         var s = l.search || '';
         var b = Drupal.settings.basePath;
         var p = l.pathname.slice(b.length) || '<front>';
-        window.location.href = l.protocol+
-        "//"+
-        l.host+
-        b+
-        "user?destination="+
-        encodeURI(p + s + h);
+        window.location.href = l.protocol+ "//"+ l.host+ b+ "user?destination="+ encodeURI(p + s + h);
     } else if (typeof drupalSettings != 'undefined') {
         var u = false;
         if (typeof jQuery != 'undefined' && jQuery('body.user-logged-in').length) {
@@ -28,18 +22,8 @@ function dlogin() {
         var h = l.hash || '';
         var s = l.search || '';
         var b = drupalSettings.path.baseUrl || drupalSettings.baseUrl;
-        if(!b) {
-            alert("This doesn't appear to be a Drupal site.");
-        }
-        else {
-            var p = l.pathname.slice(b.length) || '<front>';
-            window.location.href = l.protocol +
-            "//" +
-            l.host +
-            b +
-            "user?destination=" +
-            encodeURI(p + s + h);
-        }
+        var p = l.pathname.slice(b.length) || '<front>';
+        window.location.href = l.protocol + "//" + l.host + b + "user/login?destination=" + encodeURI(p + s + h);
     } else if (typeof _int != 'undefined') {
         var u = false;
         if (typeof jQuery != 'undefined' && jQuery('body.logged-in').length) {
@@ -52,10 +36,7 @@ function dlogin() {
         var s = l.search || '';
         var b = "/";
         var p = l.pathname.slice(b.length) || '<front>';
-        window.location.href = l.protocol + "//" + l.host + b + "admin?destination="
-        encodeURI(p + s + h);
+        window.location.href = l.protocol + "//" + l.host + b + "admin?destination=" + encodeURI(p + s + h);
     } else {
-        alert("This doesn't appear to be a Drupal site.");
+        alert('This doesn\'t appear to be a Drupal site.');
     }
-}
-dlogin();
