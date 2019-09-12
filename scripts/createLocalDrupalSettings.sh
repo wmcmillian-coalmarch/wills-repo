@@ -14,13 +14,13 @@ spinner()
     printf "    \b\b\b\b"
 }
 
+PROJECTDIR="Sites"
+if [[ "${PWD}" =~ ^${HOME}/Projects ]]; then
+    PROJECTDIR="Projects"
+fi
+
 if [ -z "$1" ]
 then
-    PROJECTDIR="Sites"
-    if [[ "${PWD}" =~ ^${HOME}/Projects ]]; then
-        PROJECTDIR="Projects"
-    fi
-
     if [[ ! "${PWD}" =~ ^${HOME}/$PROJECTDIR ]]; then
         echo "Not in a Project directory like ~/Sites or ~/Projects"
         exit 1;
