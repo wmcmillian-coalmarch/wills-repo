@@ -34,12 +34,13 @@ do
     if [ -f ~/bin/$script ]; then
         rm ~/bin/$script;
     fi
-    
+
     if [ -z ${WILL_SANDBOX_DIR} ]; then
         echo "Downloading $script to $HOME/bin/$script ..."
         curl https://raw.githubusercontent.com/wmcmillian-coalmarch/wills-repo/master/scripts/$script > $script
         chmod 777 $script
     else
+        echo "Linking $script to $HOME/bin/$script ..."
         ln -s ${WILL_SANDBOX_DIR}/scripts/$script ~/bin/
     fi
 done
