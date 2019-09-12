@@ -87,29 +87,7 @@ then
     install_log=~/Sites/${SITE}/install.log;
     if [ ! -f $local_settings ]; then
         chmod 775 ~/Sites/$SITE/sites/default
-        echo "${SITE}/sites/default/settings.local.php not found. Setting up local settings file... This might take a bit...";
-        mv $settings_file $settings_file_tmp;
-        drush si --db-url=mysql://root:root@localhost/$DB -y > $install_log 2>&1 & spinner $! || true
-        if [ -f $settings_file ]; then
-            rm $install_log;
-            chmod 775 ~/Sites/$SITE/sites/default
-            chmod 777 $settings_file;
-            cp -f $local_settings_template $local_settings;
-            echo "" >> $local_settings;
-            echo "" >> $local_settings;
-            echo "/**=====================================" >> $local_settings;
-            echo "*            local install" >> $local_settings;
-            echo "*=====================================**/" >> $local_settings;
-            echo "" >> $local_settings;
-            echo "" >> $local_settings;
-            diff "${default_settings_file}" "${settings_file}" | grep ">" | sed 's/^>//g' | sed 's/^\( *\)\(.\)/\1\1\2/g' >> "${local_settings}";
-            rm -f $settings_file;
-            mv -f $settings_file_tmp $settings_file;
-        else
-            echo "Something went wrong...";
-            cat $install_log;
-            exit 1;
-        fi
+        createLocalDrupalSettings.sh $SITE;
     fi
     chmod 775 ~/Sites/$SITE/sites/default
 else
