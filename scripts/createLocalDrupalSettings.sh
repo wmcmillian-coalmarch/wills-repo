@@ -35,12 +35,14 @@ fi;
 if [ -f ~/${PROJECTDIR}/${SITE}/core/lib/Drupal.php ]
 then
     DRUPALV=8
-else if [ -f ~/${PROJECTDIR}/${SITE}/modules/system/system.module ]; then
-    DRUPALV=7
 else
-    echo 'A drupal site was not found.'
-    exit 1;
-fi;
+    if [ -f ~/${PROJECTDIR}/${SITE}/modules/system/system.module ]; then
+        DRUPALV=7
+    else
+        echo 'A drupal site was not found.'
+        exit 1;
+    fi;
+fi
 
 if [ ! $DRUPALV = "8" ]; then
     echo 'This script not compatible with Drupal 7 yet.'
@@ -58,7 +60,7 @@ install_log=~/${PROJECTDIR}/${SITE}/install.log;
 chmod 775 ~/${PROJECTDIR}/${SITE}/sites/default
 echo "${SITE}/sites/default/settings.local.php not found. Setting up local settings file... This might take a bit...";
 mv $settings_file $settings_file_tmp;
-drush si --db-url=mysql://root:root@localhost/$DB -y > $install_log 2>&1 & spinner $! || true
+drush si --db-url=mysql://root:root@localhost/$DB -y > $install_log 2>&1 & spinner $! || true;
 if [ -f $settings_file ]; then
     rm $install_log;
     chmod 775 ~/$PROJECTDIR/$SITE/sites/default
