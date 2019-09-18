@@ -17,20 +17,18 @@ if [[ "${PWD}" =~ ^${HOME}/Projects ]]; then
     PROJECTDIR="Projects"
 fi
 
-if [ -z "$1" ]
-then
-    if [[ ! "${PWD}" =~ ^${HOME}/$PROJECTDIR ]]; then
-        echo "Not in a Project directory like ~/Sites or ~/Projects"
-        exit 1;
-    fi
-
-    SITE=${PWD##*/$PROJECTDIR/}
-    SITE=${SITE%%/*}
+if [[ ! "${PWD}" =~ ^${HOME}/$PROJECTDIR ]]; then
+    echo "Not in a Project directory like ~/Sites or ~/Projects"
+    exit 1;
 fi
+
+SITE=${PWD##*/$PROJECTDIR/}
+SITE=${SITE%%/*}
+
 ARGS=""$@"";
 
 if [ "$TERMINUS_OLD" = true ]; then
     terminus drush "$ARGS" --site=$SITE --env=$ENV;
 else
-    terminus drush $SITE.$ENV "$ARGS"
+    terminus drush $SITE.$ENV -- "$ARGS"
 fi
