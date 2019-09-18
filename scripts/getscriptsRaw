@@ -13,6 +13,7 @@ prefresh
 pdrush
 rewritebase
 createLocalDrupalSettings.sh
+getSiteEnv.sh
 getscripts
 sprowt-user-add"
 
