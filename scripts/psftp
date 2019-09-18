@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -e
+
+SITENV=$(which getSiteEnv.sh);
+source $SITENV;
+
+SITEID=$(terminus site:info $SITE --field=ID);
+
+sftp -oPort=2222 $ENV.$SITEID@appserver.$ENV.$SITEID.drush.in

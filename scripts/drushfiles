@@ -29,10 +29,13 @@ if [ "$DRUPALV" = "7" ]; then
 else
     drush cr
 fi
-if [ -d "files" ]; then
+if [ ! -d "files" ]; then
+    mkdir files
+fi
 chmod -R 777 files
-fi  
-drush -r . -y rsync @pantheon.$SITE.$ENV:%files . --progress;
+
+SITEID=$(terminus site:info $SITE --field=ID);
+rsync -rvlzhsi   --copy-unsafe-links --size-only --checksum --ipv4 --progress -e 'ssh -p 2222' $ENV.$SITEID@appserver.$ENV.$SITEID.drush.in:files .
 echo "DONE!"
 chmod -R 777 files/;
 cd -;

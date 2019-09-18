@@ -11,6 +11,7 @@ siteget
 pdeploy
 prefresh
 pdrush
+psftp
 rewritebase
 createLocalDrupalSettings.sh
 getSiteEnv.sh
