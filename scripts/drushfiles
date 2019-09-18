@@ -2,12 +2,22 @@
 
 set -e
 
+PROJECTDIR="Sites"
+if [[ "${PWD}" =~ ^${HOME}/Projects ]]; then
+    PROJECTDIR="Projects"
+fi
+
 if [ -z "$1" ]
 then
-        ROOT=$(drush ev "print DRUPAL_ROOT");
-        SITE=${ROOT##*/}
+    if [[ ! "${PWD}" =~ ^${HOME}/$PROJECTDIR ]]; then
+        echo "Not in a Project directory like ~/Sites or ~/Projects"
+        exit 1;
+    fi
+
+    SITE=${PWD##*/$PROJECTDIR/}
+    SITE=${SITE%%/*}
 else
-        SITE=$1
+    SITE=$1
 fi;
 
 if [ -z "$2" ]

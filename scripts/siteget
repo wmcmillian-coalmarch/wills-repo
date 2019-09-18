@@ -76,28 +76,6 @@ then
 else
     DRUPALV=7
 fi;
-if [ $DRUPALV = "8" ]
-then
-    DB=${SITE//-/_}
-    settings_file=~/Sites/${SITE}/sites/default/settings.php;
-    default_settings_file=~/Sites/${SITE}/sites/default/default.settings.php;
-    settings_file_tmp=~/Sites/${SITE}/sites/default/settings.php-tmp;
-    local_settings=~/Sites/${SITE}/sites/default/settings.local.php;
-    local_settings_template=~/Sites/${SITE}/sites/example.settings.local.php;
-    install_log=~/Sites/${SITE}/install.log;
-    if [ ! -f $local_settings ]; then
-        chmod 775 ~/Sites/$SITE/sites/default
-        createLocalDrupalSettings.sh $SITE;
-    fi
-    chmod 775 ~/Sites/$SITE/sites/default
-else
-    if [ ! -f sites/default/settings.php ]
-    then
-        DB=${SITE//-/_}
-        echo "No settings.php. creating..."
-        drush si --db-url=mysql://root:root@localhost/$DB -y > /dev/null 2>&1 & spinner $! || true
-    fi;
-fi;
 terminus-ssp $SITE $ENV &&
 drushfiles $SITE $ENV &&
 cd ~/Sites/$SITE &&

@@ -4,12 +4,22 @@ set -e
 
 terminus_version;
 
+PROJECTDIR="Sites"
+if [[ "${PWD}" =~ ^${HOME}/Projects ]]; then
+    PROJECTDIR="Projects"
+fi
+
 if [ -z "$1" ]
 then
-        ROOT=$(drush ev "print DRUPAL_ROOT");
-        SITE=${ROOT##*/}
+    if [[ ! "${PWD}" =~ ^${HOME}/$PROJECTDIR ]]; then
+        echo "Not in a Project directory like ~/Sites or ~/Projects"
+        exit 1;
+    fi
+
+    SITE=${PWD##*/$PROJECTDIR/}
+    SITE=${SITE%%/*}
 else
-        SITE=$1
+    SITE=$1
 fi;
 
 if [ -z "$2" ]
@@ -47,6 +57,23 @@ then
     else
         terminus aliases
     fi
+fi;
+
+if [ $DRUPALV = "8" ]
+then
+    local_settings=~/Sites/${SITE}/sites/default/settings.local.php;
+    if [ ! -f $local_settings ]; then
+        chmod 775 ~/Sites/$SITE/sites/default
+        createLocalDrupalSettings.sh $SITE;
+    fi
+    chmod 775 ~/Sites/$SITE/sites/default
+else
+    if [ ! -f sites/default/settings.php ]
+    then
+        DB=${SITE//-/_}
+        echo "No settings.php. creating..."
+        drush si --db-url=mysql://root:root@localhost/$DB -y > /dev/null 2>&1 & spinner $! || true
+    fi;
 fi;
 
 if [ $DRUPALV = "7" ]; then
