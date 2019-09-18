@@ -2,6 +2,11 @@
 
 set -e
 
+PROJECTDIR="Sites"
+if [[ "${PWD}" =~ ^${HOME}/Projects ]]; then
+    PROJECTDIR="Projects"
+fi
+
 if [ -z "$1" ]
 then
     if [[ ! "${PWD}" =~ ^${HOME}/$PROJECTDIR ]]; then
