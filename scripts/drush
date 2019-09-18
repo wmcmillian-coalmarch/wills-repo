@@ -1,0 +1,42 @@
+#! /usr/bin/env bash
+
+set -e
+
+DRUSH8=${HOME}/bin/drush8;
+DRUSH=${HOME}/drush/vendor/bin/drush;
+
+PROJECTDIR="Sites"
+if [[ "${PWD}" =~ ^${HOME}/Projects ]]; then
+    PROJECTDIR="Projects"
+fi
+
+if [[ ! "${PWD}" =~ ^${HOME}/$PROJECTDIR ]]; then
+    DRUPALV=8
+else
+    SITE=${PWD##*/$PROJECTDIR/}
+    SITE=${SITE%%/*}
+
+    if [ -f ~/${PROJECTDIR}/${SITE}/core/lib/Drupal.php ]
+    then
+        DRUPALV=8
+    else
+        if [ -f ~/${PROJECTDIR}/${SITE}/modules/system/system.module ]; then
+            DRUPALV=7
+        else
+            DRUPALV=8
+        fi;
+    fi
+fi
+
+if [ $DRUPALV = 8 ]; then
+    if [ ! -f ${DRUSH} ]; then
+        echo "Drush not installed. Installing..."
+        mkdir -p ${HOME}/drush;
+        cd ${HOME}/drush;
+        composer require drush/drush;
+    fi
+
+    ${DRUSH} "$@";
+else
+    ${DRUSH8} "$@";
+fi

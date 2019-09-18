@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -e
+DRUSH8=${HOME}/drush8/vendor/bin/drush;
+if [ ! -f ${DRUSH8} ]; then
+    echo "Drush 8 not installed. Installing..."
+    mkdir -p ${HOME}/drush8;
+    cd ${HOME}/drush8;
+    composer require drush/drush:~8.0
+fi
+
+${DRUSH8} "$@";
