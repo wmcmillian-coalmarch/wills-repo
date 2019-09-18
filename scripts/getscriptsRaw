@@ -15,8 +15,9 @@ rewritebase
 createLocalDrupalSettings.sh
 getSiteEnv.sh
 getscripts
+drush
+drush8
 sprowt-user-add"
-
 mkdir -p ~/bin
 cd ~/bin
 
