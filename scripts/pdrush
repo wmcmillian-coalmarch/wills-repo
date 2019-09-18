@@ -10,9 +10,62 @@ else
     ENV="dev"
 fi;
 
-ROOT=$(drush ev "print DRUPAL_ROOT;");
-SITE=${ROOT##*/}
+DRUSH8=${HOME}/drush8/vendor/bin/drush;
+DRUSH=${HOME}/drush/vendor/bin/drush;
+
+PROJECTDIR="Sites"
+if [[ "${PWD}" =~ ^${HOME}/Projects ]]; then
+    PROJECTDIR="Projects"
+fi
+
+if [[ ! "${PWD}" =~ ^${HOME}/$PROJECTDIR ]]; then
+    DRUPALV=8
+else
+    SITE=${PWD##*/$PROJECTDIR/}
+    SITE=${SITE%%/*}
+
+    if [ -f ~/${PROJECTDIR}/${SITE}/core/lib/Drupal.php ]
+    then
+        DRUPALV=8
+    else
+        if [ -f ~/${PROJECTDIR}/${SITE}/modules/system/system.module ]; then
+            DRUPALV=7
+        else
+            DRUPALV=8
+        fi;
+    fi
+fi
+
 ARGS=""$@"";
 
-echo "drush @pantheon.$SITE.$ENV $ARGS --strict=0"
-drush @pantheon.$SITE.$ENV "$ARGS" --strict=0;
+echo "drush @pantheon.$SITE.$ENV $ARGS"
+if [ $DRUPALV = 8 ]; then
+    INSTALL=0;
+    if [ ! -f ${DRUSH} ]; then
+        INSTALL=1;
+    else
+        VERSION=$($DRUSH version --format=string);
+        VERSION=${VERSION%%.*}
+        if [ VERSION = "8" ]; then
+            rm -rf ${HOME}/drush;
+            INSTALL=1;
+        fi
+    fi
+
+    if [ $INSTALL = 1 ]; then
+        echo "Drush not installed. Installing..."
+        mkdir -p ${HOME}/drush;
+        cd ${HOME}/drush;
+        composer require drush/drush;
+    fi
+
+    ${DRUSH} @pantheon.$SITE.$ENV "$@";
+else
+    if [ ! -f ${DRUSH8} ]; then
+        echo "Drush 8 not installed. Installing..."
+        mkdir -p ${HOME}/drush8;
+        cd ${HOME}/drush8;
+        composer require drush/drush:~8.0
+    fi
+    ${DRUSH8} @pantheon.$SITE.$ENV "$@";
+fi
