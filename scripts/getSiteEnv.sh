@@ -25,7 +25,12 @@ fi;
 if [ "$SITE" = "live" ] || [ "$SITE" = "dev" ] || [ "$SITE" = "test" ]
 then
     ENV=$SITE
-    ROOT=$(drush ev "print DRUPAL_ROOT");
-    SITE=${ROOT##*/}
+    if [[ ! "${PWD}" =~ ^${HOME}/$PROJECTDIR ]]; then
+        echo "Not in a Project directory like ~/Sites or ~/Projects"
+        exit 1;
+    fi
+
+    SITE=${PWD##*/$PROJECTDIR/}
+    SITE=${SITE%%/*}
 fi;
 
