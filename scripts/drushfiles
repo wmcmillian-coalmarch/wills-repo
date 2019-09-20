@@ -34,7 +34,7 @@ fi
 chmod -R 777 files
 
 SITEID=$(terminus site:info $SITE --field=ID);
-rsync -rvlzhsi   --copy-unsafe-links --size-only --checksum --ipv4 --progress -e 'ssh -p 2222' $ENV.$SITEID@appserver.$ENV.$SITEID.drush.in:files/ files
+rsync -rvlzhi   --copy-unsafe-links --size-only --checksum --ipv4 --progress -e 'ssh -p 2222' $ENV.$SITEID@appserver.$ENV.$SITEID.drush.in:files/ files
 echo "DONE!"
 chmod -R 777 files/;
 cd -;
