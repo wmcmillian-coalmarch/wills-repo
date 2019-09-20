@@ -35,14 +35,14 @@ if [ $DRUPALV = 8 ]; then
     else
         VERSION=$($DRUSH version --format=string);
         VERSION=${VERSION%%.*}
-        if [ VERSION = "8" ]; then
+        if [ ${VERSION} = "8" ]; then
             rm -rf ${HOME}/drush;
             INSTALL=1;
         fi
     fi
 
     if [ $INSTALL = 1 ]; then
-        echo "Drush not installed. Installing..."
+        echo "Drush 9 not installed. Installing..."
         mkdir -p ${HOME}/drush;
         cd ${HOME}/drush;
         composer require drush/drush;
