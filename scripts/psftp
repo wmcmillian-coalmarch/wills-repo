@@ -2,8 +2,7 @@
 
 set -e
 
-SITENV=$(which getSiteEnv.sh);
-source $SITENV;
+source ${HOME}/bin/getSiteEnv.sh;
 
 SITEID=$(terminus site:info $SITE --field=ID);
 

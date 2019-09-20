@@ -9,8 +9,7 @@ if [[ "${PWD}" =~ ^${HOME}/Projects ]]; then
     PROJECTDIR="Projects"
 fi
 
-SITENV=$(which getSiteEnv.sh);
-source $SITENV;
+source ${HOME}/bin/getSiteEnv.sh;
 
 cd ~/Sites/$SITE
 

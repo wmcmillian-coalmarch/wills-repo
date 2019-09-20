@@ -3,8 +3,7 @@
 set -e
 terminus_version
 
-SITENV=$(which getSiteEnv.sh);
-source $SITENV;
+source ${HOME}/bin/getSiteEnv.sh;
 
 cd $HOME/Sites/$SITE
 if [ "$TERMINUS_OLD" = true ]; then

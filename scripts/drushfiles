@@ -2,8 +2,7 @@
 
 set -e
 
-SITENV=$(which getSiteEnv.sh);
-source $SITENV;
+source ${HOME}/bin/getSiteEnv.sh;
 
 if [ -f ~/Sites/$SITE/core/lib/Drupal.php ]
 then
