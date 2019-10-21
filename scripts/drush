@@ -29,26 +29,30 @@ else
 fi
 
 if [ $DRUPALV = 8 ]; then
-    INSTALL=0;
-    if [ ! -f ${DRUSH} ]; then
-        INSTALL=1;
-    else
-        VERSION=$($DRUSH version --format=string);
-        VERSION=${VERSION%%.*}
-        if [ ${VERSION} = "8" ]; then
-            rm -rf ${HOME}/drush;
-            INSTALL=1;
-        fi
-    fi
-
-    if [ $INSTALL = 1 ]; then
-        echo "Drush 9 not installed. Installing..."
-        mkdir -p ${HOME}/drush;
-        cd ${HOME}/drush;
-        composer require drush/drush;
-    fi
-
-    ${DRUSH} "$@";
+    ##  It doesn't make any sense to use Drush 9 anymore with Pantheon's workflow
+    ## We'll stick with drush 8 for now, but I'ma comment out the drush 9 stuff for
+    ## Future use
+        ${DRUSH8} "$@";
+#    INSTALL=0;
+##    if [ ! -f ${DRUSH} ]; then
+##        INSTALL=1;
+##    else
+##        VERSION=$($DRUSH version --format=string);
+##        VERSION=${VERSION%%.*}
+##        if [ ${VERSION} = "8" ]; then
+##            rm -rf ${HOME}/drush;
+##            INSTALL=1;
+##        fi
+##    fi
+##
+##    if [ $INSTALL = 1 ]; then
+##        echo "Drush 9 not installed. Installing..."
+##        mkdir -p ${HOME}/drush;
+##        cd ${HOME}/drush;
+##        composer require drush/drush;
+##    fi
+##
+##    ${DRUSH} "$@";
 else
     ${DRUSH8} "$@";
 fi
