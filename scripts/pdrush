@@ -40,26 +40,35 @@ ARGS=""$@"";
 
 echo "drush @pantheon.$SITE.$ENV $ARGS"
 if [ $DRUPALV = 8 ]; then
-    INSTALL=0;
-    if [ ! -f ${DRUSH} ]; then
-        INSTALL=1;
-    else
-        VERSION=$($DRUSH version --format=string);
-        VERSION=${VERSION%%.*}
-        if [ VERSION = "8" ]; then
-            rm -rf ${HOME}/drush;
-            INSTALL=1;
-        fi
-    fi
+#    INSTALL=0;
+#    if [ ! -f ${DRUSH} ]; then
+#        INSTALL=1;
+#    else
+#        VERSION=$($DRUSH version --format=string);
+#        VERSION=${VERSION%%.*}
+#        if [ VERSION = "8" ]; then
+#            rm -rf ${HOME}/drush;
+#            INSTALL=1;
+#        fi
+#    fi
+#
+#    if [ $INSTALL = 1 ]; then
+#        echo "Drush not installed. Installing..."
+#        mkdir -p ${HOME}/drush;
+#        cd ${HOME}/drush;
+#        composer require drush/drush;
+#    fi
+#
+#    ${DRUSH} @pantheon.$SITE.$ENV "$@";
 
-    if [ $INSTALL = 1 ]; then
-        echo "Drush not installed. Installing..."
-        mkdir -p ${HOME}/drush;
-        cd ${HOME}/drush;
-        composer require drush/drush;
+## We aren't using drush 9 for now. Stick with 8
+    if [ ! -f ${DRUSH8} ]; then
+        echo "Drush 8 not installed. Installing..."
+        mkdir -p ${HOME}/drush8;
+        cd ${HOME}/drush8;
+        composer require drush/drush:~8.0
     fi
-
-    ${DRUSH} @pantheon.$SITE.$ENV "$@";
+    ${DRUSH8} @pantheon.$SITE.$ENV "$@";
 else
     if [ ! -f ${DRUSH8} ]; then
         echo "Drush 8 not installed. Installing..."
