@@ -81,6 +81,7 @@ git pull;
 rsync -av --progress $CALLSCRIPTS/modules ~/Sites/$SITE --exclude node_modules;
 rsync -av --progress $CALLSCRIPTS/themes ~/Sites/$SITE --exclude node_modules;
 rsync -av --progress $CALLSCRIPTS/config ~/Sites/$SITE --exclude node_modules;
+cp $CALLSCRIPTS/sites/default/settings.php ~/Sites/$SITE/sites/default/settings.php;
 
 git add .
 git commit -am "Copying code from call-scripts"
@@ -101,16 +102,7 @@ cp -r $CALLSCRIPTS/sites/default/files ~/Sites/$SITE/sites/default/;
 
 UUID=$(terminus site:info $SITE --field=id);
 cd ~/Sites/$SITE/sites/default;
-while [ 1 ]
-do
 rsync --partial -rlvz --size-only --ipv4 --progress -e 'ssh -p 2222' ./files/* --temp-dir=../tmp/ dev.$UUID@appserver.dev.$UUID.drush.in:files/
-if [ "$?" = "0" ] ; then
-echo "rsync completed normally"
-else
-echo "Rsync failure. Backing off and retrying..."
-sleep 180
-fi
-done
 
 #clear cache
 echo "Clearing cache..."
