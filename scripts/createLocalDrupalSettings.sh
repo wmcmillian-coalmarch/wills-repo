@@ -71,7 +71,7 @@ install_log=~/${PROJECTDIR}/${SITE}/install.log;
 chmod 775 ~/${PROJECTDIR}/${SITE}/sites/default
 echo "${SITE}/sites/default/settings.local.php not found. Setting up local settings file... This might take a bit...";
 mv $settings_file $settings_file_tmp;
-drush si --db-url=mysql://$MYSQL_USER:$MYSQL_PASSWORD@$MYSQL_HOST/$DB -y > $install_log 2>&1 & spinner $! || true;
+drush si minimal --db-url=mysql://$MYSQL_USER:$MYSQL_PASSWORD@$MYSQL_HOST/$DB -y > $install_log 2>&1 & spinner $! || true;
 if [ -f $settings_file ]; then
     rm $install_log;
     chmod 775 ~/$PROJECTDIR/$SITE/sites/default

@@ -57,7 +57,7 @@ else
     then
         DB=${SITE//-/_}
         echo "No settings.php. creating..."
-        drush si --db-url=mysql://$MYSQL_USER:$MYSQL_PASSWORD@$MYSQL_HOST/$DB -y > /dev/null 2>&1 & spinner $! || true
+        drush si minimal --db-url=mysql://$MYSQL_USER:$MYSQL_PASSWORD@$MYSQL_HOST/$DB -y > /dev/null 2>&1 & spinner $! || true
     fi;
 fi;
 
