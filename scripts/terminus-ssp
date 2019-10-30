@@ -4,6 +4,21 @@ set -e
 
 terminus_version;
 
+    spinner()
+    {
+        local pid=$1
+        local delay=0.5
+        local spinstr='|/-\'
+        while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+            local temp=${spinstr#?}
+            printf " [%c]  " "$spinstr"
+            local spinstr=$temp${spinstr%"$temp"}
+            sleep $delay
+            printf "\b\b\b\b\b\b"
+        done
+        printf "    \b\b\b\b"
+    }
+
 if [ -z "${MYSQL_USER}" ]; then
     MYSQL_USER="root"
 fi
@@ -76,21 +91,6 @@ if [ "$TERMINUS_OLD" = true ]; then
     terminus site backups create --element=database --site=$SITE --env=$ENV &&
     terminus site backups get --element=database --site=$SITE --env=$ENV --to=$HOME/sqltemp --latest
 else
-
-    spinner()
-    {
-        local pid=$1
-        local delay=0.5
-        local spinstr='|/-\'
-        while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
-            local temp=${spinstr#?}
-            printf " [%c]  " "$spinstr"
-            local spinstr=$temp${spinstr%"$temp"}
-            sleep $delay
-            printf "\b\b\b\b\b\b"
-        done
-        printf "    \b\b\b\b"
-    }
 
     SITEENV="$SITE.$ENV";
     printf "Backing up database..." &&
