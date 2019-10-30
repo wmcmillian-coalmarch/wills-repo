@@ -68,11 +68,12 @@ then
     fi
     chmod 775 ~/Sites/$SITE/sites/default
 else
-    if [ ! -f sites/default/settings.php ]
+    if [ ! -f ~/Sites/$SITE/sites/default/settings.php ]
     then
         DB=${SITE//-/_}
         echo "No settings.php. creating..."
         drush si minimal --db-url=mysql://$MYSQL_USER:$MYSQL_PASSWORD@$MYSQL_HOST/$DB -y > /dev/null 2>&1 & spinner $! || true
+        chmod 775 ~/Sites/$SITE/sites/default
     fi;
 fi;
 
