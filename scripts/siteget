@@ -22,6 +22,7 @@ spinner()
     printf "    \b\b\b\b"
 }
 
+
 SITE="$1";
 CLONE="tclone $SITE"
 
@@ -31,8 +32,29 @@ if [ -z $SITE ]; then
         The first argument must be the site name from pantheon.
         USAGE:
         siteget got-bugs
+        siteget got-bugs live
+        siteget got-bugs --no-refresh
+        siteget got-bugs live --no-refresh
     "
     exit 1
+fi
+
+if [ "$SITE" = "--help" ] || [ "$SITE" = "-h" ]; then
+    echo "
+            Retrieves a site from Pantheon.
+            First argument must always be the Pantheon machine name.
+            The second argument (optional) can be the Pantheon environment or the --no-refresh flag.
+            If no environment is given, \"dev\" will be assumed.
+
+            The --no-refresh flag will skip the refreshing of drush aliases and the cached site list.
+
+            USAGE:
+            siteget got-bugs
+            siteget got-bugs live
+            siteget got-bugs --no-refresh
+            siteget got-bugs live --no-refresh
+    ";
+    exit 0;
 fi
 
 if [ -n "$2" ]; then
@@ -41,11 +63,28 @@ else
     ENV="dev"
 fi
 
+noRefresh="0"
+
+if [ "$ENV" = "--no-refresh" ]; then
+    noRefresh="1"
+    ENV="dev"
+fi
+
+if [ -n "$3" ] && [ "$3" = "--no-refresh" ]; then
+    noRefresh="1"
+fi
+
 cd ~/Sites
 tlogin
-echo "refreshing site aliases..."
 
-terminus aliases > /dev/null 2>&1 & spinner $!
+if [ "$noRefresh" = "1" ]; then
+    echo "skipping site alias and site list refresh"
+else
+    echo "refreshing site aliases..."
+    terminus aliases > /dev/null 2>&1 & spinner $!
+    echo "refreshing site list..."
+    terminus site:list > /dev/null 2>&1 & spinner $!
+fi
 
 notfound="Not found:.*"
 if [[ $((drush sa @pantheon.$SITE.$ENV) 2>&1) =~ $notfound ]]
@@ -57,8 +96,8 @@ then
     echo "refreshing site aliases..."
     terminus aliases > /dev/null 2>&1 & spinner $!
 fi;
-echo "refreshing site list..."
-terminus site:list > /dev/null 2>&1 & spinner $!
+
+
 if [ -d ~/Sites/$SITE ]; then
     echo "Directory for $SITE already exists. Pulling"
     cd $SITE
