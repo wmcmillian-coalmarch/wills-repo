@@ -92,7 +92,7 @@ function updateUser($siteName) {
     
     $environments = terminusCommand("env:list $siteName");
     foreach($environments as $environment) {
-        if(in_array($environment['id'], $envs) && $environment['initialized'] == 'true') {
+        if(in_array($environment['id'], $envs) && $environment['initialized']) {
             $siteEnv = "$siteName." . $environment['id'];
             $userInfoRaw = drushCommand($siteEnv, 'uinf ' . USER, false);
             $userInfo = [];
@@ -114,10 +114,14 @@ function updateUser($siteName) {
     
 }
 
-$site_list = terminusCommand('org:sites 08b99cd5-81a3-4b67-acc1-d5dba50390f8');
+$site_list = terminusCommand('org:site:list 08b99cd5-81a3-4b67-acc1-d5dba50390f8');
 
 foreach($site_list as $site) {
-    if($site['framework'] == 'drupal' && $site['frozen'] != 'true') {
+    $frameworks = [
+        'drupal',
+        'drupal8'
+    ];
+    if(in_array($site['framework'], $frameworks) && !$site['frozen']) {
         updateUser($site['name']);
     }
 }
