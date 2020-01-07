@@ -20,13 +20,20 @@ TARGET=$HOME/exports/$SITE;
 # Specify the source folder.
 SOURCE="$SITEDIR"
 
+
+
 mkdir -p $TARGET;
 touch $TARGET/$SITE-db.sql.gz;
 touch $TARGET/$SITE-code.tar.gz
 touch $TARGET/$SITE-files.tar.gz
 rm $TARGET/$SITE*;
 
-cd $SOURCE;
+if [ -d $SOURCE ]; then
+    cd $SOURCE || exit 1;
+else
+    echo "Site doesn't exist!"
+    exit 1;
+fi
 
 if [ -f $SOURCE/core/lib/Drupal.php ]
 then
