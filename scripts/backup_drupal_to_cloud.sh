@@ -11,7 +11,7 @@ if [ -d "/var/www/$SITE" ]; then
     SITEDIR="/var/www/$SITE";
 elif [ -d "$HOME/Sites/$SITE" ]; then
     SITEDIR="$HOME/Sites/$SITE";
-elif [ -d "$HOME/Projects/$SITE" ]; then
+else
     SITEDIR="$HOME/Projects/$SITE";
 fi
 
@@ -20,7 +20,12 @@ TARGET=$HOME/exports/$SITE;
 # Specify the source folder.
 SOURCE="$SITEDIR"
 
-
+if [ -d $SOURCE ]; then
+    cd $SOURCE || exit 1;
+else
+    echo "Site doesn't exist!"
+    exit 1;
+fi
 
 mkdir -p $TARGET;
 touch $TARGET/$SITE-db.sql.gz;
@@ -28,12 +33,6 @@ touch $TARGET/$SITE-code.tar.gz
 touch $TARGET/$SITE-files.tar.gz
 rm $TARGET/$SITE*;
 
-if [ -d $SOURCE ]; then
-    cd $SOURCE || exit 1;
-else
-    echo "Site doesn't exist!"
-    exit 1;
-fi
 
 if [ -f $SOURCE/core/lib/Drupal.php ]
 then
