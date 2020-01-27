@@ -15,6 +15,7 @@ fi;
         local pid=$1
         local delay=0.5
         local spinstr='|/-\'
+        tput civis
         while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
             local temp=${spinstr#?}
             printf " [%c]  " "$spinstr"
@@ -22,6 +23,7 @@ fi;
             sleep $delay
             printf "\b\b\b\b\b\b"
         done
+        tput cnorm
         printf "    \b\b\b\b"
     }
 printf "Backing up dev..." &&
