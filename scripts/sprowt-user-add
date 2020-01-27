@@ -30,7 +30,7 @@ then
     ROOT=$(drush ev "print DRUPAL_ROOT");
     SITE=${ROOT##*/}
 else
-    ENV=$2
+    ENV=$1
     shift
 fi;
 
