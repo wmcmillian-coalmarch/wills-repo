@@ -26,6 +26,8 @@ fi;
         tput cnorm
         printf "    \b\b\b\b"
     }
+
+    trap 'tput cnorm' EXIT;
 printf "Backing up dev..." &&
 terminus backup:create $SITE.dev 2>&1 & spinner $!
 printf "Backing up test..." &&

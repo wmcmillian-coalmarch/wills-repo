@@ -24,6 +24,7 @@ spinner()
     printf "    \b\b\b\b"
 }
 
+trap 'tput cnorm' EXIT;
 
 SITE="$1";
 CLONE="tclone $SITE"

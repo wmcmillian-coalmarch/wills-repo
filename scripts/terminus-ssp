@@ -21,6 +21,8 @@ terminus_version;
         printf "    \b\b\b\b"
     }
 
+trap 'tput cnorm' EXIT;
+
 if [ -z "${MYSQL_USER}" ]; then
     MYSQL_USER="root"
 fi
