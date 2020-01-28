@@ -5,8 +5,13 @@ terminus_version;
 
 if [[ "$1" =~ --.* ]]
 then
-        ROOT=$(drush ev "print DRUPAL_ROOT");
-        SITE=${ROOT##*/}
+        PROJECTDIR="Sites"
+        if [[ "${PWD}" =~ ^${HOME}/Projects ]]; then
+            PROJECTDIR="Projects"
+        fi
+
+        SITE=${PWD##*/$PROJECTDIR/}
+        SITE=${SITE%%/*}
 else
         if [[ "$1" = "doublecheck" ]]
         then
@@ -18,8 +23,13 @@ else
 
         if [[ "$1" =~ --.* ]]
         then
-            ROOT=$(drush ev "print DRUPAL_ROOT");
-            SITE=${ROOT##*/}
+            PROJECTDIR="Sites"
+            if [[ "${PWD}" =~ ^${HOME}/Projects ]]; then
+                PROJECTDIR="Projects"
+            fi
+
+            SITE=${PWD##*/$PROJECTDIR/}
+            SITE=${SITE%%/*}
         else
             SITE=$1
             shift;
