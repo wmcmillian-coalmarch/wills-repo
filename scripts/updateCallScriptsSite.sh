@@ -36,6 +36,7 @@ if [ $needsPush = "1" ]; then
 fi
 
 pdrush cim --partial -y;
+pdrush cr;
 
 if [ $ENV = 'test' ] || [ $ENV = 'live' ]; then
     terminus env:deploy "$SITE.test" --note="Upstream Updates" --cc --updatedb;
