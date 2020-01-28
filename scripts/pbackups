@@ -2,13 +2,15 @@
 
 set -e
 
-if [ -z "$1" ]
-then
-        ROOT=$(drush ev "print DRUPAL_ROOT");
-        SITE=${ROOT##*/}
-else
-        SITE=$1
-fi;
+#if [ -z "$1" ]
+#then
+#        ROOT=$(drush ev "print DRUPAL_ROOT");
+#        SITE=${ROOT##*/}
+#else
+#        SITE=$1
+#fi;
+
+source ${HOME}/bin/getSiteEnv.sh;
 
  spinner()
     {
