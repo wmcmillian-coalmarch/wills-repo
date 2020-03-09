@@ -8,8 +8,9 @@ if [[ "${PWD}" =~ ^${HOME}/Projects ]]; then
 fi
 
 source ${HOME}/bin/getSiteEnv.sh;
+echo "Updating $SITE...";
 
 pbackups $SITE;
 terminus upstream:updates:apply $SITE.dev --updatedb &&
-terminus env:deploy "$SITE.test" --note="upstream updates" --cc --updateb;
+terminus env:deploy "$SITE.test" --note="upstream updates" --cc --updateb &&
 terminus env:deploy "$SITE.live" --note="upstream updates" --cc --updateb;
