@@ -6,6 +6,8 @@ source ${HOME}/bin/getSiteEnv.sh;
 
 echo "Pulling down live site, $SITE..."
 
+cd ~/.drush
+
 notfound="Not found:.*"
 if [[ $(drush sa @pantheon.$SITE.live 2>&1) =~ $notfound ]]
 then
