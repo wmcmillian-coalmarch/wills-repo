@@ -1,0 +1,44 @@
+#! /usr/bin/env php
+<?php
+
+date_default_timezone_set('America/New_York');
+
+exec("which terminus", $terminus);
+$terminus = array_shift($terminus);
+define('TERMINUS', $terminus);
+
+function terminusCommand($cmd) {
+    $terminus = TERMINUS;
+    $cmd = "$terminus $cmd --format=json";
+    $result = exec($cmd, $json);
+    $json = implode("", $json);
+    return json_decode($json, true);
+}
+
+$skipUpdate = [
+    'thorn-pest-call-scripts',
+    'tpc-call-scripts-2020'
+];
+
+$liveSites = [
+    "adams-pest-control-call-scripts",
+    "bel-o-call-scripts",
+    "envirocon-call-scripts",
+    "extermatrim-call-scripts",
+    "invader-call-scripts",
+    "preventive-pest-call-scripts",
+    "simply-the-best-call-scripts"
+];
+
+$site_list = terminusCommand('org:sites 08b99cd5-81a3-4b67-acc1-d5dba50390f8 --upstream="ffa5972a-65d3-4ba0-b8f1-82d5aa3c3de7"');
+
+foreach($site_list as $siteId => $siteInfo) {
+    if(!in_array($siteInfo['name'], $skipUpdate)) {
+        if($siteInfo['plan_name'] == 'Sandbox' && !in_array($siteInfo['name'], $liveSites)) {
+            passthru(__DIR__ . '/callScriptsUpdate_dev_only.sh ' . $siteInfo['name']);
+        }
+        else {
+            passthru(__DIR__ . '/callScriptsUpdate.sh ' . $siteInfo['name']);
+        }
+    }
+}
