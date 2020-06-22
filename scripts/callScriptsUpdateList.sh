@@ -1,17 +1,13 @@
 #! /usr/bin/env bash
 
-livesites="adams-pest-control-call-scripts
+livesites="miller-pest-call-scripts
 bel-o-call-scripts
-envirocon-call-scripts
-extermatrim-call-scripts
 invader-call-scripts
+simply-the-best-call-scripts
 preventive-pest-call-scripts
-simply-the-best-call-scripts"
+extermatrim-call-scripts"
 
-devsites="coalmarch-demo-call-scripts
-coalmarch-demo-call-scripts-integration
-dauv-call-scripts
-dauv-call-scripts-integration"
+devsites=""
 
 for site in $devsites;
 do

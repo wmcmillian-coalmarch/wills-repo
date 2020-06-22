@@ -55,12 +55,13 @@ drush updatedb -y
 echo "Pushing up and running updates on Pantheon"
 
 git push &&
-sleep 10 &&
+sleep 30 &&
 pdrush dev cr &&
 pdrush dev cim -y &&
 pdrush dev updatedb -y &&
 pdrush dev cr &&
 pdeploy --note="upstream updates" --cc &&
+sleep 30 &&
 pdrush live cr &&
 pdrush live cim -y &&
 pdrush live updatedb -y &&

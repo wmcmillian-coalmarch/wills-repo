@@ -56,7 +56,7 @@ drush updatedb -y
 echo "Pushing up and running updates on Pantheon"
 
 git push &&
-sleep 10 &&
+sleep 30 &&
 pdrush cr &&
 pdrush dev cim --y &&
 pdrush dev updatedb -y &&
