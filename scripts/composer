@@ -1,11 +1,4 @@
 #!/usr/bin/env bash
-re="*/php";
-if [[ "$0" =~ $re ]]; then
-    php=$0;
-else
-    php=$(which php);
-fi;
-
 PROJECTDIR="Sites"
 if [[ "${PWD}" =~ ^$HOME/Projects ]]; then
     PROJECTDIR="Projects"
@@ -24,8 +17,6 @@ ROOT=$HOME/$PROJECTDIR/$SITE;
 tests=(
   "bin/composer::COMPOSER_DOCKER"
 );
-
-cmd="$php ~/bin/composer.sh";
 
 for index in "${tests[@]}"; do
     dir="${index%%::*}";
@@ -52,8 +43,7 @@ for index in "${tests[@]}"; do
 done
 
 if [ -z "$cmd" ]; then
-    echo "Not a valid site."
-    exit 1;
+    cmd="$HOME/bin/composer.sh";
 fi
 
 $cmd "$@";
