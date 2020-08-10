@@ -16,24 +16,21 @@ function terminusCommand($cmd) {
 }
 
 $skipUpdate = [
-    'thorn-pest-call-scripts',
-    'tpc-call-scripts-2020'
+    'tpc-call-scripts'
 ];
 
-$liveSites = [
-    "adams-pest-control-call-scripts",
-    "bel-o-call-scripts",
-    "envirocon-call-scripts",
-    "extermatrim-call-scripts",
-    "invader-call-scripts",
-    "preventive-pest-call-scripts",
-    "simply-the-best-call-scripts"
-];
+$liveSites = [];
 
 $site_list = terminusCommand('org:sites 08b99cd5-81a3-4b67-acc1-d5dba50390f8 --upstream="ffa5972a-65d3-4ba0-b8f1-82d5aa3c3de7"');
 
 foreach($site_list as $siteId => $siteInfo) {
-    if(!in_array($siteInfo['name'], $skipUpdate)) {
+
+    $envList = terminusCommand('env:list ' . $siteInfo['name']);
+    if(!empty($envList['live']) && !empty($envList['live']['initialized'])) {
+        $liveSites[] = $siteInfo['name'];
+    }
+
+    if(!in_array($siteInfo['name'], $skipUpdate) && empty($siteInfo['frozen'])) {
         if($siteInfo['plan_name'] == 'Sandbox' && !in_array($siteInfo['name'], $liveSites)) {
             passthru(__DIR__ . '/callScriptsUpdate_dev_only.sh ' . $siteInfo['name']);
         }

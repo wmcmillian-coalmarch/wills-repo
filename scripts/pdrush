@@ -66,7 +66,7 @@ if [ $DRUPALV = 8 ]; then
         echo "Drush 8 not installed. Installing..."
         mkdir -p ${HOME}/drush8;
         cd ${HOME}/drush8;
-        composer require drush/drush:~8.0
+        composer.sh require drush/drush:~8.0
     fi
     ${DRUSH8} @pantheon.$SITE.$ENV "$@";
 else
@@ -74,7 +74,7 @@ else
         echo "Drush 8 not installed. Installing..."
         mkdir -p ${HOME}/drush8;
         cd ${HOME}/drush8;
-        composer require drush/drush:~8.0
+        composer.sh require drush/drush:~8.0
     fi
     ${DRUSH8} @pantheon.$SITE.$ENV "$@";
 fi
