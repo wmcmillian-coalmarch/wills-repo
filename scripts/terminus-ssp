@@ -95,6 +95,15 @@ rm ~/sqltemp/$SITE*.sql.gz > /dev/null 2>&1 ||
 if [ "$TERMINUS_OLD" = true ]; then
     terminus site backups create --element=database --site=$SITE --env=$ENV &&
     terminus site backups get --element=database --site=$SITE --env=$ENV --to=$HOME/sqltemp --latest
+    if [ ! -f ~/sqltemp/$SITE*.sql.gz ]; then
+      echo "Trouble downloading file. Waiting thirty seconds and then retrying."
+      sleep 30;
+      terminus site backups get --element=database --site=$SITE --env=$ENV --to=$HOME/sqltemp --latest
+    fi
+    if [ ! -f ~/sqltemp/$SITE*.sql.gz ]; then
+      echo "Trouble downloading file again. Exiting."
+      exit 1;
+    fi
 else
 
     SITEENV="$SITE.$ENV";

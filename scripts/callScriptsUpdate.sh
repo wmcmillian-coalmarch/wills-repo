@@ -30,11 +30,23 @@ else
     cd ~/Sites/$SITE
     chmod 775 ~/Sites/$SITE/sites/default
 fi
+
+cd ~/Sites/$SITE
+if [[ $(git diff --stat) != '' ]]; then
+  echo 'Directory dirty'
+  exit 1;
+fi
+
 rewritebase $SITE
+if [[ $(git diff --stat) != '' ]]; then
+  git add .
+  git commit -m "update htaccess"
+fi
+
 DRUPALV=8
 terminus-ssp $SITE live &&
-drushfiles $SITE live &&
-cd ~/Sites/$SITE
+drushfiles $SITE live
+
 
 echo "Backing up site on Pantheon..."
 pbackups
