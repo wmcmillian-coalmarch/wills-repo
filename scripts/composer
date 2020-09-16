@@ -4,43 +4,42 @@ if [[ "${PWD}" =~ ^$HOME/Projects ]]; then
     PROJECTDIR="Projects"
 fi
 
-if [[ ! "${PWD}" =~ ^$HOME/$PROJECTDIR ]]; then
-    echo "Not in a Project directory like ~/Sites or ~/Projects"
-    exit 1;
+if [[ "${PWD}" =~ ^$HOME/$PROJECTDIR ]]; then
+  SITE=${PWD##*/$PROJECTDIR/}
+  SITE=${SITE%%/*}
+
+  ROOT=$HOME/$PROJECTDIR/$SITE;
+
+  tests=(
+    "bin/composer::COMPOSER_DOCKER"
+  );
+
+  for index in "${tests[@]}"; do
+      dir="${index%%::*}";
+      type="${index##*::}";
+      testdir=$ROOT/$dir;
+      if [ -z $cmd ]; then
+          if [ -f $testdir ]; then
+              case $type in
+  #            DRUPAL_8)
+  #                cmd="drupal";
+  #                ;;
+  #            DRUPAL_7)
+  #                cmd="drush";
+  #                ;;
+  #            WORDPRESS)
+  #                cmd="wp";
+  #                ;;
+              *)
+                  cmd=$testdir;
+                  ;;
+              esac
+          fi
+      fi
+  done
 fi
 
-SITE=${PWD##*/$PROJECTDIR/}
-SITE=${SITE%%/*}
 
-ROOT=$HOME/$PROJECTDIR/$SITE;
-
-tests=(
-  "bin/composer::COMPOSER_DOCKER"
-);
-
-for index in "${tests[@]}"; do
-    dir="${index%%::*}";
-    type="${index##*::}";
-    testdir=$ROOT/$dir;
-    if [ -z $cmd ]; then
-        if [ -f $testdir ]; then
-            case $type in
-#            DRUPAL_8)
-#                cmd="drupal";
-#                ;;
-#            DRUPAL_7)
-#                cmd="drush";
-#                ;;
-#            WORDPRESS)
-#                cmd="wp";
-#                ;;
-            *)
-                cmd=$testdir;
-                ;;
-            esac
-        fi
-    fi
-done
 
 if [ -z "$cmd" ]; then
     cmd="$HOME/bin/composer.sh";

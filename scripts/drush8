@@ -6,7 +6,7 @@ if [ ! -f ${DRUSH8} ]; then
     echo "Drush 8 not installed. Installing..."
     mkdir -p ${HOME}/drush8;
     cd ${HOME}/drush8;
-    composer.sh require drush/drush:~8.0
+    composer require drush/drush:~8.0
 fi
 
 ${DRUSH8} "$@";

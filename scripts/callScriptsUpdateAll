@@ -22,12 +22,22 @@ $skipUpdate = [
 $liveSites = [];
 
 $runOnly = [
-    'Preventive Pest Call Scripts',
-    'Miller Pest Call Scripts',
-    'Go Green Call Scripts',
-    'Extermatrim Call Scripts',
+    'Admiral Pest Call Scripts',
+    'Bel-O Call Scripts',
     'Coalmarch Demo Call Scripts',
-    'Coalmarch Demo Call Scripts Integration'
+    'Coalmarch Demo Call Scripts Integration',
+    'Cross Pest Control Call Scripts',
+    'EnviroCon Pest Call Scripts',
+    'Extermatrim Call Scripts',
+    'Freedom Pest Control Call Scripts',
+    'Go Green Call Scripts',
+    'Greenleaf Pest Call Scripts',
+    'GRIT Call Scripts',
+    'Invader Call Scripts',
+    'Miller Pest Call Scripts',
+    'Preventive Pest Call Scripts',
+    'Simply The Best Call Scripts',
+    'TPC Call Scripts 2020'
 ];
 
 if(!empty($runOnly)) {
