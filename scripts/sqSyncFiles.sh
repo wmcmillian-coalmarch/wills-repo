@@ -25,7 +25,7 @@ if [ -z "${MYSQL_HOST}" ]; then
     MYSQL_HOST="localhost"
 fi
 
-chmod -R 775 $SITEDIR/sites/default;
+chmod 775 $SITEDIR/sites/default;
 
 cd $SITEDIR/sites/default;
 
