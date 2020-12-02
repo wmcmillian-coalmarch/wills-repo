@@ -4,7 +4,7 @@ set -e
 
 source ${HOME}/bin/getSiteEnv.sh;
 
-SITEDIR=$PROJECTDIR/$SITE;
+SITEDIR=~/$PROJECTDIR/$SITE;
 
 cd $SITEDIR;
 
@@ -44,20 +44,20 @@ else
 fi;
 
 if [ $DRUPALV = "7" ]; then
-    CLEARCACHECMD='drush cc all'
+    CLEARCACHECMD="cd /var/www/${SITE}-${ENV} && drush cc all"
 else
-    CLEARCACHECMD='drush cr'
+    CLEARCACHECMD="cd /var/www/${SITE}-${ENV} && drush cr"
 fi
-FILENAME="${SITE}-${env}-backup.sql.gz"
+FILENAME="${SITE}-${ENV}-backup.sql"
 SERVERFILE="/tmp/${FILENAME}";
-BACKUPCMD="cd /var/www/${SITE}-${dev} && drush sql:dump --result-file=${SERVERFILE} --gzip"
+BACKUPCMD="cd /var/www/${SITE}-${ENV} && drush sql:dump --result-file=${SERVERFILE} --gzip"
 
 echo "Exporting remote database..."
 
-ssh sprowthq "sudo su www -- sh -c '${CLEARCACHECMD}'"
-ssh sprowthq "sudo su www -- sh -c '${BACKUPCMD}'"
-ssh sprowthq "sudo chmod 777 ${SERVERFILE}"
-scp sprowthq:${SERVERFILE} ./${FILENAME}
+ssh sprowthq "sudo -u www -- sh -c '${CLEARCACHECMD}'"
+ssh sprowthq "sudo -u www -- sh -c '${BACKUPCMD}'"
+ssh sprowthq "sudo chmod 777 ${SERVERFILE}.gz"
+scp sprowthq:${SERVERFILE}.gz ./${FILENAME}
 
 drush sql-create -y;
 

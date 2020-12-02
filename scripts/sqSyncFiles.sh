@@ -4,7 +4,7 @@ set -e
 
 source ${HOME}/bin/getSiteEnv.sh;
 
-SITEDIR=$PROJECTDIR/$SITE;
+SITEDIR=~/$PROJECTDIR/$SITE;
 
 cd $SITEDIR;
 
