@@ -33,6 +33,6 @@ mkdir -p files;
 
 chmod -R 777 files;
 
-rsync -rvlhiW --info=progress2 --copy-unsafe-links --size-only --ipv4 --progress sprowthq:/var/www/${SITE}-${ENV}/sites/default/files/ files
+rsync --rsync-path='sudo -u www rsync' -rvlhiW --info=progress2 --copy-unsafe-links --size-only --ipv4 --progress sprowthq:/var/www/${SITE}-${ENV}/sites/default/files/ files
 
 chmod -R 777 files;

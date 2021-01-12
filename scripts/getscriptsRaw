@@ -18,7 +18,10 @@ getSiteEnv.sh
 getscripts
 drush
 drush8
-sprowt-user-add"
+sprowt-user-add
+sqSync.sh
+sqSyncFiles.sh
+sqSyncDB.sh"
 mkdir -p ~/bin
 cd ~/bin
 
