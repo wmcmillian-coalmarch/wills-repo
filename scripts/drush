@@ -16,6 +16,12 @@ else
     SITE=${PWD##*/$PROJECTDIR/}
     SITE=${SITE%%/*}
 
+    SITEDIR=$PROJECTDIR/$SITE;
+    if [ -f $SITEDIR/vendor/bin/drush ]; then
+      $SITEDIR/vendor/bin/drush --local "$@";
+      exit;
+    fi
+
     if [ -f ~/${PROJECTDIR}/${SITE}/core/lib/Drupal.php ]
     then
         DRUPALV=8
@@ -27,6 +33,8 @@ else
         fi;
     fi
 fi
+
+
 
 if [ $DRUPALV = 8 ]; then
     ##  It doesn't make any sense to use Drush 9 anymore with Pantheon's workflow
