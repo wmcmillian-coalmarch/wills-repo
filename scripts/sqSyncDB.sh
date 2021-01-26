@@ -43,14 +43,16 @@ else
     fi;
 fi;
 
+DRUSH="/home/www/bin/drush";
+
 if [ $DRUPALV = "7" ]; then
-    CLEARCACHECMD="cd /var/www/${SITE}-${ENV} && drush cc all"
+    CLEARCACHECMD="cd /var/www/${SITE}-${ENV} && $DRUSH cc all"
 else
-    CLEARCACHECMD="cd /var/www/${SITE}-${ENV} && drush cr"
+    CLEARCACHECMD="cd /var/www/${SITE}-${ENV} && $DRUSH cr"
 fi
 FILENAME="${SITE}-${ENV}-backup.sql"
 SERVERFILE="/tmp/${FILENAME}";
-BACKUPCMD="cd /var/www/${SITE}-${ENV} && drush sql:dump --result-file=${SERVERFILE} --gzip"
+BACKUPCMD="cd /var/www/${SITE}-${ENV} && $DRUSH sql:dump --result-file=${SERVERFILE} --gzip"
 
 echo "Exporting remote database..."
 
