@@ -20,6 +20,7 @@ drush
 drush8
 sprowt-user-add
 sqSync.sh
+sqSyncCode.sh
 sqSyncFiles.sh
 sqSyncDB.sh"
 mkdir -p ~/bin
