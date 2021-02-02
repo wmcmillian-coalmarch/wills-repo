@@ -5,6 +5,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae augue sed d
 Maecenas et eleifend lacus. Aenean aliquet accumsan mauris, nec pulvinar est. Morbi dictum est quis dolor convallis, id gravida orci fringilla. Duis ornare nunc at enim accumsan elementum. Maecenas porta elit id urna hendrerit, sit amet cursus turpis placerat. Vestibulum interdum magna at posuere ultricies. Praesent quis elit elit. Etiam mollis ut nunc hendrerit vulputate. Etiam commodo porta nunc, a lobortis diam volutpat ut.
 
 
+<<<<<<< HEAD
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae augue sed dolor sagittis aliquet nec id quam. Vestibulum eleifend semper aliquet. In in orci at orci sollicitudin rutrum. Sed condimentum posuere justo, at rutrum nunc maximus et. Etiam porta nec risus ac cursus. Donec congue nec lorem non efficitur. Integer vel vestibulum turpis. Donec iaculis tempor sapien vel egestas. Maecenas ultricies nisi sollicitudin, sagittis nulla in, mollis leo. Praesent ac arcu ac ex ultricies tincidunt eu in odio. Curabitur tempor ex a mauris venenatis, sit amet consequat massa egestas.
 
@@ -20,6 +21,8 @@ Maecenas et eleifend lacus. Aenean aliquet accumsan mauris, nec pulvinar est. Mo
 Maecenas tempus lacus vitae nisl aliquet, ac auctor lacus vehicula. In tortor leo, consequat vitae lorem et, dapibus vestibulum nisl. Morbi nec lacus sed metus sollicitudin bibendum. Phasellus sed dictum tellus. Praesent scelerisque porta felis id efficitur. Cras felis dui, consequat eget ornare a, cursus in lectus. Proin quam est, pulvinar in sagittis ut, varius eget eros. In feugiat condimentum dolor, id luctus odio sollicitudin nec. Vestibulum varius dapibus ipsum, nec fringilla purus aliquam a. Nam libero dui, ultricies in tellus ut, egestas lobortis urna. Vestibulum aliquam ut justo vitae tristique.
 
 
+=======
+>>>>>>> test
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae augue sed dolor sagittis aliquet nec id quam. Vestibulum eleifend semper aliquet. In in orci at orci sollicitudin rutrum. Sed condimentum posuere justo, at rutrum nunc maximus et. Etiam porta nec risus ac cursus. Donec congue nec lorem non efficitur. Integer vel vestibulum turpis. Donec iaculis tempor sapien vel egestas. Maecenas ultricies nisi sollicitudin, sagittis nulla in, mollis leo. Praesent ac arcu ac ex ultricies tincidunt eu in odio. Curabitur tempor ex a mauris venenatis, sit amet consequat massa egestas.
 
 Maecenas et eleifend lacus. Aenean aliquet accumsan mauris, nec pulvinar est. Morbi dictum est quis dolor convallis, id gravida orci fringilla. Duis ornare nunc at enim accumsan elementum. Maecenas porta elit id urna hendrerit, sit amet cursus turpis placerat. Vestibulum interdum magna at posuere ultricies. Praesent quis elit elit. Etiam mollis ut nunc hendrerit vulputate. Etiam commodo porta nunc, a lobortis diam volutpat ut.
