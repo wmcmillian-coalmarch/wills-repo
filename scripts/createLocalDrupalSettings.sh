@@ -59,9 +59,42 @@ else
     fi;
 fi
 
-if [ ! $DRUPALV = "8" ]; then
-    echo 'This script not compatible with Drupal 7 yet.'
-    exit 1;
+if [ $DRUPALV = "7" ]; then
+    DB=${SITE//-/_}
+    default_settings_file=~/${PROJECTDIR}/${SITE}/sites/default/default.settings.php;
+    settings_file=~/${PROJECTDIR}/${SITE}/sites/default/settings.php;
+    local_settings=~/${PROJECTDIR}/${SITE}/sites/default/settings.local.php;
+    settings_file_tmp=~/${PROJECTDIR}/${SITE}/sites/default/settings.php-tmp;
+    install_log=~/${PROJECTDIR}/${SITE}/install.log;
+    if [ -f $settings_file ]; then
+      mv $settings_file $settings_file_tmp;
+    fi
+    drush si minimal --db-url=mysql://$MYSQL_USER:$MYSQL_PASSWORD@$MYSQL_HOST/$DB -y > $install_log 2>&1 & spinner $! || true;
+    if [ -f $settings_file ]; then
+      rm $install_log;
+      chmod 775 ~/$PROJECTDIR/$SITE/sites/default
+      chmod 755 $settings_file;
+      if [ -f $local_settings ]; then
+        rm $local_settings;
+      fi
+      touch $local_settings;
+      chmod 755 $local_settings;
+      echo '<?php' >> $local_settings;
+      echo '' >> $local_settings;
+            echo "" >> $local_settings;
+      echo "" >> $local_settings;
+      echo "/**=====================================" >> $local_settings;
+      echo "*            local install" >> $local_settings;
+      echo "*=====================================**/" >> $local_settings;
+      echo "" >> $local_settings;
+      echo "" >> $local_settings;
+      diff "${default_settings_file}" "${settings_file}" | grep ">" | sed 's/^>//g' | sed 's/^\( *\)\(.\)/\1\1\2/g' >> "${local_settings}";
+      if [ -f $settings_file_tmp ]; then
+        mv $settings_file_tmp $settings_file;
+      fi
+    fi
+
+    exit 0;
 fi
 
 DB=${SITE//-/_}
@@ -79,7 +112,7 @@ drush si minimal --db-url=mysql://$MYSQL_USER:$MYSQL_PASSWORD@$MYSQL_HOST/$DB -y
 if [ -f $settings_file ]; then
     rm $install_log;
     chmod 775 ~/$PROJECTDIR/$SITE/sites/default
-    chmod 777 $settings_file;
+    chmod 755 $settings_file;
     cp -f $local_settings_template $local_settings;
     echo "" >> $local_settings;
     echo "" >> $local_settings;

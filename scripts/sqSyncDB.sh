@@ -25,23 +25,12 @@ if [ -z "${MYSQL_HOST}" ]; then
     MYSQL_HOST="localhost"
 fi
 
-if [ $DRUPALV = "8" ]
-then
-    local_settings=~/Sites/${SITE}/sites/default/settings.local.php;
-    if [ ! -f $local_settings ]; then
-        chmod 775 ~/Sites/$SITE/sites/default
-        createLocalDrupalSettings.sh $SITE;
-    fi
+local_settings=~/Sites/${SITE}/sites/default/settings.local.php;
+if [ ! -f $local_settings ]; then
     chmod 775 ~/Sites/$SITE/sites/default
-else
-    if [ ! -f ~/Sites/$SITE/sites/default/settings.php ]
-    then
-        DB=${SITE//-/_}
-        echo "No settings.php. creating..."
-        drush si minimal --db-url=mysql://$MYSQL_USER:$MYSQL_PASSWORD@$MYSQL_HOST/$DB -y > /dev/null 2>&1 & spinner $! || true
-        chmod 775 ~/Sites/$SITE/sites/default
-    fi;
-fi;
+    createLocalDrupalSettings.sh $SITE;
+fi
+chmod 775 ~/Sites/$SITE/sites/default
 
 DRUSH="/home/www/bin/drush";
 
