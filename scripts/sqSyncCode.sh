@@ -9,7 +9,7 @@ SITEDIR=~/$PROJECTDIR/$SITE;
 echo "Syncing code";
 
 if [ ! -d $SITEDIR ]; then
-  git clone git@github.com:coalmarch-development/${SITE}.git
+  git clone git@github.com:coalmarch-development/${SITE}.git $SITEDIR
 else
   cd $SITEDIR && git pull
 fi
