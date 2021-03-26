@@ -34,7 +34,7 @@ for index in "${tests[@]}"; do
         if [ -f $testdir ]; then
             case $type in
             DRUPAL_8)
-                cmd="drupal";
+                cmd="drush";
                 ;;
             DRUPAL_7)
                 cmd="drush";
