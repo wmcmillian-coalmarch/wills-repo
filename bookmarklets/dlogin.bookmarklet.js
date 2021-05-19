@@ -23,9 +23,9 @@ javascript:(function () {
         var l = window.location;
         var h = l.hash || '';
         var s = l.search || '';
-        var b = drupalSettings.baseUrl;
-        var p = l.pathname.slice(b.length) || '<front>';
-        window.location.href = l.protocol+ "//"+ l.host+b+ "index.php?q=user&destination="+ encodeURI(p+s+h);
+        var b = drupalSettings.path.baseUrl;
+        var p = l.pathname.slice(b.length) || '';
+        window.location.href = l.protocol+ "//"+ l.host+b+ "user/login?destination=/"+ encodeURI(p+s+h);
     }
     else if (typeof _int != 'undefined') {
         var u = false;
