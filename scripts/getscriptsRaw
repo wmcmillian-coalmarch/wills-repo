@@ -19,6 +19,8 @@ getscripts
 drush
 drush8
 sprowt-user-add
+isSprowt3.sh
+addSprowt3Aliases
 sqSync.sh
 sqSyncCode.sh
 sqSyncFiles.sh

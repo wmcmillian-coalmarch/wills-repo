@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )";
 set -e
 
 source ${HOME}/bin/getSiteEnv.sh;
+source $DIR/isSprowt3.sh;
 
 SITEDIR=~/$PROJECTDIR/$SITE;
 
@@ -41,7 +42,7 @@ else
 fi
 FILENAME="${SITE}-${ENV}-backup.sql"
 SERVERFILE="/tmp/${FILENAME}";
-BACKUPCMD="cd /var/www/${SITE}-${ENV} && $DRUSH sql:dump --result-file=${SERVERFILE} --gzip"
+BACKUPCMD="backupLocal.sh $SITE $ENV"
 
 echo "Exporting remote database..."
 
@@ -50,14 +51,14 @@ ssh sprowthq "sudo -u www -- sh -c '${BACKUPCMD}'"
 ssh sprowthq "sudo chmod 777 ${SERVERFILE}.gz"
 scp sprowthq:${SERVERFILE}.gz ./${FILENAME}
 
-drush sql-create -y;
+$LOCALDRUSH sql-create -y;
 
-pv ./${FILENAME} | gunzip | $(drush sql-connect);
+pv ./${FILENAME} | gunzip | $($LOCALDRUSH sql-connect);
 if [ $DRUPALV = "7" ]; then
-    drush vset cache 0;drush vset preprocess_css 0;drush vset preprocess_js 0;
+    $LOCALDRUSH vset cache 0;drush vset preprocess_css 0;drush vset preprocess_js 0;
 fi
 if [ $DRUPALV = "7" ]; then
-    drush cc all
+    $LOCALDRUSH cc all
 else
-    drush cr
+    $LOCALDRUSH cr
 fi
