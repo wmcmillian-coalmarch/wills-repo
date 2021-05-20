@@ -11,9 +11,21 @@ $DIR/sqSyncFiles.sh $SITE $ENV;
 
 if [ $ISSPROWT3 = "1" ]; then
   cd ~/${PROJECTDIR}/sprowt3-core;
+  echo ""
+  echo ""
+  echo "################################"
   echo "Site synced"
   echo "To use drush run 'drush @$SITE'"
+  echo "################################"
+  echo ""
+  echo ""
 else
   cd ~/${PROJECTDIR}/${SITE};
+  echo ""
+  echo ""
+  echo "################################"
   echo "Site synced"
+  echo "################################"
+  echo ""
+  echo ""
 fi

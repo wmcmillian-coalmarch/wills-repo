@@ -1203,7 +1203,7 @@ if(!empty($options['s'])) {
 
 $site = $options['site'] ?? null;
 
-if(empty($site) || empty($env)) {
+if(empty($site)) {
     echo "site is required";
     exit(1);
 }
@@ -1238,7 +1238,7 @@ else {
 $serverLines = explode("\n", $serverStr);
 $lineIdx = null;
 foreach($serverLines as $i => $line) {
-    if(strpos($line, 'ServerAlias')) {
+    if(strpos($line, 'ServerAlias') !== false) {
         $lineIdx = $i;
     }
 }

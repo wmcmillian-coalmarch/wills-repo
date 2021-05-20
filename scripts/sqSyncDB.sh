@@ -5,11 +5,21 @@ set -e
 source ${HOME}/bin/getSiteEnv.sh;
 source $DIR/isSprowt3.sh;
 
-SITEDIR=~/$PROJECTDIR/$SITE;
+if [ $ISSPROWT3 = "1" ]; then
+  SITEDIR=~/$PROJECTDIR/sprowt3-core;
+else
+  SITEDIR=~/$PROJECTDIR/$SITE;
+fi
+
+if [ $ISSPROWT3 = "1" ]; then
+  SITESETTINGSDIR=${SITEDIR}/sites/${SITE};
+else
+  SITESETTINGSDIR=${SITEDIR}/sites/default;
+fi
 
 cd $SITEDIR;
 
-if [ -f ~/Sites/$SITE/core/lib/Drupal.php ]
+if [ -f ${SITEDIR}/core/lib/Drupal.php ]
 then
     DRUPALV=8
 else
@@ -26,23 +36,27 @@ if [ -z "${MYSQL_HOST}" ]; then
     MYSQL_HOST="localhost"
 fi
 
-local_settings=~/Sites/${SITE}/sites/default/settings.local.php;
+local_settings=${SITESETTINGSDIR}/settings.local.php;
 if [ ! -f $local_settings ]; then
-    chmod 775 ~/Sites/$SITE/sites/default
+    chmod 755 ${SITESETTINGSDIR}
     createLocalDrupalSettings.sh $SITE;
 fi
-chmod 775 ~/Sites/$SITE/sites/default
+chmod 755 ${SITESETTINGSDIR}
 
 DRUSH="/home/www/bin/drush";
 
 if [ $DRUPALV = "7" ]; then
     CLEARCACHECMD="cd /var/www/${SITE}-${ENV} && $DRUSH cc all"
 else
+  if [ $ISSPROWT3 = "1" ]; then
+    CLEARCACHECMD="cd /var/www/sprowt3-core && $DRUSH @${SITE}-${ENV} cr"
+  else
     CLEARCACHECMD="cd /var/www/${SITE}-${ENV} && $DRUSH cr"
+  fi
 fi
 FILENAME="${SITE}-${ENV}-backup.sql"
 SERVERFILE="/tmp/${FILENAME}";
-BACKUPCMD="backupLocal.sh $SITE $ENV"
+BACKUPCMD="/home/www/bin/backupLocal.sh $SITE $ENV"
 
 echo "Exporting remote database..."
 

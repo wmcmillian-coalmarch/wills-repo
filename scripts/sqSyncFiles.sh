@@ -10,7 +10,7 @@ SITEDIR=~/$PROJECTDIR/$SITE;
 if [ $ISSPROWT3 = "1" ]; then
   SITEDIR=~/$PROJECTDIR/sprowt3-core;
   FILEPARENTDIR=sites/$SITE;
-  SERVERFILEDIR=/var/www/sprowt3-core/sites/$SITE/files;
+  SERVERFILEDIR=/var/www/sprowt3-core/sites/$SITE--$ENV/files;
 else
   FILEPARENTDIR=sites/default;
   SERVERFILEDIR=/var/www/$SITE-$ENV/sites/default/files;

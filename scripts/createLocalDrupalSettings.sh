@@ -1,4 +1,6 @@
 #! /usr/bin/env bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )";
+source $DIR/isSprowt3.sh;
 
 if [ -z "${MYSQL_USER}" ]; then
     MYSQL_USER="root"
@@ -34,6 +36,12 @@ if [[ "${PWD}" =~ ^${HOME}/Projects ]]; then
     PROJECTDIR="Projects"
 fi
 
+if [ $ISSPROWT3 = "1" ]; then
+  SITEDIR=~/$PROJECTDIR/sprowt3-core;
+else
+  SITEDIR=~/$PROJECTDIR/$SITE;
+fi
+
 if [ -z "$1" ]
 then
     if [[ ! "${PWD}" =~ ^${HOME}/$PROJECTDIR ]]; then
@@ -47,11 +55,11 @@ else
     SITE=$1
 fi;
 
-if [ -f ~/${PROJECTDIR}/${SITE}/core/lib/Drupal.php ]
+if [ -f ${SITEDIR}/core/lib/Drupal.php ]
 then
     DRUPALV=8
 else
-    if [ -f ~/${PROJECTDIR}/${SITE}/modules/system/system.module ]; then
+    if [ -f ${SITEDIR}/modules/system/system.module ]; then
         DRUPALV=7
     else
         echo 'A drupal site was not found.'
@@ -97,23 +105,31 @@ if [ $DRUPALV = "7" ]; then
     exit 0;
 fi
 
-DB=${SITE//-/_}
-settings_file=~/${PROJECTDIR}/${SITE}/sites/default/settings.php;
-default_settings_file=~/${PROJECTDIR}/${SITE}/sites/default/default.settings.php;
-settings_file_tmp=~/${PROJECTDIR}/${SITE}/sites/default/settings.php-tmp;
-local_settings=~/${PROJECTDIR}/${SITE}/sites/default/settings.local.php;
-local_settings_template=~/${PROJECTDIR}/${SITE}/sites/example.settings.local.php;
-install_log=~/${PROJECTDIR}/${SITE}/install.log;
+if [ $ISSPROWT3 = "1" ]; then
+  SITESETTINGSDIR=${SITEDIR}/sites/${SITE};
+else
+  SITESETTINGSDIR=${SITEDIR}/sites/default;
+fi
 
-chmod 775 ~/${PROJECTDIR}/${SITE}/sites/default
-echo "${SITE}/sites/default/settings.local.php not found. Setting up local settings file... This might take a bit...";
+DB=${SITE//-/_}
+settings_file=${SITESETTINGSDIR}/settings.php;
+default_settings_file=${SITEDIR}/sites/default/default.settings.php;
+settings_file_tmp=${SITESETTINGSDIR}/settings.php-tmp;
+local_settings=${SITESETTINGSDIR}/settings.local.php;
+local_settings_template=${SITEDIR}/sites/example.settings.local.php;
+install_log=${SITEDIR}/${SITE}-install.log;
+
+chmod 755 ${SITESETTINGSDIR};
+echo "${SITESETTINGSDIR}/settings.local.php not found. Setting up local settings file... This might take a bit...";
 mv $settings_file $settings_file_tmp;
-drush si minimal --db-url=mysql://$MYSQL_USER:$MYSQL_PASSWORD@$MYSQL_HOST/$DB -y > $install_log 2>&1 & spinner $! || true;
+$LOCALDRUSH si minimal --db-url=mysql://$MYSQL_USER:$MYSQL_PASSWORD@$MYSQL_HOST/$DB -y > $install_log 2>&1 & spinner $! || true;
+chmod 755 $install_log;
 if [ -f $settings_file ]; then
     rm $install_log;
-    chmod 775 ~/$PROJECTDIR/$SITE/sites/default
+    chmod 755 ${SITESETTINGSDIR}
     chmod 755 $settings_file;
     cp -f $local_settings_template $local_settings;
+    chmod 755 $local_settings;
     echo "" >> $local_settings;
     echo "" >> $local_settings;
     echo "/**=====================================" >> $local_settings;
