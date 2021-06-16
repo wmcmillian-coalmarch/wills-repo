@@ -73,8 +73,6 @@ touch $HOME/bin/sprowt;
 rm $HOME/bin/sprowt;
 ln -s $sqDir/bin/console $HOME/bin/sprowt;
 
-source ~/.zshrc;
-
 echo
 echo '#######################################'
 echo '               DONE!!!'
