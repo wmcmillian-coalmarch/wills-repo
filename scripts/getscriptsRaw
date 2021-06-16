@@ -56,6 +56,24 @@ done
 
 echo
 echo '#######################################'
+echo '          getting sprowthq-cli'
+echo '#######################################'
+echo
+
+mkdir -p $HOME/opt;
+sqDir="$HOME/opt/sprowthq-cli";
+if [ -d $sqDir ]; then
+  cd $sqDir && git pull && composer install && $sqDir/bin/console cache:clear;
+else
+  git clone git@github.com:coalmarch-development/sprowthq-cli.git $sqDir;
+  cd $sqDir && composer install && $sqDir/bin/console cache:clear;
+fi
+
+rm $HOME/bin/sprowt;
+ln -s $sqDir/bin/console $HOME/bin/sprowt;
+
+echo
+echo '#######################################'
 echo '               DONE!!!'
 echo '#######################################'
 echo
