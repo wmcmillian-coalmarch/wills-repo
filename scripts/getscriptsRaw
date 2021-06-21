@@ -25,37 +25,37 @@ set -e
 #sqSyncCode.sh
 #sqSyncFiles.sh
 #sqSyncDB.sh"
-SCRIPTS="getscripts
-drush
-drush8"
+#getscripts
+#drush
+#drush8"
 mkdir -p ~/bin
-cd ~/bin
+#cd ~/bin
 
-if [ ! -z ${WILL_SANDBOX_DIR} ]; then
-    cd ${WILL_SANDBOX_DIR};
-    git pull;
-    cd ~/bin
-fi
-
-echo '#######################################'
-echo '         getting scripts...'
-echo '#######################################'
-echo
-for script in $SCRIPTS;
-do
-    if [ -f ~/bin/$script ]; then
-        rm ~/bin/$script;
-    fi
-
-    if [ -z ${WILL_SANDBOX_DIR} ]; then
-        echo "Downloading $script to $HOME/bin/$script ..."
-        curl https://raw.githubusercontent.com/wmcmillian-coalmarch/wills-repo/master/scripts/$script > $script
-        chmod 777 $script
-    else
-        echo "Linking $script to $HOME/bin/$script ..."
-        ln -s ${WILL_SANDBOX_DIR}/scripts/$script ~/bin/
-    fi
-done
+#if [ ! -z ${WILL_SANDBOX_DIR} ]; then
+#    cd ${WILL_SANDBOX_DIR};
+#    git pull;
+#    cd ~/bin
+#fi
+#
+#echo '#######################################'
+#echo '         getting scripts...'
+#echo '#######################################'
+#echo
+#for script in $SCRIPTS;
+#do
+#    if [ -f ~/bin/$script ]; then
+#        rm ~/bin/$script;
+#    fi
+#
+#    if [ -z ${WILL_SANDBOX_DIR} ]; then
+#        echo "Downloading $script to $HOME/bin/$script ..."
+#        curl https://raw.githubusercontent.com/wmcmillian-coalmarch/wills-repo/master/scripts/$script > $script
+#        chmod 777 $script
+#    else
+#        echo "Linking $script to $HOME/bin/$script ..."
+#        ln -s ${WILL_SANDBOX_DIR}/scripts/$script ~/bin/
+#    fi
+#done
 
 echo
 echo '#######################################'
@@ -71,6 +71,10 @@ else
   git clone git@github.com:coalmarch-development/sprowthq-cli.git $sqDir;
   cd $sqDir && composer install && $sqDir/bin/console cache:clear;
 fi
+
+touch $HOME/bin/drush;
+rm $HOME/bin/drush;
+ln -s $sqDir/bin/drush.sh $HOME/bin/drush;
 
 touch $HOME/bin/sprowt;
 rm $HOME/bin/sprowt;
