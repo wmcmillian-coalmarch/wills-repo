@@ -2,29 +2,32 @@
 
 set -e
 
-SCRIPTS="terminus_version
-tlogin
-terminus-ssp
-drushfiles
-tclone
-siteget
-pdeploy
-prefresh
-pdrush
-psftp
-rewritebase
-createLocalDrupalSettings.sh
-getSiteEnv.sh
-getscripts
+#SCRIPTS="terminus_version
+#tlogin
+#terminus-ssp
+#drushfiles
+#tclone
+#siteget
+#pdeploy
+#prefresh
+#pdrush
+#psftp
+#rewritebase
+#createLocalDrupalSettings.sh
+#getSiteEnv.sh
+#getscripts
+#drush
+#drush8
+#sprowt-user-add
+#isSprowt3.sh
+#addSprowt3Aliases
+#sqSync.sh
+#sqSyncCode.sh
+#sqSyncFiles.sh
+#sqSyncDB.sh"
+SCRIPTS="getscripts
 drush
-drush8
-sprowt-user-add
-isSprowt3.sh
-addSprowt3Aliases
-sqSync.sh
-sqSyncCode.sh
-sqSyncFiles.sh
-sqSyncDB.sh"
+drush8"
 mkdir -p ~/bin
 cd ~/bin
 
@@ -72,6 +75,11 @@ fi
 touch $HOME/bin/sprowt;
 rm $HOME/bin/sprowt;
 ln -s $sqDir/bin/console $HOME/bin/sprowt;
+
+echo
+echo "sprowthq cli installed as $HOME/bin/sprowt"
+echo
+echo "restart terminal or source ~/.zshrc to use"
 
 echo
 echo '#######################################'
